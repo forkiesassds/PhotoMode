@@ -1,0 +1,9 @@
+{
+  "gui.photomode": "Photo Mode",
+  "gui.photomode.takescreenshot": "Take Screenshot",
+  "gui.photomode.time": "Time of Day: %s",
+  "gui.photomode.fog": "Fog: %s%%",
+  "gui.photomode.tilt": "Tilt: %s",
+  "gui.photomode.default": "Default",
+  "gui.photomode.degrees": "degrees"
+}
