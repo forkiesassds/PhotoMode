@@ -10,7 +10,7 @@
     "MixinWorldRenderer",
     "MixinInGameHud",
     "MixinCamera",
-    "MixinBackgroundRenderer"
+    "MixinRenderSystem"
   ],
   "injectors": {
     "defaultRequire": 1
