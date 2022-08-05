@@ -1,14 +1,14 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "me.icanttellyou.mods.photomode.mixin",
+  "package": "me.icanttellyou.mods.photomode.common.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
   ],
   "client": [
+    "InvokerCamera",
     "MixinGameRenderer",
     "MixinWorldRenderer",
-    "MixinInGameHud",
     "MixinCamera",
     "MixinRenderSystem"
   ],

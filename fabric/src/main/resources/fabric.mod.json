@@ -14,11 +14,11 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "me.icanttellyou.mods.photomode.PhotoMode"
+      "PhotoMode"
     ]
   },
   "mixins": [
-    "PhotoMode.mixins.json"
+    "PhotoMode-common.mixins.json"
   ],
 
   "depends": {

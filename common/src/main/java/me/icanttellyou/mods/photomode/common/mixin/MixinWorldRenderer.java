@@ -1,6 +1,7 @@
-package me.icanttellyou.mods.photomode.mixin;
+package me.icanttellyou.mods.photomode.common.mixin;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import me.icanttellyou.mods.photomode.common.client.PhotoModeScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -10,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import me.icanttellyou.mods.photomode.client.PhotoModeScreen;
 
 @Mixin(WorldRenderer.class)
 public class MixinWorldRenderer {
