@@ -1,7 +1,7 @@
-package me.icanttellyou.mods.photomode.mixin;
+package me.icanttellyou.mods.photomode.common.mixin;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import me.icanttellyou.mods.photomode.client.PhotoModeScreen;
+import me.icanttellyou.mods.photomode.common.client.PhotoModeScreen;
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

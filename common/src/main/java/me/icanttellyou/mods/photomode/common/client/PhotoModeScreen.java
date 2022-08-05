@@ -1,6 +1,6 @@
-package me.icanttellyou.mods.photomode.client;
+package me.icanttellyou.mods.photomode.common.client;
 
-import net.fabricmc.fabric.api.client.screen.v1.Screens;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -23,6 +23,7 @@ public class PhotoModeScreen extends Screen {
     private long selectedTime = -1L;
     private long selectedDay = -1L;
     private boolean isTakingScreenshot = false;
+    private final boolean wasHudHidden = MinecraftClient.getInstance().options.hudHidden;
 
     PhotoModeSliderWidget tiltSlider;
     PhotoModeSliderWidget timeSlider;
@@ -37,6 +38,7 @@ public class PhotoModeScreen extends Screen {
         super.init();
         this.initWidgets();
         this.updateGui();
+        MinecraftClient.getInstance().options.hudHidden = true;
     }
 
     @Override
@@ -104,7 +106,7 @@ public class PhotoModeScreen extends Screen {
         }
 
         int i = 0;
-        for (Object button : Screens.getButtons(this)) {
+        for (Object button : this.children()) {
             ((ClickableWidget)button).y = i++ * 20;
         }
 
@@ -156,6 +158,7 @@ public class PhotoModeScreen extends Screen {
     public void close() {
         super.close();
         this.client.world.setTimeOfDay(this.oldTime);
+        MinecraftClient.getInstance().options.hudHidden = wasHudHidden;
     }
 }
 

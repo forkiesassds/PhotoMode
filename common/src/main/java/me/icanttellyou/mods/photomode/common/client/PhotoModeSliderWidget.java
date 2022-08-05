@@ -1,4 +1,4 @@
-package me.icanttellyou.mods.photomode.client;
+package me.icanttellyou.mods.photomode.common.client;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
