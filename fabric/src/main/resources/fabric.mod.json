@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "photomode",
+  "version": "${version}",
+
+  "name": "Photo Mode",
+  "description": "This mod adds an isometric view of the world dedicated for taking pictures.\nPorted with permission from Better than Adventure!",
+  "authors": [
+    ""
+  ],
+
+  "license": "LGPL-3.0",
+
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "me.icanttellyou.mods.photomode.fabric.PhotoMode"
+    ]
+  },
+  "mixins": [
+    "PhotoMode-common.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.6",
+    "fabric": "*",
+    "minecraft": "~1.19",
+    "java": ">=17"
+  },
+  "breaks": {
+    "sodium": "*"
+  }
+}
