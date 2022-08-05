@@ -7,6 +7,7 @@ import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -21,7 +22,7 @@ public class PhotoMode {
     private void screenEventHandler(ScreenEvent event) {
         Screen screen = event.getScreen();
         if (screen instanceof GameMenuScreen) {
-            ScreenHooks.addRenderableWidget(screen, new ButtonWidget(screen.width / 2 - 48, 8, 98, 20, Text.translatable("gui.photomode"), (button) -> {
+            ScreenHooks.addRenderableWidget(screen, new ButtonWidget(screen.width / 2 - 48, 8, 98, 20, new TranslatableText("gui.photomode"), (button) -> {
                 client.setScreen(new PhotoModeScreen(Text.of("")));
             }));
         }

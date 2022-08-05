@@ -14,7 +14,7 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "PhotoMode"
+      "me.icanttellyou.mods.photomode.fabric.PhotoMode"
     ]
   },
   "mixins": [
