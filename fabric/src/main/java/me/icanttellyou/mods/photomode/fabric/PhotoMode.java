@@ -1,6 +1,5 @@
 package me.icanttellyou.mods.photomode.fabric;
 
-
 import me.icanttellyou.mods.photomode.common.client.PhotoModeScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -27,9 +26,9 @@ public class PhotoMode implements ClientModInitializer {
         if (screen instanceof GameMenuScreen) {
             final List<ClickableWidget> buttons = Screens.getButtons(screen);
 
-            buttons.add(new ButtonWidget(screen.width / 2 - 48, 8, 98, 20, Text.translatable("gui.photomode"), (button) -> {
+            buttons.add(ButtonWidget.createBuilder(Text.translatable("gui.photomode"), (button) -> {
                 client.setScreen(new PhotoModeScreen(Text.of("")));
-            }));
+            }).setPosition(screen.width / 2 - 48, 8).setWidth(98).build());
         }
     }
 }

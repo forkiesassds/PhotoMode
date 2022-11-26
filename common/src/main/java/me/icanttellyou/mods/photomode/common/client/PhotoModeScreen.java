@@ -106,23 +106,26 @@ public class PhotoModeScreen extends Screen {
 
         int i = 0;
         for (Object button : this.children()) {
-            ((ClickableWidget)button).y = i++ * 20;
+            ((ClickableWidget)button).setPos(((ClickableWidget) button).getX(), i++ * 20);
         }
 
-        this.addDrawableChild(new ButtonWidget(width / 2 - 49, height - 20, 98, 20, Text.translatable("gui.photomode.takescreenshot"), (button) -> {
+
+        this.addDrawableChild(ButtonWidget.createBuilder(Text.translatable("gui.photomode.takescreenshot"), (button) -> {
             isTakingScreenshot = true;
-        }));
-        this.addDrawableChild(new ButtonWidget(0, 0, 20, 20, Text.of("X"), (button) -> {
+        }).setPosition(width / 2 - 49, height - 20).setWidth(98).build());
+
+        this.addDrawableChild(ButtonWidget.createBuilder(Text.of("X"), (button) -> {
             client.setScreen(new GameMenuScreen(true));
-        }));
-        this.addDrawableChild(new ButtonWidget(width / 2 - 49 - 2 - 20, height - 20, 20, 20, Text.of("<"), (button) -> {
+        }).setPosition(0, 0).setWidth(20).build());
+
+        this.addDrawableChild(ButtonWidget.createBuilder(Text.of("<"), (button) -> {
             this.cameraRotationGoal -= 1.0f;
             this.cameraRotationGoal = (int)this.cameraRotationGoal;
-        }));
-        this.addDrawableChild(new ButtonWidget(width / 2 + 49 + 2, height - 20, 20, 20, Text.of(">"), (button) -> {
+        }).setPosition(width / 2 - 49 - 2 - 20, height - 20).setWidth(20).build());
+        this.addDrawableChild(ButtonWidget.createBuilder(Text.of(">"), (button) -> {
             this.cameraRotationGoal += 1.0f;
             this.cameraRotationGoal = (int)this.cameraRotationGoal;
-        }));
+        }).setPosition(width / 2 + 49 + 2, height - 20).setWidth(20).build());
 
         this.oldTime = this.client.world.getTimeOfDay();
         if (timeSlider.value != 0.0F) {

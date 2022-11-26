@@ -7,10 +7,10 @@
   ],
   "client": [
     "InvokerCamera",
-    "MixinGameRenderer",
-    "MixinWorldRenderer",
     "MixinCamera",
-    "MixinRenderSystem"
+    "MixinGameRenderer",
+    "MixinRenderSystem",
+    "MixinWorldRenderer"
   ],
   "injectors": {
     "defaultRequire": 1
