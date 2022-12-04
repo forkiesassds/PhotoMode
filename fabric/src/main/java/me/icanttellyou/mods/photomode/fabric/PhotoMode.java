@@ -26,9 +26,9 @@ public class PhotoMode implements ClientModInitializer {
         if (screen instanceof GameMenuScreen) {
             final List<ClickableWidget> buttons = Screens.getButtons(screen);
 
-            buttons.add(ButtonWidget.createBuilder(Text.translatable("gui.photomode"), (button) -> {
+            buttons.add(ButtonWidget.builder(Text.translatable("gui.photomode"), (button) -> {
                 client.setScreen(new PhotoModeScreen(Text.of("")));
-            }).setPosition(screen.width / 2 - 48, 8).setWidth(98).build());
+            }).position(screen.width / 2 - 48, 8).width(98).build());
         }
     }
 }

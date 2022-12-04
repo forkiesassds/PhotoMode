@@ -10,7 +10,8 @@
     "MixinCamera",
     "MixinGameRenderer",
     "MixinRenderSystem",
-    "MixinWorldRenderer"
+    "MixinWorldRenderer",
+    "MixinFrustum"
   ],
   "injectors": {
     "defaultRequire": 1
