@@ -10,7 +10,8 @@
     "MixinGameRenderer",
     "MixinWorldRenderer",
     "MixinCamera",
-    "MixinRenderSystem"
+    "MixinRenderSystem",
+    "compat.MixinRegionChunkRenderer"
   ],
   "injectors": {
     "defaultRequire": 1
