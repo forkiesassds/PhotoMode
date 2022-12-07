@@ -2,6 +2,8 @@ plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
 }
 
+apply from: "${rootProject.projectDir}/modrinthrepo.gradle"
+
 architectury {
     platformSetupLoomIde()
     forge()
@@ -29,6 +31,8 @@ configurations {
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
     modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
+    modImplementation "maven.modrinth:rubidium:0.5.3a"
+    runtimeOnly "org.joml:joml:1.10.2"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
