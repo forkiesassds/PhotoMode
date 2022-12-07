@@ -11,7 +11,8 @@
     "MixinGameRenderer",
     "MixinRenderSystem",
     "MixinWorldRenderer",
-    "MixinFrustum"
+    "MixinFrustum",
+    "compat.MixinRegionChunkRenderer"
   ],
   "injectors": {
     "defaultRequire": 1
