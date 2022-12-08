@@ -1,6 +1,5 @@
 package me.icanttellyou.mods.photomode.forge;
 
-import dev.architectury.hooks.client.screen.ScreenHooks;
 import me.icanttellyou.mods.photomode.common.client.PhotoModeScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.GameMenuScreen;
@@ -20,8 +19,8 @@ public class PhotoMode {
 
     private void screenEventHandler(ScreenEvent event) {
         Screen screen = event.getScreen();
-        if (screen instanceof GameMenuScreen) {
-            ScreenHooks.addRenderableWidget(screen, new ButtonWidget(screen.width / 2 - 48, 8, 98, 20, Text.translatable("gui.photomode"), (button) -> {
+        if (screen instanceof GameMenuScreen && event instanceof ScreenEvent.Init) {
+            screen.addDrawableChild(new ButtonWidget(screen.width / 2 - 48, 8, 98, 20, Text.translatable("gui.photomode"), (button) -> {
                 client.setScreen(new PhotoModeScreen(Text.of("")));
             }));
         }
