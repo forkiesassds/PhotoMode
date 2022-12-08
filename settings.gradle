@@ -9,5 +9,4 @@ pluginManagement {
 
 include("common")
 include("fabric")
-// not supported by 1.19.3
-//include("forge")
+include("forge")
