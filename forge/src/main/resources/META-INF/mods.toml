@@ -1,6 +1,6 @@
 modLoader = "javafml"
 loaderVersion = "[40,)"
-#issueTrackerURL = ""
+issueTrackerURL = "https://github.com/forkiesassds/PhotoMode/issues"
 license = "LGPL 3.0"
 
 [[mods]]
@@ -19,18 +19,11 @@ modId = "forge"
 mandatory = true
 versionRange = "[40,)"
 ordering = "NONE"
-side = "BOTH"
+side = "CLIENT"
 
 [[dependencies.photomode]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.18,)"
 ordering = "NONE"
-side = "BOTH"
-
-[[dependencies.photomode]]
-modId = "architectury"
-mandatory = true
-versionRange = "[4.5.76,)"
-ordering = "AFTER"
-side = "BOTH"
+side = "CLIENT"

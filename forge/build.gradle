@@ -30,7 +30,6 @@ configurations {
 
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
-    modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
     modImplementation "maven.modrinth:rubidium:0.5.3a"
     runtimeOnly "org.joml:joml:1.10.2"
 
