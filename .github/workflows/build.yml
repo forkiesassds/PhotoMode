@@ -40,5 +40,5 @@ jobs:
         name: PhotoMode-${{ github.ref }}
         # A file, directory or wildcard pattern that describes what to upload
         path: |
-         forge/libs/* 
-         fabric/libs/*
+         forge/build/libs/* 
+         fabric/build/libs/*
