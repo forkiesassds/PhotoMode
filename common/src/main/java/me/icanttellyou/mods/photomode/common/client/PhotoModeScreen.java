@@ -24,6 +24,7 @@ public class PhotoModeScreen extends Screen {
     private long selectedDay = -1L;
     private boolean isTakingScreenshot = false;
     private final boolean wasHudHidden = MinecraftClient.getInstance().options.hudHidden;
+    private final boolean wasChunkCullingEnabled = MinecraftClient.getInstance().chunkCullingEnabled;
 
     PhotoModeSliderWidget tiltSlider;
     PhotoModeSliderWidget timeSlider;
@@ -39,6 +40,7 @@ public class PhotoModeScreen extends Screen {
         this.initWidgets();
         this.updateGui();
         MinecraftClient.getInstance().options.hudHidden = true;
+        MinecraftClient.getInstance().chunkCullingEnabled = false;
     }
 
     @Override
@@ -159,6 +161,7 @@ public class PhotoModeScreen extends Screen {
         super.close();
         this.client.world.setTimeOfDay(this.oldTime);
         MinecraftClient.getInstance().options.hudHidden = wasHudHidden;
+        MinecraftClient.getInstance().chunkCullingEnabled = wasChunkCullingEnabled;
     }
 }
 
