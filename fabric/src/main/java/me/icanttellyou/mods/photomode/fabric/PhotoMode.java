@@ -18,13 +18,16 @@ import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public class PhotoMode implements ClientModInitializer {
+    private static final List<String> usePauseScreenWorkarround = List.of(
+        "NostalgicPauseScreen" //used by nt 2.0 old pause screen tweak
+    );
     @Override
     public void onInitializeClient() {
         ScreenEvents.AFTER_INIT.register(this::afterInitScreen);
     }
 
     private void afterInitScreen(MinecraftClient client, Screen screen, int windowWidth, int windowHeight) {
-        if (screen instanceof GameMenuScreen) {
+        if (screen instanceof GameMenuScreen || usePauseScreenWorkarround.contains(screen.getClass().getSimpleName())) {
             final List<ClickableWidget> buttons = Screens.getButtons(screen);
 
             buttons.add(new ButtonWidget(screen.width / 2 - 48, 8, 98, 20, Text.translatable("gui.photomode"), (button) -> {
