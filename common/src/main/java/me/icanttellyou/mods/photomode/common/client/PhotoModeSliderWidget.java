@@ -45,4 +45,10 @@ public class PhotoModeSliderWidget extends SliderWidget {
         this.isDragging = true;
         super.onClick(mouseX, mouseY);
     }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        this.isDragging = true;
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
 }

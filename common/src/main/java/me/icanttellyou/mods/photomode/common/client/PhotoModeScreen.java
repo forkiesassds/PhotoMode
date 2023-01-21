@@ -108,7 +108,7 @@ public class PhotoModeScreen extends Screen {
 
         int i = 0;
         for (Object button : this.children()) {
-            ((ClickableWidget)button).setPos(((ClickableWidget) button).getX(), i++ * 20);
+            ((ClickableWidget)button).setPosition(((ClickableWidget) button).getX(), i++ * 20);
         }
 
 
