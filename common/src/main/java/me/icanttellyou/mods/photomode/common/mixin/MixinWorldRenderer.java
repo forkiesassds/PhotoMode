@@ -17,7 +17,7 @@ public class MixinWorldRenderer {
         if (client.currentScreen instanceof PhotoModeScreen) info.cancel();
     }
 
-    @Inject(method = "renderClouds", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "renderClouds(Lnet/minecraft/client/util/math/MatrixStack;Lorg/joml/Matrix4f;FDDD)V", at = @At("HEAD"), cancellable = true)
     public void injectRenderClouds(CallbackInfo info) {
         if (client.currentScreen instanceof PhotoModeScreen) info.cancel();
     }
