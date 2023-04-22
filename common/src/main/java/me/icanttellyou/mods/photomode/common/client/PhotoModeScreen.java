@@ -1,6 +1,7 @@
 package me.icanttellyou.mods.photomode.common.client;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -43,12 +44,12 @@ public class PhotoModeScreen extends Screen {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+    public void render(DrawContext drawContext, int mouseX, int mouseY, float delta) {
         if (isTakingScreenshot) {
             ScreenshotRecorder.saveScreenshot(client.runDirectory, this.client.getFramebuffer(), text -> {});
             isTakingScreenshot = false;
         } else {
-            super.render(matrices, mouseX, mouseY, delta);
+            super.render(drawContext, mouseX, mouseY, delta);
             if (tiltSlider.isDragging) {
                 float cameraAngle = (int)(tiltSlider.value * 90.0f);
                 cameraTiltGoal = cameraAngle;

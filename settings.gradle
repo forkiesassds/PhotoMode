@@ -9,4 +9,5 @@ pluginManagement {
 
 include("common")
 include("fabric")
-include("forge")
+//forge is not supported by 1.20
+//include("forge")
