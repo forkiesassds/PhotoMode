@@ -29,10 +29,11 @@ public class MixinWorldRenderer {
     @ModifyVariable(method = "render", at = @At("HEAD"))
     private Matrix4f injectRender(Matrix4f matrix4f, MatrixStack matrices, float tickDelta) {
         if (client.currentScreen instanceof PhotoModeScreen) {
-            float div = (float) Math.pow(2.0, ((PhotoModeScreen) this.client.currentScreen).cameraZoom);
+            float div = (float) Math.pow(2.0, ((PhotoModeScreen) this.client.currentScreen).getZoom(tickDelta));
             float width = client.getWindow().getFramebufferWidth() / div;
             float height = client.getWindow().getFramebufferHeight() / div;
             Matrix4f newMatrix4f = Matrix4f.projectionMatrix(-width, width, height, -height, -9999, 9999);
+            newMatrix4f.multiplyByTranslation(((PhotoModeScreen) this.client.currentScreen).getPanX(tickDelta), -((PhotoModeScreen) client.currentScreen).getPanY(tickDelta), 0.0F);
             RenderSystem.setProjectionMatrix(newMatrix4f);
 
             if (newMatrix4f == null) {
@@ -47,10 +48,11 @@ public class MixinWorldRenderer {
     @ModifyVariable(method = "setupFrustum", at = @At("HEAD"), argsOnly = true)
     private Matrix4f injectSetupFrustum(Matrix4f matrix4f) {
         if (client.currentScreen instanceof PhotoModeScreen) {
-            float div = (float) Math.pow(2.0, ((PhotoModeScreen) this.client.currentScreen).cameraZoom);
+            float div = (float) Math.pow(2.0, ((PhotoModeScreen) this.client.currentScreen).getZoom(MinecraftClient.getInstance().getTickDelta()));
             float width = client.getWindow().getFramebufferWidth() / div;
             float height = client.getWindow().getFramebufferHeight() / div;
             Matrix4f newMatrix4f = Matrix4f.projectionMatrix(-Math.max(10, width), Math.max(10, width), Math.max(10, height), -Math.max(10, height), -9999, 9999);
+            newMatrix4f.multiplyByTranslation(((PhotoModeScreen) this.client.currentScreen).getPanX(MinecraftClient.getInstance().getTickDelta()), -((PhotoModeScreen) client.currentScreen).getPanY(MinecraftClient.getInstance().getTickDelta()), 0.0F);
 
             if (newMatrix4f == null) {
                 return matrix4f;
