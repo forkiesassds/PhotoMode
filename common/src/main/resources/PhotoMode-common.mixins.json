@@ -8,10 +8,10 @@
   "client": [
     "InvokerCamera",
     "MixinCamera",
+    "MixinFrustum",
     "MixinGameRenderer",
     "MixinRenderSystem",
     "MixinWorldRenderer",
-    "MixinFrustum",
     "compat.MixinRegionChunkRenderer"
   ],
   "injectors": {

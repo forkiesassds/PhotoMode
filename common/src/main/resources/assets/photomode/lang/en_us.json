@@ -5,5 +5,8 @@
   "gui.photomode.fog": "Fog: %s%%",
   "gui.photomode.tilt": "Tilt: %s",
   "gui.photomode.default": "Default",
-  "gui.photomode.degrees": "degrees"
+  "gui.photomode.degrees": "degrees",
+  "gui.photomode.centerScreen": "Center Screen",
+  "gui.photomode.showPlayer": "Show Player: %s",
+  "gui.photomode.helpText": "Click and drag to move and rotate."
 }
