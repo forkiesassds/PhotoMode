@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[44,)"
+loaderVersion = "[47,)"
 issueTrackerURL = "https://github.com/forkiesassds/PhotoMode/issues"
 license = "LGPL 3.0"
 
@@ -17,13 +17,13 @@ Ported with permission from Better than Adventure!
 [[dependencies.photomode]]
 modId = "forge"
 mandatory = true
-versionRange = "[44,)"
+versionRange = "[47,)"
 ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.photomode]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.19.3,)"
+versionRange = "[1.20,)"
 ordering = "NONE"
 side = "CLIENT"
