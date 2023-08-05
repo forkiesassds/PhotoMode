@@ -20,8 +20,8 @@ public class MixinFrustum {
         }
     }
 
-    @Inject(method = "method_38557", at = @At("HEAD"), cancellable = true)
-    private void injectMethod38557(CallbackInfoReturnable<Frustum> cir) {
+    @Inject(method = "coverBoxAroundSetPosition", at = @At("HEAD"), cancellable = true)
+    private void photoMode$coverBoxAroundSetPosition(CallbackInfoReturnable<Frustum> cir) {
         if(MinecraftClient.getInstance().currentScreen instanceof PhotoModeScreen) {
             cir.setReturnValue((Frustum)((Object)this));
             cir.cancel();

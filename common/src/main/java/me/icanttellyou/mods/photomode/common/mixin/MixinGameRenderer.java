@@ -35,7 +35,7 @@ public abstract class MixinGameRenderer {
             MatrixStack matrixStack = new MatrixStack();
             matrixStack.peek().getPositionMatrix().identity();
             cir.setReturnValue(matrixStack.peek().getPositionMatrix().mul((new Matrix4f())
-                    .setOrtho(-width, width, -height, height, ((GameRenderer)(Object)this).method_32796() * -2.0f, ((GameRenderer)(Object)this).method_32796() * 2.0f)
+                    .setOrtho(-width, width, -height, height, ((GameRenderer)(Object)this).getFarPlaneDistance() * -2.0f, ((GameRenderer)(Object)this).getFarPlaneDistance() * 2.0f)
                     .translate(((PhotoModeScreen) client.currentScreen).getPanX(delta), -((PhotoModeScreen) client.currentScreen).getPanY(delta), 0.0F)));
         }
     }
