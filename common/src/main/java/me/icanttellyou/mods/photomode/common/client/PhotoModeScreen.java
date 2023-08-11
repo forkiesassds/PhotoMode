@@ -148,6 +148,9 @@ public class PhotoModeScreen extends Screen {
         updateGui();
     }
 
+    @Override
+    public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {}
+
     private void initWidgets() {
         addDrawableChild(centerScreen = ButtonWidget.builder(Text.translatable("gui.photomode.centerScreen"), (button) -> {
             cametaPanXGoal = 0.0F;
@@ -212,10 +215,10 @@ public class PhotoModeScreen extends Screen {
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
-        if (amount < 0) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
+        if (verticalAmount < 0) {
             cameraZoomGoal -= 0.25f;
-        } else if (amount > 0) {
+        } else if (verticalAmount > 0) {
             cameraZoomGoal += 0.25f;
         }
         return true;
