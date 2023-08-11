@@ -9,9 +9,9 @@ name: Build Mod
 
 on:
   push:
-    branches: [ "1.20", "1.19.4", "1.19.3", "1.19", "1.18" ]
+    branches: [ "1.20.2", "1.20", "1.19.4", "1.19.3", "1.19", "1.18" ]
   pull_request:
-    branches: [ "1.19.4" ] #pull requests really should only target 1.19.4, anything else is not suitable
+    branches: [ "1.20" ] #pull requests really should only target 1.20, anything else is not suitable
   workflow_dispatch:
 
 permissions:
