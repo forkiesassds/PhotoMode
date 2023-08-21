@@ -30,7 +30,7 @@ configurations {
 
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
-    modImplementation "maven.modrinth:rubidium:0.7.0"
+    //modImplementation "maven.modrinth:rubidium:0.7.0"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
