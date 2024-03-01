@@ -181,11 +181,11 @@ public class PhotoModeScreen extends Screen {
                 client.setScreen(new GameMenuScreen(true))).position(0, 0).width(20).build());
 
         addDrawableChild(ButtonWidget.builder(Text.of("<"), (button) -> {
-            cameraRotationGoal--;
+            cameraRotationGoal++;
             cameraRotationGoal = (int)cameraRotationGoal;
         }).position(width / 2 - 49 - 2 - 20, height - 20).width(20).build());
         addDrawableChild(ButtonWidget.builder(Text.of(">"), (button) -> {
-            cameraRotationGoal++;
+            cameraRotationGoal--;
             cameraRotationGoal = (int)cameraRotationGoal;
         }).position(width / 2 + 49 + 2, height - 20).width(20).build());
 
