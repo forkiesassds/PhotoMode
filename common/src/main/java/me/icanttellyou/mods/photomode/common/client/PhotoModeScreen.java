@@ -181,11 +181,11 @@ public class PhotoModeScreen extends Screen {
             client.setScreen(new GameMenuScreen(true));
         }));
         this.addDrawableChild(new ButtonWidget(width / 2 - 49 - 2 - 20, height - 20, 20, 20, Text.of("<"), (button) -> {
-            this.cameraRotationGoal -= 1.0f;
+            this.cameraRotationGoal += 1.0f;
             this.cameraRotationGoal = (int)this.cameraRotationGoal;
         }));
         this.addDrawableChild(new ButtonWidget(width / 2 + 49 + 2, height - 20, 20, 20, Text.of(">"), (button) -> {
-            this.cameraRotationGoal += 1.0f;
+            this.cameraRotationGoal -= 1.0f;
             this.cameraRotationGoal = (int)this.cameraRotationGoal;
         }));
 
