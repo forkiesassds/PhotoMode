@@ -10,7 +10,9 @@
     "MixinGameRenderer",
     "MixinRenderSystem",
     "MixinWorldRenderer",
-    "compat.MixinDefaultChunkRenderer"
+    "MixinWorldRendererVanilla",
+    "compat.MixinDefaultChunkRenderer",
+    "compat.MixinSodiumWorldRenderer"
   ],
   "injectors": {
     "defaultRequire": 1

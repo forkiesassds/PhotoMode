@@ -1,0 +1,6 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.icanttellyou.mods.photomode.neoforge.mixin",
+  "plugin": "me.icanttellyou.mods.photomode.neoforge.mixin.PhotoModeMixinPluginNeoForge"
+}
