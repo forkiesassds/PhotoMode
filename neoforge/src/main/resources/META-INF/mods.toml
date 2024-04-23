@@ -20,7 +20,7 @@ Ported with permission from Better than Adventure!
 [[dependencies.photomode]]
 modId = "neoforge"
 mandatory = true
-versionRange = "[20.2,)"
+versionRange = "[20.2.84,)"
 ordering = "NONE"
 side = "CLIENT"
 
