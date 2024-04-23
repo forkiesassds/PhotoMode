@@ -1,6 +1,0 @@
-{
-  "required": true,
-  "minVersion": "0.8",
-  "package": "me.icanttellyou.mods.photomode.fabric.mixin",
-  "plugin": "me.icanttellyou.mods.photomode.fabric.mixin.PhotoModeMixinPluginFabric"
-}

@@ -1,21 +1,34 @@
-package me.icanttellyou.mods.photomode.fabric.mixin;
+package me.icanttellyou.mods.photomode.common.mixin;
 
 import com.google.common.collect.ImmutableMap;
-import net.fabricmc.loader.api.FabricLoader;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
+import org.spongepowered.asm.service.MixinService;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
-public class PhotoModeMixinPluginFabric implements IMixinConfigPlugin {
+public class PhotoModeMixinPlugin implements IMixinConfigPlugin {
+    public static boolean HAS_SODIUM;
+
+    static {
+        try {
+            MixinService.getService().getBytecodeProvider().getClassNode("me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer");
+            HAS_SODIUM = true;
+        } catch (Throwable t) {
+            HAS_SODIUM = false;
+        }
+    }
+
     private static final Supplier<Boolean> TRUE = () -> true;
 
     private static final Map<String, Supplier<Boolean>> CONDITIONS = ImmutableMap.of(
-        "me.icanttellyou.mods.photomode.common.mixin.MixinWorldRendererVanilla", () -> FabricLoader.getInstance().isModLoaded("sodium")
+        "me.icanttellyou.mods.photomode.common.mixin.MixinWorldRendererVanilla", () -> !HAS_SODIUM,
+        "me.icanttellyou.mods.photomode.common.mixin.compat.MixinDefaultChunkRenderer", () -> HAS_SODIUM,
+        "me.icanttellyou.mods.photomode.common.mixin.compat.MixinSodiumWorldRenderer", () -> HAS_SODIUM
     );
 
     @Override

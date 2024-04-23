@@ -23,7 +23,7 @@ public class MixinSodiumWorldRenderer {
             if (lastCameraZoom != zoom) {
                 lastCameraZoom = zoom;
                 return true;
-            } else return dirty;
+            }
         }
 
         return dirty;
