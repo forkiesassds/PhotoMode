@@ -2,6 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "me.icanttellyou.mods.photomode.common.mixin",
+  "plugin": "me.icanttellyou.mods.photomode.common.mixin.PhotoModeMixinPlugin",
   "compatibilityLevel": "JAVA_17",
   "client": [
     "InvokerCamera",
@@ -10,7 +11,9 @@
     "MixinGameRenderer",
     "MixinRenderSystem",
     "MixinWorldRenderer",
-    "compat.MixinDefaultChunkRenderer"
+    "MixinWorldRendererVanilla",
+    "compat.MixinDefaultChunkRenderer",
+    "compat.MixinSodiumWorldRenderer"
   ],
   "injectors": {
     "defaultRequire": 1
