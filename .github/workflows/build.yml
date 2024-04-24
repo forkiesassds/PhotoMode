@@ -1,17 +1,10 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
-
 name: Build Mod
 
 on:
   push:
-    branches: [ "1.20", "1.19.4", "1.19.3", "1.19", "1.18" ]
+    branches: [ "1.20.5", "1.20.2", "1.20", "1.19.4", "1.19.3", "1.19", "1.18" ]
   pull_request:
-    branches: [ "1.19.4" ] #pull requests really should only target 1.19.4, anything else is not suitable
+    branches: [ "1.20.5" ] #pull requests really should only target 1.20.5, anything else is not suitable
   workflow_dispatch:
 
 permissions:
@@ -23,22 +16,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up JDK 17
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-      with:
-        arguments: build
+      run: ./gradlew build
+    - name: Get build hash
+      id: get-build-hash
+      run: |
+        id=$(echo ${{github.sha}} | cut -c 1-7)
+        echo ${{github.sha}} | cut -c 1-7 >> $GITHUB_OUTPUT
+    - name: Get branch name
+      id: get-branch
+      shell: bash
+      run: |
+        echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
     - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v3.1.1
+      uses: actions/upload-artifact@v4.3.3
       with:
-        # Artifact name
-        name: PhotoMode-${{ github.sha }}
-        # A file, directory or wildcard pattern that describes what to upload
+        name: PhotoMode-${{steps.get-branch.outputs.branch}}-${{steps.get-build-hash.outputs.id}}
         path: |
          forge/build/libs/* 
          fabric/build/libs/*
