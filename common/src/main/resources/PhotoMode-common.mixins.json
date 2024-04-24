@@ -5,7 +5,6 @@
   "plugin": "me.icanttellyou.mods.photomode.common.mixin.PhotoModeMixinPlugin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "InvokerCamera",
     "MixinCamera",
     "MixinFrustum",
     "MixinGameRenderer",
