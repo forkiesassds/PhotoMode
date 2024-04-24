@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(SodiumWorldRenderer.class)
-public class MixinSodiumWorldRenderer {
+public abstract class MixinSodiumWorldRenderer {
     @Unique
     MinecraftClient client = MinecraftClient.getInstance();
 

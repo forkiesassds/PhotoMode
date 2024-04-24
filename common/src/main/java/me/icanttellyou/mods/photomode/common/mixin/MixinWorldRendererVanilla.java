@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = WorldRenderer.class, priority = 999)
-public class MixinWorldRendererVanilla {
+public abstract class MixinWorldRendererVanilla {
     @Unique
     MinecraftClient client = MinecraftClient.getInstance();
 
