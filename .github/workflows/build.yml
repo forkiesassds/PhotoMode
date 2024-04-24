@@ -29,8 +29,7 @@ jobs:
     - name: Get build hash
       id: get-build-hash
       run: |
-        id=$(echo ${{github.sha}} | cut -c 1-7)
-        echo ${{github.sha}} | cut -c 1-7 >> $GITHUB_OUTPUT
+        echo "id=$(echo ${{github.sha}} | cut -c 1-7)" >> $GITHUB_OUTPUT
     - name: Get branch name
       id: get-branch
       shell: bash
