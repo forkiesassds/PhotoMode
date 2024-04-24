@@ -22,9 +22,12 @@ public abstract class MixinCamera {
     private void injectUpdate(BlockView area, Entity focusedEntity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo ci) {
         if (client.currentScreen instanceof PhotoModeScreen) {
             this.thirdPerson = ((PhotoModeScreen)client.currentScreen).playerVisible;
-            ((InvokerCamera) ((Camera)(Object)this)).invokeSetRotation(45.0f + 45.0f * ((PhotoModeScreen)client.currentScreen).getRotation(tickDelta), ((PhotoModeScreen)client.currentScreen).getTilt(tickDelta));
+            this.setRotation(45.0f + 45.0f * ((PhotoModeScreen)client.currentScreen).getRotation(tickDelta), ((PhotoModeScreen)client.currentScreen).getTilt(tickDelta));
         }
     }
+
+    @Shadow
+    protected abstract void setRotation(float yaw, float pitch);
 }
 
 

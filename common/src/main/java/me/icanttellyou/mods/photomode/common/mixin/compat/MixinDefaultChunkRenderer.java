@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(DefaultChunkRenderer.class)
-public class MixinDefaultChunkRenderer {
+public abstract class MixinDefaultChunkRenderer {
     @Inject(method = "getVisibleFaces", at = @At("HEAD"), remap = false, cancellable = true)
     private static void photoMode$sodium05x$getVisibleFaces(int originX, int originY, int originZ, int chunkX, int chunkY, int chunkZ, CallbackInfoReturnable<Integer> cir) {
         if (MinecraftClient.getInstance().currentScreen instanceof PhotoModeScreen)
