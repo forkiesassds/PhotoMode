@@ -17,20 +17,20 @@ public class PhotoModeScreen extends Screen {
     private float cameraZoom = 1.0f;
     private float cameraTilt = 30.0f;
     private float cameraFog = 1.0f;
-    private float cametaPanX = 0.0f;
-    private float cametaPanY = 0.0f;
+    private float cameraPanX = 0.0f;
+    private float cameraPanY = 0.0f;
     private float lastCameraRotation = 0.0f;
     private float lastCameraZoom = 1.0f;
     private float lastCameraTilt = 30.0f;
     private float lastCameraFog = 1.0f;
-    private float lastCametaPanX = 0.0f;
-    private float lastCametaPanY = 0.0f;
+    private float lastCameraPanX = 0.0f;
+    private float lastCameraPanY = 0.0f;
     private float cameraRotationGoal = 0.0f;
     private float cameraZoomGoal = 1.0f;
     private float cameraTiltGoal = 30.0f;
     private float cameraFogGoal = 1.0f;
-    private float cametaPanXGoal = 0.0f;
-    private float cametaPanYGoal = 0.0f;
+    private float cameraPanXGoal = 0.0f;
+    private float cameraPanYGoal = 0.0f;
     private float lastPanXEnd;
     private float lastPanYEnd;
     private float lastRotationEnd;
@@ -114,28 +114,27 @@ public class PhotoModeScreen extends Screen {
                     }
                 }
 
-                lastCameraFog = lastCameraZoom;
-                //FIXME: change this to be more like the other goal updaters as soon as i get tick delta working in rendersystem
+                lastCameraFog = cameraFog;
                 if (cameraFog != cameraFogGoal) {
-                    cameraFog += (cameraFogGoal - cameraFog) * 0.02f + (cameraFogGoal - cameraFog) * 0.02f * delta;
+                    cameraFog += (cameraFogGoal - cameraFog) * 0.02f;
                     if (Math.abs(cameraFog - cameraFogGoal) < 5.0E-5f) {
                         cameraFog = cameraFogGoal;
                     }
                 }
 
-                lastCametaPanX = cametaPanX;
-                if (cametaPanX != cametaPanXGoal) {
-                    cametaPanX += (cametaPanXGoal - cametaPanX) * 0.4F;
-                    if (Math.abs(cametaPanX - cametaPanXGoal) < 0.01F) {
-                        cametaPanX = cametaPanXGoal;
+                lastCameraPanX = cameraPanX;
+                if (cameraPanX != cameraPanXGoal) {
+                    cameraPanX += (cameraPanXGoal - cameraPanX) * 0.4F;
+                    if (Math.abs(cameraPanX - cameraPanXGoal) < 0.01F) {
+                        cameraPanX = cameraPanXGoal;
                     }
                 }
 
-                lastCametaPanY = cametaPanY;
-                if (cametaPanY != cametaPanYGoal) {
-                    cametaPanY += (cametaPanYGoal - cametaPanY) * 0.4F;
-                    if (Math.abs(cametaPanY - cametaPanYGoal) < 0.01F) {
-                        cametaPanY = cametaPanYGoal;
+                lastCameraPanY = cameraPanY;
+                if (cameraPanY != cameraPanYGoal) {
+                    cameraPanY += (cameraPanYGoal - cameraPanY) * 0.4F;
+                    if (Math.abs(cameraPanY - cameraPanYGoal) < 0.01F) {
+                        cameraPanY = cameraPanYGoal;
                     }
                 }
 
@@ -151,8 +150,8 @@ public class PhotoModeScreen extends Screen {
 
     private void initWidgets() {
         addDrawableChild(centerScreen = new ButtonWidget(width - 150, 0, 150, 20, new TranslatableText("gui.photomode.centerScreen"), (button) -> {
-            cametaPanXGoal = 0.0F;
-            cametaPanYGoal = 0.0F;
+            cameraPanXGoal = 0.0F;
+            cameraPanYGoal = 0.0F;
             cameraRotationGoal = 0.0F;
         }));
 
@@ -208,7 +207,7 @@ public class PhotoModeScreen extends Screen {
         fogSlider.setText(new TranslatableText("gui.photomode.fog", (int)(fogSlider.value * 100.0f)));
         tiltSlider.setText(new TranslatableText("gui.photomode.tilt", (int)(tiltSlider.value * 90.0f) == 30 ? new TranslatableText("gui.photomode.default") : (int)(tiltSlider.value * 90.0f)).append(" ").append((int)(tiltSlider.value * 90.0f) == 30 ? Text.of("") : new TranslatableText("gui.photomode.degrees")));
         showPlayer.setMessage(new TranslatableText("gui.photomode.showPlayer", ScreenTexts.onOrOff(playerVisible)));
-        centerScreen.active = (cametaPanX != 0.0F || cametaPanY != 0.0F || cameraRotation != 0.0F) && (cametaPanXGoal != 0.0F || cametaPanYGoal != 0.0F || cameraRotationGoal != 0.0F);
+        centerScreen.active = (cameraPanX != 0.0F || cameraPanY != 0.0F || cameraRotation != 0.0F) && (cameraPanXGoal != 0.0F || cameraPanYGoal != 0.0F || cameraRotationGoal != 0.0F);
     }
 
     @Override
@@ -227,8 +226,8 @@ public class PhotoModeScreen extends Screen {
             if (button == 0) {
                 assert client != null;
                 float div = (float) Math.pow(2.0, cameraZoom) / client.options.guiScale;
-                cametaPanXGoal = lastPanXEnd + (float) (mouseX - initMouseX) / div;
-                cametaPanYGoal = lastPanYEnd + (float) (mouseY - initMouseY) / div;
+                cameraPanXGoal = lastPanXEnd + (float) (mouseX - initMouseX) / div;
+                cameraPanYGoal = lastPanYEnd + (float) (mouseY - initMouseY) / div;
             } else {
                 cameraRotationGoal = lastRotationEnd + (float) (mouseX - initMouseX) / 128.0F;
             }
@@ -249,8 +248,8 @@ public class PhotoModeScreen extends Screen {
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         if (!super.mouseReleased(mouseX, mouseY, button)) {
-            lastPanXEnd = cametaPanX;
-            lastPanYEnd = cametaPanY;
+            lastPanXEnd = cameraPanX;
+            lastPanYEnd = cameraPanY;
             lastRotationEnd = cameraRotation;
         }
         return true;
@@ -268,17 +267,16 @@ public class PhotoModeScreen extends Screen {
         return lastCameraTilt + (cameraTilt - lastCameraTilt) * delta;
     }
 
-    //FIXME: can't seem to get the tick delta working in the way i have set up my mixins
-    public float getFog() {
-        return lastCameraFog + (cameraFog - lastCameraFog);
+    public float getFog(float delta) {
+        return lastCameraFog + (cameraFog - lastCameraFog) * delta;
     }
 
     public float getPanX(float delta) {
-        return lastCametaPanX + (cametaPanX - lastCametaPanX) * delta;
+        return lastCameraPanX + (cameraPanX - lastCameraPanX) * delta;
     }
 
     public float getPanY(float delta) {
-        return lastCametaPanY + (cametaPanY - lastCametaPanY) * delta;
+        return lastCameraPanY + (cameraPanY - lastCameraPanY) * delta;
     }
 
     @Override

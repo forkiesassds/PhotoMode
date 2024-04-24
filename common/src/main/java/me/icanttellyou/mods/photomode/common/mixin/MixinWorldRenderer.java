@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(WorldRenderer.class)
-public class MixinWorldRenderer {
+public abstract class MixinWorldRenderer {
     @Unique
     MinecraftClient client = MinecraftClient.getInstance();
 
