@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(RegionChunkRenderer.class)
-public class MixinRegionChunkRenderer {
+public abstract class MixinRegionChunkRenderer {
     @ModifyVariable(method = "buildDrawBatches", at = @At("STORE"), remap = false)
     private ChunkRenderBounds injectBuildDrawBatches(ChunkRenderBounds chunkRenderBounds) {
         if (MinecraftClient.getInstance().currentScreen instanceof PhotoModeScreen) {
