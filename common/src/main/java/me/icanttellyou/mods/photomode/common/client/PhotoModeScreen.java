@@ -1,12 +1,16 @@
 package me.icanttellyou.mods.photomode.common.client;
 
+import me.icanttellyou.mods.photomode.common.mixin.AccessGameRenderer;
+import me.icanttellyou.mods.photomode.common.mixin.MixinGameRenderer;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.PostEffectProcessor;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.util.ScreenshotRecorder;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 
@@ -43,6 +47,8 @@ public class PhotoModeScreen extends Screen {
     private boolean isTakingScreenshot = false;
     private final boolean wasHudHidden = MinecraftClient.getInstance().options.hudHidden;
     private final boolean wasChunkCullingEnabled = MinecraftClient.getInstance().chunkCullingEnabled;
+
+    private int currentShader = 0;
 
     ButtonWidget centerScreen;
     ButtonWidget showPlayer;
@@ -150,6 +156,23 @@ public class PhotoModeScreen extends Screen {
     @Override
     public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {}
 
+    public void cycleShader() {
+        assert client != null;
+
+        if (client.getCameraEntity() instanceof PlayerEntity) {
+            if (client.gameRenderer.getPostProcessor() != null) {
+                client.gameRenderer.getPostProcessor().close();
+            }
+
+            currentShader = (currentShader + 1) % (PhotoModeUtils.SHADER_PROGRAM_COUNT + 1);
+            if (currentShader == PhotoModeUtils.SHADER_PROGRAM_COUNT) {
+                ((AccessGameRenderer) client.gameRenderer).photoMode$setPostProcessor(null);
+            } else {
+                ((AccessGameRenderer) client.gameRenderer).photoMode$loadPostProcessor(PhotoModeUtils.SHADER_PROGRAMS[currentShader]);
+            }
+        }
+    }
+
     private void initWidgets() {
         addDrawableChild(centerScreen = ButtonWidget.builder(Text.translatable("gui.photomode.centerScreen"), (button) -> {
             cameraPanXGoal = 0.0F;
@@ -181,6 +204,12 @@ public class PhotoModeScreen extends Screen {
 
         addDrawableChild(ButtonWidget.builder(Text.of("X"), (button) ->
                 client.setScreen(new GameMenuScreen(true))).position(0, 0).width(20).build());
+
+        addDrawableChild(ButtonWidget.builder(Text.of("test"), (button) -> { cycleShader();
+            PostEffectProcessor postEffectProcessor = this.client.gameRenderer.getPostProcessor();
+            if (postEffectProcessor != null) {
+                button.setMessage(Text.of("Shader: " + postEffectProcessor.getName()));
+            } }).position(0, 20).build());
 
         addDrawableChild(ButtonWidget.builder(Text.of("<"), (button) -> {
             cameraRotationGoal++;
