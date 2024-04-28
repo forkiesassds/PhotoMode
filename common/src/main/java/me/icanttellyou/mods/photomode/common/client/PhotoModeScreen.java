@@ -12,6 +12,7 @@ import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.ScreenshotRecorder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.ScreenTexts;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 
 public class PhotoModeScreen extends Screen {
@@ -37,6 +38,7 @@ public class PhotoModeScreen extends Screen {
     private float lastPanXEnd;
     private float lastPanYEnd;
     private float lastRotationEnd;
+    public float shaderIntensity = 1.0F;
     private long lastGuiUpdateTime = 0L;
     private double initMouseX;
     private double initMouseY;
@@ -52,9 +54,11 @@ public class PhotoModeScreen extends Screen {
 
     ButtonWidget centerScreen;
     ButtonWidget showPlayer;
+    ButtonWidget shader;
     PhotoModeSliderWidget tiltSlider;
     PhotoModeSliderWidget timeSlider;
     PhotoModeSliderWidget fogSlider;
+    PhotoModeSliderWidget intensitySlider;
 
     public PhotoModeScreen(Text title) {
         super(title);
@@ -94,6 +98,10 @@ public class PhotoModeScreen extends Screen {
                 assert client.world != null;
                 client.world.setTimeOfDay(selectedDay + selectedTime);
                 client.gameRenderer.tick();
+            }
+
+            if (intensitySlider.isDragging) {
+                shaderIntensity = (float) intensitySlider.value;
             }
 
             long currentTime = System.currentTimeMillis();
@@ -174,7 +182,7 @@ public class PhotoModeScreen extends Screen {
                 ((AccessGameRenderer) gr).photoMode$setPostProcessor(null);
                 currentShader = 0;
             } else {
-                PhotoModeUtils.loadPMPostProcessor(gr, PhotoModeUtils.SHADER_PROGRAMS[currentShader]);
+                PhotoModeUtils.loadPMPostProcessor(this, gr, PhotoModeUtils.SHADER_PROGRAMS[currentShader]);
             }
         }
     }
@@ -199,6 +207,15 @@ public class PhotoModeScreen extends Screen {
             addDrawableChild(fogSlider);
         }
 
+        addDrawableChild(shader = ButtonWidget.builder(Text.translatable("gui.photomode.shader", Text.translatable("gui.photomode.none")), (button) -> {
+            cycleShader();
+            this.intensitySlider.active = client.gameRenderer.getPostProcessor() != null;
+        }).position(width - 150, 0).build());
+
+        intensitySlider = new PhotoModeSliderWidget(width - 150, 0, 150, 20, Text.translatable("gui.photomode.intensity"), shaderIntensity);
+        intensitySlider.active = false;
+        addDrawableChild(intensitySlider);
+
         int i = 0;
         for (Object button : children()) {
             ((ClickableWidget)button).setPosition(((ClickableWidget) button).getX(), i++ * 21);
@@ -212,12 +229,6 @@ public class PhotoModeScreen extends Screen {
             onClose();
             client.setScreen(new GameMenuScreen(true));
         }).position(0, 0).width(20).build());
-
-        addDrawableChild(ButtonWidget.builder(Text.of("test"), (button) -> { cycleShader();
-            PostEffectProcessor postEffectProcessor = this.client.gameRenderer.getPostProcessor();
-            if (postEffectProcessor != null) {
-                button.setMessage(Text.of("Shader: " + postEffectProcessor.getName()));
-            } }).position(0, 20).build());
 
         addDrawableChild(ButtonWidget.builder(Text.of("<"), (button) -> {
             cameraRotationGoal++;
@@ -247,6 +258,21 @@ public class PhotoModeScreen extends Screen {
         fogSlider.setText(Text.translatable("gui.photomode.fog", (int)(fogSlider.value * 100.0f)));
         tiltSlider.setText(Text.translatable("gui.photomode.tilt", (int)(tiltSlider.value * 90.0f) == 30 ? Text.translatable("gui.photomode.default") : (int)(tiltSlider.value * 90.0f)).append(ScreenTexts.SPACE).append((int)(tiltSlider.value * 90.0f) == 30 ? ScreenTexts.EMPTY : Text.translatable("gui.photomode.degrees")));
         showPlayer.setMessage(Text.translatable("gui.photomode.showPlayer", ScreenTexts.onOrOff(playerVisible)));
+
+        assert client != null;
+        PostEffectProcessor postEffectProcessor = client.gameRenderer.getPostProcessor();
+        MutableText shaderName = Text.translatable("gui.photomode.none");
+        if (postEffectProcessor != null) {
+            String[] splitPath = postEffectProcessor.getName().split("/");
+
+            String name = splitPath[splitPath.length - 1];
+            name = name.substring(0, name.indexOf(".")).toUpperCase();
+            shaderName = (MutableText) Text.of(name);
+        }
+
+        shader.setMessage(Text.translatable("gui.photomode.shader", shaderName));
+        intensitySlider.setText(Text.translatable("gui.photomode.intensity", (int)(intensitySlider.value * 100.0F)));
+
         centerScreen.active = (cameraPanX != 0.0F || cameraPanY != 0.0F || cameraRotation != 0.0F) && (cameraPanXGoal != 0.0F || cameraPanYGoal != 0.0F || cameraRotationGoal != 0.0F);
     }
 

@@ -10,6 +10,7 @@ import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class PhotoModeUtils {
     public static final Logger LOGGER = LogUtils.getLogger();
@@ -35,14 +36,14 @@ public class PhotoModeUtils {
         client = MinecraftClient.getInstance();
     }
 
-    public static void loadPMPostProcessor(GameRenderer gr, Identifier id) {
+    public static void loadPMPostProcessor(PhotoModeScreen photoModeScreen, GameRenderer gr, Identifier id) {
         if (gr.getPostProcessor() != null) {
             gr.getPostProcessor().close();
         }
 
         try {
-            ((AccessGameRenderer) gr).photoMode$setPostProcessor(
-                    new PostEffectProcessor(client.getTextureManager(), client.getResourceManager(), client.getFramebuffer(), id));
+            PhotoModePostEffectProcessor processor = new PhotoModePostEffectProcessor(photoModeScreen, client.getTextureManager(), client.getResourceManager(), client.getFramebuffer(), id);
+            ((AccessGameRenderer) gr).photoMode$setPostProcessor(processor);
             gr.getPostProcessor().setupDimensions(client.getWindow().getFramebufferWidth(), client.getWindow().getFramebufferHeight());
             ((AccessGameRenderer) gr).photoMode$setPostProcessorEnabled(true);
         } catch (IOException ioE) {
@@ -51,6 +52,30 @@ public class PhotoModeUtils {
         } catch (JsonSyntaxException jSE) {
             LOGGER.warn("Failed to parse shader: {}", id, jSE);
             ((AccessGameRenderer) gr).photoMode$setPostProcessorEnabled(false);
+        }
+    }
+
+    /**
+     * Corrects wrongly passed identifier path (a/b/namespace:c.json) to (namespace:a/b/c.json).
+     * @param path Path to fix
+     * @return A {@link Identifier} with correct namespace and path
+     */
+    public static Identifier correctIdentifier(String path) {
+        String[] splitPath = path.split("/"); //a, b, namespace:c.json
+
+        int lastDirColon = splitPath[splitPath.length - 1].indexOf(':');
+
+        if (lastDirColon == -1) {
+            return new Identifier(path);
+        } else {
+            String[] lastDir = splitPath[splitPath.length - 1].split("\\."); //namespace:c, json
+            if (lastDir.length == 1) {
+                throw new IllegalArgumentException("Path contains no file extension?");
+            }
+
+            Identifier id = new Identifier(lastDir[0]); //namespace:c, corrects c -> minecraft:c
+            return new Identifier(id.getNamespace(),
+                    String.join("/", Arrays.copyOfRange(splitPath, 0, splitPath.length - 1)) + "/" + id.getPath() + "." + lastDir[1]);
         }
     }
 }

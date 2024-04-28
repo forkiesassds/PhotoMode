@@ -6,9 +6,12 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "AccessGameRenderer",
+    "AccessPostEffectPass",
+    "AccessPostEffectProcessor",
     "MixinCamera",
     "MixinFrustum",
     "MixinGameRenderer",
+    "MixinJsonEffectShaderProgram",
     "MixinRenderSystem",
     "MixinWorldRenderer",
     "MixinWorldRendererVanilla",
