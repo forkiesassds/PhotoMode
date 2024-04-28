@@ -6,28 +6,28 @@ in vec2 oneTexel;
 uniform sampler2D DiffuseSampler;
 uniform sampler2D DiffuseDepthSampler;
 
-uniform float intensity;
+uniform float Intensity;
 
 out vec4 fragColor;
 
 float getDepth(vec2 coord) {
-	return texture(DiffuseDepthSampler, coord).r;
+    return texture(DiffuseDepthSampler, coord).r;
 }
 
 void main() {
-	vec3 color = texture(DiffuseSampler, texCoord).rgb;
-	
-	float outline = 0.0;
-	float size = 4.0 * intensity;
-	
-	outline += clamp(getDepth(texCoord) - getDepth(texCoord + vec2(size * oneTexel.x, 0)), 0.0, 1.0);
-	outline += clamp(getDepth(texCoord) - getDepth(texCoord - vec2(size * oneTexel.x, 0)), 0.0, 1.0);
-	outline += clamp(getDepth(texCoord) - getDepth(texCoord + vec2(0, size * oneTexel.y)), 0.0, 1.0);
-	outline += clamp(getDepth(texCoord) - getDepth(texCoord - vec2(0, size * oneTexel.y)), 0.0, 1.0);
-	
-	outline = 1.0 - clamp(outline * 512, 0.0, 1.0);
-	
-	color *= outline;
+    vec3 color = texture(DiffuseSampler, texCoord).rgb;
 
-	fragColor = vec4(color, 1.0);
+    float outline = 0.0;
+    float size = 4.0 * Intensity;
+
+    outline += clamp(getDepth(texCoord) - getDepth(texCoord + vec2(size * oneTexel.x, 0)), 0.0, 1.0);
+    outline += clamp(getDepth(texCoord) - getDepth(texCoord - vec2(size * oneTexel.x, 0)), 0.0, 1.0);
+    outline += clamp(getDepth(texCoord) - getDepth(texCoord + vec2(0, size * oneTexel.y)), 0.0, 1.0);
+    outline += clamp(getDepth(texCoord) - getDepth(texCoord - vec2(0, size * oneTexel.y)), 0.0, 1.0);
+
+    outline = 1.0 - clamp(outline * 512, 0.0, 1.0);
+
+    color *= outline;
+
+    fragColor = vec4(color, 1.0);
 }

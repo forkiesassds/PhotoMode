@@ -1,7 +1,6 @@
 package me.icanttellyou.mods.photomode.common.client;
 
 import me.icanttellyou.mods.photomode.common.mixin.AccessGameRenderer;
-import me.icanttellyou.mods.photomode.common.mixin.MixinGameRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.PostEffectProcessor;
 import net.minecraft.client.gui.DrawContext;
@@ -9,6 +8,7 @@ import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
+import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.ScreenshotRecorder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.ScreenTexts;
@@ -65,8 +65,11 @@ public class PhotoModeScreen extends Screen {
         super.init();
         initWidgets();
         updateGui();
-        MinecraftClient.getInstance().options.hudHidden = true;
-        MinecraftClient.getInstance().chunkCullingEnabled = false;
+
+        assert client != null;
+
+        client.options.hudHidden = true;
+        client.chunkCullingEnabled = false;
     }
 
     @Override
@@ -160,15 +163,18 @@ public class PhotoModeScreen extends Screen {
         assert client != null;
 
         if (client.getCameraEntity() instanceof PlayerEntity) {
-            if (client.gameRenderer.getPostProcessor() != null) {
-                client.gameRenderer.getPostProcessor().close();
+            GameRenderer gr = client.gameRenderer;
+
+            if (gr.getPostProcessor() != null) {
+                gr.getPostProcessor().close();
             }
 
             currentShader = (currentShader + 1) % (PhotoModeUtils.SHADER_PROGRAM_COUNT + 1);
-            if (currentShader == PhotoModeUtils.SHADER_PROGRAM_COUNT) {
-                ((AccessGameRenderer) client.gameRenderer).photoMode$setPostProcessor(null);
+            if (hasControlDown() || currentShader == PhotoModeUtils.SHADER_PROGRAM_COUNT) {
+                ((AccessGameRenderer) gr).photoMode$setPostProcessor(null);
+                currentShader = 0;
             } else {
-                ((AccessGameRenderer) client.gameRenderer).photoMode$loadPostProcessor(PhotoModeUtils.SHADER_PROGRAMS[currentShader]);
+                PhotoModeUtils.loadPMPostProcessor(gr, PhotoModeUtils.SHADER_PROGRAMS[currentShader]);
             }
         }
     }
@@ -202,8 +208,10 @@ public class PhotoModeScreen extends Screen {
         addDrawableChild(ButtonWidget.builder(Text.translatable("gui.photomode.takescreenshot"), (button) ->
                 isTakingScreenshot = true).position(width / 2 - 49, height - 20).width(98).build());
 
-        addDrawableChild(ButtonWidget.builder(Text.of("X"), (button) ->
-                client.setScreen(new GameMenuScreen(true))).position(0, 0).width(20).build());
+        addDrawableChild(ButtonWidget.builder(Text.of("X"), (button) -> {
+            onClose();
+            client.setScreen(new GameMenuScreen(true));
+        }).position(0, 0).width(20).build());
 
         addDrawableChild(ButtonWidget.builder(Text.of("test"), (button) -> { cycleShader();
             PostEffectProcessor postEffectProcessor = this.client.gameRenderer.getPostProcessor();
@@ -237,7 +245,7 @@ public class PhotoModeScreen extends Screen {
     private void updateGui() {
         timeSlider.setText(Text.translatable("gui.photomode.time", timeSlider.value == 0.0f ? Text.translatable("gui.photomode.default") : (long)(timeSlider.value * 24000.0f)));
         fogSlider.setText(Text.translatable("gui.photomode.fog", (int)(fogSlider.value * 100.0f)));
-        tiltSlider.setText(Text.translatable("gui.photomode.tilt", (int)(tiltSlider.value * 90.0f) == 30 ? Text.translatable("gui.photomode.default") : (int)(tiltSlider.value * 90.0f)).append(" ").append((int)(tiltSlider.value * 90.0f) == 30 ? Text.of("") : Text.translatable("gui.photomode.degrees")));
+        tiltSlider.setText(Text.translatable("gui.photomode.tilt", (int)(tiltSlider.value * 90.0f) == 30 ? Text.translatable("gui.photomode.default") : (int)(tiltSlider.value * 90.0f)).append(ScreenTexts.SPACE).append((int)(tiltSlider.value * 90.0f) == 30 ? ScreenTexts.EMPTY : Text.translatable("gui.photomode.degrees")));
         showPlayer.setMessage(Text.translatable("gui.photomode.showPlayer", ScreenTexts.onOrOff(playerVisible)));
         centerScreen.active = (cameraPanX != 0.0F || cameraPanY != 0.0F || cameraRotation != 0.0F) && (cameraPanXGoal != 0.0F || cameraPanYGoal != 0.0F || cameraRotationGoal != 0.0F);
     }
@@ -314,11 +322,17 @@ public class PhotoModeScreen extends Screen {
     @Override
     public void close() {
         super.close();
+        onClose();
+    }
+
+    private void onClose() {
         assert client != null;
         assert client.world != null;
+
         client.world.setTimeOfDay(oldTime);
-        MinecraftClient.getInstance().options.hudHidden = wasHudHidden;
-        MinecraftClient.getInstance().chunkCullingEnabled = wasChunkCullingEnabled;
+        client.options.hudHidden = wasHudHidden;
+        client.chunkCullingEnabled = wasChunkCullingEnabled;
+        client.gameRenderer.disablePostProcessor();
     }
 }
 
