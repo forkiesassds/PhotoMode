@@ -226,7 +226,7 @@ public class PhotoModeScreen extends Screen {
                 isTakingScreenshot = true).position(width / 2 - 49, height - 20).width(98).build());
 
         addDrawableChild(ButtonWidget.builder(Text.of("X"), (button) -> {
-            onClose();
+            onPhotoModeClose();
             client.setScreen(new GameMenuScreen(true));
         }).position(0, 0).width(20).build());
 
@@ -348,10 +348,10 @@ public class PhotoModeScreen extends Screen {
     @Override
     public void close() {
         super.close();
-        onClose();
+        onPhotoModeClose();
     }
 
-    private void onClose() {
+    private void onPhotoModeClose() {
         assert client != null;
         assert client.world != null;
 
