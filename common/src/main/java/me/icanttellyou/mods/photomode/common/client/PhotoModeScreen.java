@@ -180,7 +180,7 @@ public class PhotoModeScreen extends Screen {
             currentShader = (currentShader + 1) % (PhotoModeUtils.SHADER_PROGRAM_COUNT + 1);
             if (hasControlDown() || currentShader == PhotoModeUtils.SHADER_PROGRAM_COUNT) {
                 ((AccessGameRenderer) gr).photoMode$setPostProcessor(null);
-                currentShader = 0;
+                currentShader = -1;
             } else {
                 PhotoModeUtils.loadPMPostProcessor(this, gr, PhotoModeUtils.SHADER_PROGRAMS[currentShader]);
             }
