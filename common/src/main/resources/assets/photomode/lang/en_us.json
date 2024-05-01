@@ -9,7 +9,7 @@
   "gui.photomode.default": "Default",
   "gui.photomode.none": "None",
   "gui.photomode.degrees": "degrees",
-  "gui.photomode.centerScreen": "Center Screen",
+  "gui.photomode.centerCamera": "Center Camera",
   "gui.photomode.showPlayer": "Show Player: %s",
   "gui.photomode.helpText": "Click and drag to move and rotate.",
   "photomode.shader.blur": "Blur",

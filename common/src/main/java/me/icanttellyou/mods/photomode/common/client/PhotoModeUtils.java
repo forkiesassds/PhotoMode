@@ -4,7 +4,6 @@ import com.google.gson.JsonSyntaxException;
 import com.mojang.logging.LogUtils;
 import me.icanttellyou.mods.photomode.common.mixin.AccessGameRenderer;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gl.PostEffectProcessor;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;

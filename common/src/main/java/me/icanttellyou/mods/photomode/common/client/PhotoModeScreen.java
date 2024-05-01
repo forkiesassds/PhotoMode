@@ -12,7 +12,6 @@ import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.ScreenshotRecorder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.ScreenTexts;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 
 public class PhotoModeScreen extends Screen {
@@ -50,7 +49,7 @@ public class PhotoModeScreen extends Screen {
     private final boolean wasHudHidden = MinecraftClient.getInstance().options.hudHidden;
     private final boolean wasChunkCullingEnabled = MinecraftClient.getInstance().chunkCullingEnabled;
 
-    private int currentShader = 0;
+    private int currentShader = -1;
 
     ButtonWidget centerScreen;
     ButtonWidget showPlayer;
@@ -74,6 +73,7 @@ public class PhotoModeScreen extends Screen {
 
         client.options.hudHidden = true;
         client.chunkCullingEnabled = false;
+        client.gameRenderer.setRenderHand(false);
     }
 
     @Override
@@ -188,7 +188,7 @@ public class PhotoModeScreen extends Screen {
     }
 
     private void initWidgets() {
-        addDrawableChild(centerScreen = ButtonWidget.builder(Text.translatable("gui.photomode.centerScreen"), (button) -> {
+        addDrawableChild(centerScreen = ButtonWidget.builder(Text.translatable("gui.photomode.centerCamera"), (button) -> {
             cameraPanXGoal = 0.0F;
             cameraPanYGoal = 0.0F;
             cameraRotationGoal = 0.0F;
@@ -213,7 +213,7 @@ public class PhotoModeScreen extends Screen {
         }).position(width - 150, 0).build());
 
         intensitySlider = new PhotoModeSliderWidget(width - 150, 0, 150, 20, Text.translatable("gui.photomode.intensity"), shaderIntensity);
-        intensitySlider.active = false;
+        intensitySlider.active = client.gameRenderer.getPostProcessor() != null;
         addDrawableChild(intensitySlider);
 
         int i = 0;
@@ -359,6 +359,7 @@ public class PhotoModeScreen extends Screen {
         client.options.hudHidden = wasHudHidden;
         client.chunkCullingEnabled = wasChunkCullingEnabled;
         client.gameRenderer.disablePostProcessor();
+        client.gameRenderer.setRenderHand(true);
     }
 }
 
