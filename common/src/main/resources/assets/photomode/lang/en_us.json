@@ -11,5 +11,15 @@
   "gui.photomode.degrees": "degrees",
   "gui.photomode.centerScreen": "Center Screen",
   "gui.photomode.showPlayer": "Show Player: %s",
-  "gui.photomode.helpText": "Click and drag to move and rotate."
+  "gui.photomode.helpText": "Click and drag to move and rotate.",
+  "photomode.shader.blur": "Blur",
+  "photomode.shader.distantblur": "Distant Blur",
+  "photomode.shader.eerie": "Eerie",
+  "photomode.shader.inverted": "Inverted",
+  "photomode.shader.outline": "Outline",
+  "photomode.shader.outline2": "Outline 2",
+  "photomode.shader.sepia": "Sepia",
+  "photomode.shader.silhouette": "Silhouette",
+  "photomode.shader.tiltshift": "Tiltshift",
+  "photomode.shader.vignette": "Vignette"
 }

@@ -261,13 +261,13 @@ public class PhotoModeScreen extends Screen {
 
         assert client != null;
         PostEffectProcessor postEffectProcessor = client.gameRenderer.getPostProcessor();
-        MutableText shaderName = Text.translatable("gui.photomode.none");
+        Text shaderName = Text.translatable("gui.photomode.none");
         if (postEffectProcessor != null) {
             String[] splitPath = postEffectProcessor.getName().split("/");
 
             String name = splitPath[splitPath.length - 1];
-            name = name.substring(0, name.indexOf(".")).toUpperCase();
-            shaderName = (MutableText) Text.of(name);
+            name = name.substring(0, name.indexOf("."));
+            shaderName = Text.translatable("photomode.shader." + name);
         }
 
         shader.setMessage(Text.translatable("gui.photomode.shader", shaderName));
