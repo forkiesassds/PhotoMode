@@ -2,6 +2,7 @@ package me.icanttellyou.mods.photomode.fabric;
 
 
 import me.icanttellyou.mods.photomode.common.client.PhotoModeScreen;
+import me.icanttellyou.mods.photomode.common.client.PhotoModeUtils;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -23,6 +24,7 @@ public class PhotoMode implements ClientModInitializer {
     );
     @Override
     public void onInitializeClient() {
+        PhotoModeUtils.init();
         ScreenEvents.AFTER_INIT.register(this::afterInitScreen);
     }
 
