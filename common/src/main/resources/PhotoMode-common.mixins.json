@@ -10,7 +10,6 @@
     "AccessPostEffectProcessor",
     "MixinCamera",
     "MixinGameRenderer",
-    "MixinJsonEffectShaderProgram",
     "MixinRenderSystem",
     "MixinWorldRenderer",
     "MixinWorldRendererVanilla",
