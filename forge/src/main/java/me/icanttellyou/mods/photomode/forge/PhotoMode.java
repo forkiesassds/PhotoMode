@@ -1,6 +1,7 @@
 package me.icanttellyou.mods.photomode.forge;
 
 import me.icanttellyou.mods.photomode.common.client.PhotoModeScreen;
+import me.icanttellyou.mods.photomode.common.client.PhotoModeUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
@@ -20,6 +21,7 @@ public class PhotoMode {
         "NostalgicPauseScreen" //used by nt 2.0 old pause screen tweak
     );
     public PhotoMode() {
+        PhotoModeUtils.init();
         MinecraftForge.EVENT_BUS.addListener(this::screenEventHandler);
     }
 
