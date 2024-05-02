@@ -2,7 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "me.icanttellyou.mods.photomode.common.mixin",
-  "plugin": "me.icanttellyou.mods.photomode.common.mixin.PhotoModeMixinPlugin",
+  "plugin": "me.icanttellyou.mods.photomode.common.mixin.PhotoModeCommonMixinPlugin",
   "compatibilityLevel": "JAVA_17",
   "client": [
     "AccessGameRenderer",
