@@ -1,18 +1,17 @@
 package me.icanttellyou.mods.photomode.common.client;
 
 import com.google.gson.JsonSyntaxException;
-import com.mojang.logging.LogUtils;
 import me.icanttellyou.mods.photomode.common.mixin.AccessGameRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.util.Identifier;
-import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.util.Arrays;
 
+import static me.icanttellyou.mods.photomode.common.PhotoModeCommon.LOGGER;
+
 public class PhotoModeUtils {
-    public static final Logger LOGGER = LogUtils.getLogger();
     private static MinecraftClient client;
 
     static final Identifier[] SHADER_PROGRAMS = new Identifier[] {
