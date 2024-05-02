@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(JsonEffectGlShader.class)
+@Mixin(JsonEffectGlShader.class, priority = 500)
 public class MixinJsonEffectShaderProgram {
     @Redirect(
             method = "<init>",
