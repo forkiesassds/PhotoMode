@@ -1,6 +1,7 @@
 package me.icanttellyou.mods.photomode.common.mixin;
 
 import com.google.common.collect.ImmutableMap;
+import me.icanttellyou.mods.photomode.common.PhotoModeCommon;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -21,6 +22,9 @@ public class PhotoModeMixinPlugin implements IMixinConfigPlugin {
         } catch (Throwable t) {
             HAS_SODIUM = false;
         }
+
+        if (HAS_SODIUM)
+            PhotoModeCommon.LOGGER.info("[PhotoMode] Detected Sodium or it's forks!");
     }
 
     private static final Supplier<Boolean> TRUE = () -> true;
