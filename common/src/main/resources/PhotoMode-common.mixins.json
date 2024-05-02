@@ -11,7 +11,6 @@
     "MixinCamera",
     "MixinFrustum",
     "MixinGameRenderer",
-    "MixinJsonEffectShaderProgram",
     "MixinRenderSystem",
     "MixinWorldRenderer",
     "MixinWorldRendererVanilla",

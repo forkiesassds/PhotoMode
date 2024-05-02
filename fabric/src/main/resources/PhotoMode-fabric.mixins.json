@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.icanttellyou.mods.photomode.fabric.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "MixinJsonEffectShaderProgram"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
