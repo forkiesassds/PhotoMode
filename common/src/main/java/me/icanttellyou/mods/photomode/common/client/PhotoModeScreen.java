@@ -253,7 +253,7 @@ public class PhotoModeScreen extends Screen {
     private void updateGui() {
         timeSlider.setText(Text.translatable("gui.photomode.time", timeSlider.value == 0.0f ? Text.translatable("gui.photomode.default") : (long)(timeSlider.value * 24000.0f)));
         fogSlider.setText(Text.translatable("gui.photomode.fog", (int)(fogSlider.value * 100.0f)));
-        tiltSlider.setText(Text.translatable("gui.photomode.tilt", (int)(tiltSlider.value * 90.0f) == 30 ? Text.translatable("gui.photomode.default") : (int)(tiltSlider.value * 90.0f)).append(ScreenTexts.SPACE).append((int)(tiltSlider.value * 90.0f) == 30 ? ScreenTexts.EMPTY : Text.translatable("gui.photomode.degrees")));
+        tiltSlider.setText(Text.translatable("gui.photomode.tilt", (int)(tiltSlider.value * 90.0f) == 30 ? Text.translatable("gui.photomode.default") : (int)(tiltSlider.value * 90.0f)).append(Text.of(" ")).append((int)(tiltSlider.value * 90.0f) == 30 ? ScreenTexts.EMPTY : Text.translatable("gui.photomode.degrees")));
         showPlayer.setMessage(Text.translatable("gui.photomode.showPlayer", ScreenTexts.onOrOff(playerVisible)));
 
         assert client != null;
