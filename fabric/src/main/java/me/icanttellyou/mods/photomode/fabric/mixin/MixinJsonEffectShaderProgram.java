@@ -1,4 +1,4 @@
-package me.icanttellyou.mods.photomode.common.mixin;
+package me.icanttellyou.mods.photomode.fabric.mixin;
 
 import me.icanttellyou.mods.photomode.common.client.PhotoModeUtils;
 import net.minecraft.client.gl.JsonEffectShaderProgram;

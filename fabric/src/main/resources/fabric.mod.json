@@ -18,7 +18,8 @@
     ]
   },
   "mixins": [
-    "PhotoMode-common.mixins.json"
+    "PhotoMode-common.mixins.json",
+    "PhotoMode-fabric.mixins.json"
   ],
 
   "depends": {
