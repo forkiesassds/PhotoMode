@@ -15,7 +15,7 @@ public class PhotoModeFabricMixinPlugin implements IMixinConfigPlugin {
     private static final Supplier<Boolean> TRUE = () -> true;
 
     private static final Map<String, Supplier<Boolean>> CONDITIONS = ImmutableMap.of(
-        "me.icanttellyou.mods.photomode.fabric.mixin.JsonEffectShaderProgram", () -> !(FabricLoader.getInstance().isModLoaded("satin")
+        "me.icanttellyou.mods.photomode.fabric.mixin.MixinJsonEffectShaderProgram", () -> !(FabricLoader.getInstance().isModLoaded("satin")
                         || FabricLoader.getInstance().isModLoaded("architectury"))
     );
 
