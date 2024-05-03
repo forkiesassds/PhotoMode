@@ -3,6 +3,7 @@ package me.icanttellyou.mods.photomode.common.mixin;
 import com.mojang.blaze3d.systems.RenderSystem;
 import me.icanttellyou.mods.photomode.common.client.PhotoModeScreen;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.ShaderEffect;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
@@ -11,6 +12,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(WorldRenderer.class)
@@ -65,4 +67,16 @@ public abstract class MixinWorldRenderer {
         return matrix4f;
     }
 
+
+    /**
+     * Fixes depth buffer being messed up in fabulous graphics... Somewhat, as depth information is not present for translucent surfaces.
+     * @param instance Effect processor
+     * @param tickDelta Tick delta
+     */
+    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gl/ShaderEffect;render(F)V", ordinal = 1))
+    private void photoMode$fixFabulousDepthSomewhat(ShaderEffect instance, float tickDelta) {
+        RenderSystem.depthMask(false);
+        instance.render(tickDelta);
+        RenderSystem.depthMask(true);
+    }
 }
