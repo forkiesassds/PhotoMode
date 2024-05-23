@@ -17,7 +17,7 @@ public abstract class MixinFrustum {
     @Inject(method = "coverBoxAroundSetPosition", at = @At("HEAD"), cancellable = true)
     private void photoMode$coverBoxAroundSetPosition(CallbackInfoReturnable<Frustum> cir) {
         if (photoMode$client.currentScreen instanceof PhotoModeScreen) {
-            float div = (float) Math.pow(2.0, ((PhotoModeScreen) this.photoMode$client.currentScreen).getZoom(photoMode$client.getTickDelta()));
+            float div = (float) Math.pow(2.0, ((PhotoModeScreen) this.photoMode$client.currentScreen).getZoom(photoMode$client.getRenderTickCounter().getTickDelta(true)));
             float width = photoMode$client.getWindow().getFramebufferWidth() / div;
             float height = photoMode$client.getWindow().getFramebufferHeight() / div;
             if (width <= 10 || height <= 10) {

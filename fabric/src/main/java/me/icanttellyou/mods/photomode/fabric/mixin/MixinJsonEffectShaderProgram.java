@@ -3,6 +3,7 @@ package me.icanttellyou.mods.photomode.fabric.mixin;
 import me.icanttellyou.mods.photomode.common.client.PhotoModeUtils;
 import net.minecraft.client.gl.JsonEffectShaderProgram;
 import net.minecraft.util.Identifier;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -12,9 +13,8 @@ public class MixinJsonEffectShaderProgram {
     @Redirect(
             method = "<init>",
             at = @At(
-                    value = "NEW",
-                    target = "net/minecraft/util/Identifier",
-                    ordinal = 0
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/util/Identifier;ofDefaultNamespace(Ljava/lang/String;)Lnet/minecraft/util/Identifier;"
             )
     )
     Identifier photoMode$correctInitIdentifier(String arg) {
@@ -24,9 +24,8 @@ public class MixinJsonEffectShaderProgram {
     @Redirect(
             method = "loadEffect",
             at = @At(
-                    value = "NEW",
-                    target = "net/minecraft/util/Identifier",
-                    ordinal = 0
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/util/Identifier;ofDefaultNamespace(Ljava/lang/String;)Lnet/minecraft/util/Identifier;"
             )
     )
     private static Identifier photoMode$correctLoadEffectIdentifier(String arg) {

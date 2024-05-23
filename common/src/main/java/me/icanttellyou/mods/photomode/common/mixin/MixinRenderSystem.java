@@ -15,7 +15,7 @@ public abstract class MixinRenderSystem {
         MinecraftClient client = MinecraftClient.getInstance();
 
         if (client.currentScreen instanceof PhotoModeScreen && value != Float.MAX_VALUE) {
-            float fogModifier = ((PhotoModeScreen) client.currentScreen).getFog(client.getTickDelta());
+            float fogModifier = ((PhotoModeScreen) client.currentScreen).getFog(client.getRenderTickCounter().getTickDelta(true));
             return value * fogModifier;
         }
         return value;
@@ -26,7 +26,7 @@ public abstract class MixinRenderSystem {
         MinecraftClient client = MinecraftClient.getInstance();
 
         if (client.currentScreen instanceof PhotoModeScreen) {
-            float fogModifier = ((PhotoModeScreen) client.currentScreen).getFog(client.getTickDelta());
+            float fogModifier = ((PhotoModeScreen) client.currentScreen).getFog(client.getRenderTickCounter().getTickDelta(true));
             return value * fogModifier;
         }
         return value;

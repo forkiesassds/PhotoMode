@@ -5,6 +5,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.math.MatrixStack;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
@@ -46,8 +47,8 @@ public abstract class MixinGameRenderer {
         }
     }
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;render(Lnet/minecraft/client/gui/DrawContext;F)V"))
-    private void photoMode$forceHideHud(InGameHud instance, DrawContext context, float tickDelta) {
-        if (!(client.currentScreen instanceof PhotoModeScreen)) instance.render(context, tickDelta);
+    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;render(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/client/render/RenderTickCounter;)V"))
+    private void photoMode$forceHideHud(InGameHud instance, DrawContext context, RenderTickCounter tickCounter) {
+        if (!(client.currentScreen instanceof PhotoModeScreen)) instance.render(context, tickCounter);
     }
 }

@@ -15,16 +15,16 @@ public class PhotoModeUtils {
     private static MinecraftClient client;
 
     static final Identifier[] SHADER_PROGRAMS = new Identifier[] {
-            new Identifier("photomode", "shaders/post/blur.json"),
-            new Identifier("photomode", "shaders/post/silhouette.json"),
-            new Identifier("photomode", "shaders/post/vignette.json"),
-            new Identifier("photomode", "shaders/post/tiltshift.json"),
-            new Identifier("photomode", "shaders/post/outline.json"),
-            new Identifier("photomode", "shaders/post/outline2.json"),
-            new Identifier("photomode", "shaders/post/eerie.json"),
-            new Identifier("photomode", "shaders/post/sepia.json"),
-            new Identifier("photomode", "shaders/post/inverted.json"),
-            new Identifier("photomode", "shaders/post/distantblur.json")
+            Identifier.of("photomode", "shaders/post/blur.json"),
+            Identifier.of("photomode", "shaders/post/silhouette.json"),
+            Identifier.of("photomode", "shaders/post/vignette.json"),
+            Identifier.of("photomode", "shaders/post/tiltshift.json"),
+            Identifier.of("photomode", "shaders/post/outline.json"),
+            Identifier.of("photomode", "shaders/post/outline2.json"),
+            Identifier.of("photomode", "shaders/post/eerie.json"),
+            Identifier.of("photomode", "shaders/post/sepia.json"),
+            Identifier.of("photomode", "shaders/post/inverted.json"),
+            Identifier.of("photomode", "shaders/post/distantblur.json")
     };
     static final int SHADER_PROGRAM_COUNT = SHADER_PROGRAMS.length;
 
@@ -64,15 +64,15 @@ public class PhotoModeUtils {
         int lastDirColon = splitPath[splitPath.length - 1].indexOf(':');
 
         if (lastDirColon == -1) {
-            return new Identifier(path);
+            return Identifier.ofDefaultNamespace(path);
         } else {
             String[] lastDir = splitPath[splitPath.length - 1].split("\\."); //namespace:c, json
             if (lastDir.length == 1) {
                 throw new IllegalArgumentException("Path contains no file extension?");
             }
 
-            Identifier id = new Identifier(lastDir[0]); //namespace:c, corrects c -> minecraft:c
-            return new Identifier(id.getNamespace(),
+            Identifier id = Identifier.of(lastDir[0]); //namespace:c, corrects c -> minecraft:c
+            return Identifier.of(id.getNamespace(),
                     String.join("/", Arrays.copyOfRange(splitPath, 0, splitPath.length - 1)) + "/" + id.getPath() + "." + lastDir[1]);
         }
     }

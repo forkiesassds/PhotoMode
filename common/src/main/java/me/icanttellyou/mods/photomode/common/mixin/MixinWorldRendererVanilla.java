@@ -24,7 +24,7 @@ public abstract class MixinWorldRendererVanilla {
     )
     private boolean photoMode$shouldUpdateFrustum(boolean original) {
         if (client.currentScreen instanceof PhotoModeScreen) {
-            double zoom = ((PhotoModeScreen) client.currentScreen).getZoom(client.getTickDelta());
+            double zoom = ((PhotoModeScreen) client.currentScreen).getZoom(client.getRenderTickCounter().getTickDelta(true));
             return original || lastCameraZoom != zoom;
         } else return original;
     }
@@ -39,7 +39,7 @@ public abstract class MixinWorldRendererVanilla {
     )
     private void photoMode$updateLastZoom(CallbackInfo ci) {
         if (client.currentScreen instanceof PhotoModeScreen) {
-            lastCameraZoom = ((PhotoModeScreen) client.currentScreen).getZoom(client.getTickDelta());
+            lastCameraZoom = ((PhotoModeScreen) client.currentScreen).getZoom(client.getRenderTickCounter().getTickDelta(true));
         }
     }
 }

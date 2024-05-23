@@ -19,7 +19,7 @@ public abstract class MixinSodiumWorldRenderer {
     @ModifyVariable(method = "setupTerrain", at = @At(value = "LOAD"), ordinal = 2, remap = false)
     private boolean photoMode$hackDirtyFlag(boolean dirty) {
         if (client.currentScreen instanceof PhotoModeScreen) {
-            double zoom = ((PhotoModeScreen) client.currentScreen).getZoom(client.getTickDelta());
+            double zoom = ((PhotoModeScreen) client.currentScreen).getZoom(client.getRenderTickCounter().getTickDelta(true));
             if (lastCameraZoom != zoom) {
                 lastCameraZoom = zoom;
                 return true;
