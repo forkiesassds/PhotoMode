@@ -14,7 +14,7 @@ public class MixinJsonEffectShaderProgram {
             method = "<init>",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/util/Identifier;ofDefaultNamespace(Ljava/lang/String;)Lnet/minecraft/util/Identifier;"
+                    target = "Lnet/minecraft/util/Identifier;ofVanilla(Ljava/lang/String;)Lnet/minecraft/util/Identifier;"
             )
     )
     Identifier photoMode$correctInitIdentifier(String arg) {
@@ -25,7 +25,7 @@ public class MixinJsonEffectShaderProgram {
             method = "loadEffect",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/util/Identifier;ofDefaultNamespace(Ljava/lang/String;)Lnet/minecraft/util/Identifier;"
+                    target = "Lnet/minecraft/util/Identifier;ofVanilla(Ljava/lang/String;)Lnet/minecraft/util/Identifier;"
             )
     )
     private static Identifier photoMode$correctLoadEffectIdentifier(String arg) {

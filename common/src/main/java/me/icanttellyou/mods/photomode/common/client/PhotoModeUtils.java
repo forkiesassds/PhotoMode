@@ -64,7 +64,7 @@ public class PhotoModeUtils {
         int lastDirColon = splitPath[splitPath.length - 1].indexOf(':');
 
         if (lastDirColon == -1) {
-            return Identifier.ofDefaultNamespace(path);
+            return Identifier.ofVanilla(path);
         } else {
             String[] lastDir = splitPath[splitPath.length - 1].split("\\."); //namespace:c, json
             if (lastDir.length == 1) {
