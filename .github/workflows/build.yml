@@ -6,7 +6,7 @@ on:
       - "**"
   pull_request:
     branches:
-      - "1.20.5" #pull requests really should only target 1.20.5, anything else is not suitable
+      - "1.21" #pull requests really should only target 1.21, anything else is not suitable
   workflow_dispatch:
 
 permissions:
