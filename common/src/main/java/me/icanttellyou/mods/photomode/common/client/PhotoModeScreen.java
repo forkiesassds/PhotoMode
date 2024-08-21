@@ -173,8 +173,8 @@ public class PhotoModeScreen extends Screen {
         if (client.getCameraEntity() instanceof PlayerEntity) {
             GameRenderer gr = client.gameRenderer;
 
-            if (gr.getPostProcessor() != null) {
-                gr.getPostProcessor().close();
+            if (gr.method_62906() != null) {
+                gr.method_62905();
             }
 
             currentShader = (currentShader + 1) % (PhotoModeUtils.SHADER_PROGRAM_COUNT + 1);

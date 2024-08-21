@@ -3,6 +3,8 @@ package me.icanttellyou.mods.photomode.common.client;
 import com.google.gson.JsonSyntaxException;
 import me.icanttellyou.mods.photomode.common.mixin.AccessGameRenderer;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.PostEffectProcessor;
+import net.minecraft.client.render.DefaultFramebufferSet;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.util.Identifier;
 
@@ -35,12 +37,13 @@ public class PhotoModeUtils {
     }
 
     public static void loadPMPostProcessor(PhotoModeScreen photoModeScreen, GameRenderer gr, Identifier id) {
-        if (gr.getPostProcessor() != null) {
-            gr.getPostProcessor().close();
+        if (gr.method_62906() != null) {
+            gr.method_62905();
         }
 
         try {
-            PhotoModePostEffectProcessor processor = new PhotoModePostEffectProcessor(photoModeScreen, client.getTextureManager(), client.getResourceManager(), client.getFramebuffer(), id);
+//            PostEffectProcessor processor = new PhotoModePostEffectProcessor(photoModeScreen, client.getTextureManager(), client.getResourceManager(), client.getFramebuffer(), id);
+            PostEffectProcessor processor = client.method_62887().method_62941(gr.method_62906(), DefaultFramebufferSet.field_53902);
             ((AccessGameRenderer) gr).photoMode$setPostProcessor(processor);
             gr.getPostProcessor().setupDimensions(client.getWindow().getFramebufferWidth(), client.getWindow().getFramebufferHeight());
             ((AccessGameRenderer) gr).photoMode$setPostProcessorEnabled(true);

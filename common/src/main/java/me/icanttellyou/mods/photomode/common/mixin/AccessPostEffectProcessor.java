@@ -10,8 +10,8 @@ import java.util.List;
 
 @Mixin(PostEffectProcessor.class)
 public interface AccessPostEffectProcessor {
-    @Accessor("resourceFactory")
-    ResourceFactory photoMode$getResourceFactory();
+//    @Accessor("resourceFactory")
+//    ResourceFactory photoMode$getResourceFactory();
     @Accessor("passes")
     List<PostEffectPass> photoMode$getPasses();
 }

@@ -1,23 +1,14 @@
 {
-  "targets": [
-    "swap"
+  "vertex": "sobel",
+  "fragment": "photomode:distantblur",
+  "samplers": [
+    { "name": "DiffuseSampler" },
+    { "name": "DiffuseDepthSampler" }
   ],
-  "passes": [
-    {
-      "name": "photomode:distantblur",
-      "intarget": "minecraft:main",
-      "auxtargets": [
-        {
-          "name": "DiffuseDepthSampler",
-          "id": "minecraft:main:depth"
-        }
-      ],
-      "outtarget": "swap"
-    },
-    {
-      "name": "blit",
-      "intarget": "swap",
-      "outtarget": "minecraft:main"
-    }
+  "uniforms": [
+    { "name": "ProjMat",       "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "InSize",        "type": "float",     "count": 2,  "values": [ 1.0, 1.0 ] },
+    { "name": "OutSize",       "type": "float",     "count": 2,  "values": [ 1.0, 1.0 ] },
+    { "name": "Intensity",     "type": "float",     "count": 1,  "values": [ 1.0 ] }
   ]
 }

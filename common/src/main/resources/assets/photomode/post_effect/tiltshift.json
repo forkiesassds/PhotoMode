@@ -1,0 +1,17 @@
+{
+  "targets": [
+    "swap"
+  ],
+  "passes": [
+    {
+      "program": "photomode:tiltshift",
+      "intarget": "minecraft:main",
+      "outtarget": "swap"
+    },
+    {
+      "program": "blit",
+      "intarget": "swap",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}
