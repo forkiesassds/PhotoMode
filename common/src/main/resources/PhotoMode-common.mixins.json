@@ -9,6 +9,7 @@
     "MixinCamera",
     "MixinFrustum",
     "MixinGameRenderer",
+    "MixinPostEffectPass",
     "MixinRenderSystem",
     "MixinWorldRenderer",
     "MixinWorldRendererVanilla",
