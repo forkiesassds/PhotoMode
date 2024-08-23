@@ -1,8 +1,8 @@
 {
-  "vertex": "sobel",
-  "fragment": "photomode:outline2",
+  "vertex": "minecraft:post/sobel",
+  "fragment": "photomode:post/outline2",
   "samplers": [
-    { "name": "DiffuseDepthSampler" }
+    { "name": "InDepthSampler" }
   ],
   "uniforms": [
     { "name": "ProjMat",       "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },

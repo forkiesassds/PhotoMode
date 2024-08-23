@@ -3,7 +3,7 @@
 in vec2 texCoord;
 in vec2 oneTexel;
 
-uniform sampler2D DiffuseSampler;
+uniform sampler2D InSampler;
 uniform float Intensity;
 
 out vec4 fragColor;
@@ -18,7 +18,7 @@ vec3 getBlur() {
         for (int j = 0; j < q; j++) {
             float strength = 1 - sin(length(vec2(i - qh, j - qh)) / qh);
 
-            blur += texture(DiffuseSampler, texCoord + vec2(i - qh, j - qh) * oneTexel).rgb * strength;
+            blur += texture(InSampler, texCoord + vec2(i - qh, j - qh) * oneTexel).rgb * strength;
 
             allStrengths += strength;
         }
@@ -28,7 +28,7 @@ vec3 getBlur() {
 }
 
 void main() {
-    vec3 color = texture(DiffuseSampler, texCoord).rgb;
+    vec3 color = texture(InSampler, texCoord).rgb;
 
     float blurFactor = clamp(distance(texCoord, vec2(0.5)) * 1.0, 0.0, 1.0);
     vec3 blur = getBlur();

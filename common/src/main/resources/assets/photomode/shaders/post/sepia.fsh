@@ -2,7 +2,7 @@
 
 in vec2 texCoord;
 
-uniform sampler2D DiffuseSampler;
+uniform sampler2D InSampler;
 uniform float Intensity;
 
 out vec4 fragColor;
@@ -16,7 +16,7 @@ vec3 toSepia(vec3 color) {
 }
 
 void main() {
-    vec3 color = texture(DiffuseSampler, texCoord).rgb;
+    vec3 color = texture(InSampler, texCoord).rgb;
     vec3 sepia = toSepia(color);
 
     color = mix(color, sepia, Intensity);

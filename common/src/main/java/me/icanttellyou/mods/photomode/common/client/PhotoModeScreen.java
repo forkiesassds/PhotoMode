@@ -13,6 +13,7 @@ import net.minecraft.client.util.ScreenshotRecorder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 public class PhotoModeScreen extends Screen {
     public boolean playerVisible = true;
@@ -209,11 +210,11 @@ public class PhotoModeScreen extends Screen {
 
         addDrawableChild(shader = ButtonWidget.builder(Text.translatable("gui.photomode.shader", Text.translatable("gui.photomode.none")), (button) -> {
             cycleShader();
-            this.intensitySlider.active = client.gameRenderer.getPostProcessor() != null;
+            this.intensitySlider.active = client.gameRenderer.method_62906() != null;
         }).position(width - 150, 0).build());
 
         intensitySlider = new PhotoModeSliderWidget(width - 150, 0, 150, 20, Text.translatable("gui.photomode.intensity"), shaderIntensity);
-        intensitySlider.active = client.gameRenderer.getPostProcessor() != null;
+        intensitySlider.active = client.gameRenderer.method_62906() != null;
         addDrawableChild(intensitySlider);
 
         int i = 0;
@@ -260,14 +261,10 @@ public class PhotoModeScreen extends Screen {
         showPlayer.setMessage(Text.translatable("gui.photomode.showPlayer", ScreenTexts.onOrOff(playerVisible)));
 
         assert client != null;
-        PostEffectProcessor postEffectProcessor = client.gameRenderer.getPostProcessor();
+        Identifier postEffectProcessor = client.gameRenderer.method_62906();
         Text shaderName = Text.translatable("gui.photomode.none");
         if (postEffectProcessor != null) {
-            String[] splitPath = postEffectProcessor.getName().split("/");
-
-            String name = splitPath[splitPath.length - 1];
-            name = name.substring(0, name.indexOf("."));
-            shaderName = Text.translatable("photomode.shader." + name);
+            shaderName = Text.translatable(postEffectProcessor.toTranslationKey("shader"));
         }
 
         shader.setMessage(Text.translatable("gui.photomode.shader", shaderName));
@@ -358,7 +355,7 @@ public class PhotoModeScreen extends Screen {
         client.world.setTimeOfDay(oldTime);
         client.options.hudHidden = wasHudHidden;
         client.chunkCullingEnabled = wasChunkCullingEnabled;
-        client.gameRenderer.disablePostProcessor();
+        client.gameRenderer.method_62905();
         client.gameRenderer.setRenderHand(true);
     }
 }

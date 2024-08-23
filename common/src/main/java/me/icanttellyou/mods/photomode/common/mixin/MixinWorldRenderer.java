@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import me.icanttellyou.mods.photomode.common.client.PhotoModeScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.PostEffectProcessor;
-import net.minecraft.client.render.WorldRenderer;
+import net.minecraft.client.render.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,25 +17,30 @@ public abstract class MixinWorldRenderer {
     @Unique
     MinecraftClient client = MinecraftClient.getInstance();
 
-    @Inject(method = "renderSky(Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "renderSky", at = @At("HEAD"), cancellable = true)
     private void injectRenderSky(CallbackInfo info) {
         if (client.currentScreen instanceof PhotoModeScreen) info.cancel();
     }
 
-    @Inject(method = "renderClouds(Lnet/minecraft/client/util/math/MatrixStack;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;FDDD)V", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "renderClouds", at = @At("HEAD"), cancellable = true)
     public void injectRenderClouds(CallbackInfo info) {
         if (client.currentScreen instanceof PhotoModeScreen) info.cancel();
     }
 
     /**
      * Fixes depth buffer being messed up in fabulous graphics... Somewhat, as depth information is not present for translucent surfaces.
-     * @param instance Effect processor
-     * @param tickDelta Tick delta
      */
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gl/PostEffectProcessor;render(F)V", ordinal = 1))
-    private void photoMode$fixFabulousDepthSomewhat(PostEffectProcessor instance, float tickDelta) {
+    @Redirect(
+            method = "render",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gl/PostEffectProcessor;method_62234(Lnet/minecraft/client/render/FrameGraphBuilder;IILnet/minecraft/client/gl/PostEffectProcessor$FramebufferSet;)V",
+                    ordinal = 1
+            )
+    )
+    private void photoMode$fixFabulousDepthSomewhat(PostEffectProcessor instance, FrameGraphBuilder frameGraphBuilder, int i, int j, PostEffectProcessor.FramebufferSet framebufferSet) {
         RenderSystem.depthMask(false);
-        instance.render(tickDelta);
+        instance.method_62234(frameGraphBuilder, i, j, framebufferSet);
         RenderSystem.depthMask(true);
     }
 }

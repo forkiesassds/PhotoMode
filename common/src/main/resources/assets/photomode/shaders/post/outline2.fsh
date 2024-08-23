@@ -3,13 +3,13 @@
 in vec2 texCoord;
 in vec2 oneTexel;
 
-uniform sampler2D DiffuseDepthSampler;
+uniform sampler2D InDepthSampler;
 uniform float Intensity;
 
 out vec4 fragColor;
 
 float getDepth(vec2 coord) {
-    return texture(DiffuseDepthSampler, coord).r;
+    return texture(InDepthSampler, coord).r;
 }
 
 void main() {

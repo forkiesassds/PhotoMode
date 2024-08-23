@@ -1,23 +1,34 @@
 {
-  "targets": [
-    "swap"
-  ],
+  "targets": {
+    "swap": {}
+  },
   "passes": [
     {
-      "program": "photomode:silhouette",
-      "intarget": "minecraft:main",
-      "auxtargets": [
+      "program": "photomode:post/silhouette",
+      "inputs": [
         {
-          "name": "DiffuseDepthSampler",
-          "id": "minecraft:main:depth"
+          "sampler_name": "In",
+          "target": "minecraft:main",
+          "bilinear": true
+        },
+        {
+          "sampler_name": "InDepth",
+          "target": "minecraft:main",
+          "use_depth_buffer": true
         }
       ],
-      "outtarget": "swap"
+      "output": "swap"
     },
     {
-      "program": "blit",
-      "intarget": "swap",
-      "outtarget": "minecraft:main"
+      "program": "minecraft:post/blit",
+      "inputs": [
+        {
+          "sampler_name": "In",
+          "target": "swap",
+          "bilinear": true
+        }
+      ],
+      "output": "minecraft:main"
     }
   ]
 }

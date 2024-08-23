@@ -3,7 +3,7 @@
 in vec2 texCoord;
 in vec2 oneTexel;
 
-uniform sampler2D DiffuseSampler;
+uniform sampler2D InSampler;
 
 uniform float Intensity;
 
@@ -20,7 +20,7 @@ vec3 getBlur(float r){
             yy = y * y;
             if (xx + yy <= rr) {
                 w = w0 * exp((-xx - yy) / (2.0 * rr));
-                col += texture(DiffuseSampler, p) * w;
+                col += texture(InSampler, p) * w;
             }
         }
     }
@@ -28,7 +28,7 @@ vec3 getBlur(float r){
 }
 
 void main() {
-    vec3 color = texture(DiffuseSampler, texCoord).rgb;
+    vec3 color = texture(InSampler, texCoord).rgb;
 
     float blurFactor = clamp(distance(texCoord, vec2(0.5)) * 4 * Intensity, 0.0, 1.0);
     vec3 blur = getBlur(blurFactor * 15);

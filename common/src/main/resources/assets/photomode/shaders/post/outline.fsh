@@ -3,19 +3,19 @@
 in vec2 texCoord;
 in vec2 oneTexel;
 
-uniform sampler2D DiffuseSampler;
-uniform sampler2D DiffuseDepthSampler;
+uniform sampler2D InSampler;
+uniform sampler2D InDepthSampler;
 
 uniform float Intensity;
 
 out vec4 fragColor;
 
 float getDepth(vec2 coord) {
-    return texture(DiffuseDepthSampler, coord).r;
+    return texture(InDepthSampler, coord).r;
 }
 
 void main() {
-    vec3 color = texture(DiffuseSampler, texCoord).rgb;
+    vec3 color = texture(InSampler, texCoord).rgb;
 
     float outline = 0.0;
     float size = 4.0 * Intensity;

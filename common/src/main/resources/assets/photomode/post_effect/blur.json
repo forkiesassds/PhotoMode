@@ -1,17 +1,29 @@
 {
-  "targets": [
-    "swap"
-  ],
+  "targets": {
+    "swap": {}
+  },
   "passes": [
     {
-      "program": "photomode:blur",
-      "intarget": "minecraft:main",
-      "outtarget": "swap"
+      "program": "photomode:post/blur",
+      "inputs": [
+        {
+          "sampler_name": "In",
+          "target": "minecraft:main",
+          "bilinear": true
+        }
+      ],
+      "output": "swap"
     },
     {
-      "program": "blit",
-      "intarget": "swap",
-      "outtarget": "minecraft:main"
+      "program": "minecraft:post/blit",
+      "inputs": [
+        {
+          "sampler_name": "In",
+          "target": "swap",
+          "bilinear": true
+        }
+      ],
+      "output": "minecraft:main"
     }
   ]
 }

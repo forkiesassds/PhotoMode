@@ -1,9 +1,9 @@
 {
-  "vertex": "blit",
-  "fragment": "photomode:silhouette",
+  "vertex": "minecraft:post/blit",
+  "fragment": "photomode:post/silhouette",
   "samplers": [
-    { "name": "DiffuseSampler" },
-    { "name": "DiffuseDepthSampler" }
+    { "name": "InSampler" },
+    { "name": "InDepthSampler" }
   ],
   "uniforms": [
     { "name": "ProjMat",       "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },

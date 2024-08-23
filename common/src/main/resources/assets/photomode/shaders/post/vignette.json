@@ -1,8 +1,8 @@
 {
-  "vertex": "blit",
-  "fragment": "photomode:vignette",
+  "vertex": "minecraft:post/blit",
+  "fragment": "photomode:post/vignette",
   "samplers": [
-    { "name": "DiffuseSampler" }
+    { "name": "InSampler" }
   ],
   "uniforms": [
     { "name": "ProjMat",       "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
