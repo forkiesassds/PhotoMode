@@ -1,8 +1,8 @@
 package me.icanttellyou.mods.photomode.common.mixin.compat;
 
 import me.icanttellyou.mods.photomode.common.client.PhotoModeScreen;
-import me.jellysquid.mods.sodium.client.model.quad.properties.ModelQuadFacing;
-import me.jellysquid.mods.sodium.client.render.chunk.DefaultChunkRenderer;
+import net.caffeinemc.mods.sodium.client.model.quad.properties.ModelQuadFacing;
+import net.caffeinemc.mods.sodium.client.render.chunk.DefaultChunkRenderer;
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

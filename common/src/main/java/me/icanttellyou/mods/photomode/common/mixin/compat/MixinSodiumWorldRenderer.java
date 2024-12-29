@@ -1,7 +1,7 @@
 package me.icanttellyou.mods.photomode.common.mixin.compat;
 
 import me.icanttellyou.mods.photomode.common.client.PhotoModeScreen;
-import me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer;
+import net.caffeinemc.mods.sodium.client.render.SodiumWorldRenderer;
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;

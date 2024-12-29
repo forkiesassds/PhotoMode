@@ -17,14 +17,14 @@ public class PhotoModeCommonMixinPlugin implements IMixinConfigPlugin {
 
     static {
         try {
-            MixinService.getService().getBytecodeProvider().getClassNode("me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer");
+            MixinService.getService().getBytecodeProvider().getClassNode("net.caffeinemc.mods.sodium.client.render.SodiumWorldRenderer");
             HAS_SODIUM = true;
         } catch (Throwable t) {
             HAS_SODIUM = false;
         }
 
         if (HAS_SODIUM)
-            PhotoModeCommon.LOGGER.info("[PhotoMode] Detected Sodium or it's forks!");
+            PhotoModeCommon.LOGGER.info("[PhotoMode] Detected Sodium!");
     }
 
     private static final Supplier<Boolean> TRUE = () -> true;

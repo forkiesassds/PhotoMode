@@ -19,12 +19,12 @@ Ported with permission from Better than Adventure!
 
 [[dependencies.photomode]]
 modId = "neoforge"
-versionRange = "[20.5-beta,)"
+versionRange = "[21.0-beta,)"
 ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.photomode]]
 modId = "minecraft"
-versionRange = "[1.20,)"
+versionRange = "[1.21,)"
 ordering = "NONE"
 side = "CLIENT"
