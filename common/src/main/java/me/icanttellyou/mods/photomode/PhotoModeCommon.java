@@ -1,4 +1,4 @@
-package me.icanttellyou.mods.photomode.common;
+package me.icanttellyou.mods.photomode;
 
 import com.mojang.logging.LogUtils;
 import org.slf4j.Logger;

@@ -1,6 +1,6 @@
-package me.icanttellyou.mods.photomode.common.client;
+package me.icanttellyou.mods.photomode.client;
 
-import me.icanttellyou.mods.photomode.common.mixin.AccessPostEffectPass;
+import me.icanttellyou.mods.photomode.mixin.AccessPostEffectPass;
 import net.minecraft.client.gl.Framebuffer;
 import net.minecraft.client.gl.PostEffectPass;
 import net.minecraft.resource.ResourceFactory;

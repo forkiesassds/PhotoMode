@@ -1,4 +1,4 @@
-package me.icanttellyou.mods.photomode.common.mixin;
+package me.icanttellyou.mods.photomode.mixin;
 
 import net.minecraft.client.gl.PostEffectPass;
 import net.minecraft.client.gl.PostEffectProcessor;

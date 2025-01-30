@@ -1,7 +1,7 @@
-package me.icanttellyou.mods.photomode.common.mixin;
+package me.icanttellyou.mods.photomode.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import me.icanttellyou.mods.photomode.common.client.PhotoModeScreen;
+import me.icanttellyou.mods.photomode.client.PhotoModeScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.WorldRenderer;
 import org.spongepowered.asm.mixin.Mixin;

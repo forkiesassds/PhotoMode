@@ -1,7 +1,7 @@
-package me.icanttellyou.mods.photomode.common.client;
+package me.icanttellyou.mods.photomode.client;
 
 import com.google.gson.JsonSyntaxException;
-import me.icanttellyou.mods.photomode.common.mixin.AccessPostEffectProcessor;
+import me.icanttellyou.mods.photomode.mixin.AccessPostEffectProcessor;
 import net.minecraft.client.gl.Framebuffer;
 import net.minecraft.client.gl.PostEffectPass;
 import net.minecraft.client.gl.PostEffectProcessor;

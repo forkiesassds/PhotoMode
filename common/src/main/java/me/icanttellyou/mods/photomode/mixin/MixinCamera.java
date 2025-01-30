@@ -1,4 +1,4 @@
-package me.icanttellyou.mods.photomode.common.mixin;
+package me.icanttellyou.mods.photomode.mixin;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import me.icanttellyou.mods.photomode.common.client.PhotoModeScreen;
+import me.icanttellyou.mods.photomode.client.PhotoModeScreen;
 
 @Mixin(Camera.class)
 public abstract class MixinCamera {

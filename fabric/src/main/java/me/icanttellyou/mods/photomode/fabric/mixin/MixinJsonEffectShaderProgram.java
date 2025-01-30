@@ -1,9 +1,8 @@
 package me.icanttellyou.mods.photomode.fabric.mixin;
 
-import me.icanttellyou.mods.photomode.common.client.PhotoModeUtils;
+import me.icanttellyou.mods.photomode.client.PhotoModeUtils;
 import net.minecraft.client.gl.JsonEffectShaderProgram;
 import net.minecraft.util.Identifier;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
