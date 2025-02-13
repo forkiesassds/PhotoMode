@@ -7,6 +7,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(GameRenderer.class)
 public interface AccessGameRenderer {
-    @Invoker("method_62904")
+    @Invoker("setPostProcessor")
     void photoMode$setPostProcessor(Identifier path);
 }

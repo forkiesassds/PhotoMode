@@ -34,7 +34,7 @@ public class PhotoModeUtils {
     }
 
     public static void loadPMPostProcessor(PhotoModeScreen photoModeScreen, GameRenderer gr, Identifier id) {
-        gr.method_62905();
+        gr.clearPostProcessor();
         ((AccessGameRenderer) gr).photoMode$setPostProcessor(id);
     }
 }

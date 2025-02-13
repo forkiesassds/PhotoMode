@@ -97,7 +97,7 @@ public class PhotoModeScreen extends Screen {
                 long time = (long)(timeSlider.value * 24000.0f);
                 selectedTime = timeSlider.value == 0.0f ? oldTime % 24000L : time;
                 assert client.world != null;
-                client.world.setTimeOfDay(selectedDay + selectedTime);
+                client.world.getLevelProperties().setTimeOfDay(selectedDay + selectedTime);
                 client.gameRenderer.tick();
             }
 
@@ -174,8 +174,8 @@ public class PhotoModeScreen extends Screen {
         if (client.getCameraEntity() instanceof PlayerEntity) {
             GameRenderer gr = client.gameRenderer;
 
-            if (gr.method_62906() != null) {
-                gr.method_62905();
+            if (gr.getPostProcessorId() != null) {
+                gr.clearPostProcessor();
             }
 
             currentShader = (currentShader + 1) % (PhotoModeUtils.SHADER_PROGRAM_COUNT + 1);
@@ -210,11 +210,11 @@ public class PhotoModeScreen extends Screen {
 
         addDrawableChild(shader = ButtonWidget.builder(Text.translatable("gui.photomode.shader", Text.translatable("gui.photomode.none")), (button) -> {
             cycleShader();
-            this.intensitySlider.active = client.gameRenderer.method_62906() != null;
+            this.intensitySlider.active = client.gameRenderer.getPostProcessorId() != null;
         }).position(width - 150, 0).build());
 
         intensitySlider = new PhotoModeSliderWidget(width - 150, 0, 150, 20, Text.translatable("gui.photomode.intensity"), shaderIntensity);
-        intensitySlider.active = client.gameRenderer.method_62906() != null;
+        intensitySlider.active = client.gameRenderer.getPostProcessorId() != null;
         addDrawableChild(intensitySlider);
 
         int i = 0;
@@ -261,7 +261,7 @@ public class PhotoModeScreen extends Screen {
         showPlayer.setMessage(Text.translatable("gui.photomode.showPlayer", ScreenTexts.onOrOff(playerVisible)));
 
         assert client != null;
-        Identifier postEffectProcessor = client.gameRenderer.method_62906();
+        Identifier postEffectProcessor = client.gameRenderer.getPostProcessorId();
         Text shaderName = Text.translatable("gui.photomode.none");
         if (postEffectProcessor != null) {
             shaderName = Text.translatable(postEffectProcessor.toTranslationKey("shader"));
@@ -352,10 +352,10 @@ public class PhotoModeScreen extends Screen {
         assert client != null;
         assert client.world != null;
 
-        client.world.setTimeOfDay(oldTime);
+        client.world.getLevelProperties().setTimeOfDay(oldTime);
         client.options.hudHidden = wasHudHidden;
         client.chunkCullingEnabled = wasChunkCullingEnabled;
-        client.gameRenderer.method_62905();
+        client.gameRenderer.clearPostProcessor();
         client.gameRenderer.setRenderHand(true);
     }
 }

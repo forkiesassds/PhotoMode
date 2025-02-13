@@ -33,7 +33,7 @@ public abstract class MixinWorldRendererVanilla {
             method = "setupTerrain",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/render/WorldRenderer;method_52816(Lnet/minecraft/client/render/Frustum;)Lnet/minecraft/client/render/Frustum;",
+                    target = "Lnet/minecraft/client/render/ChunkRenderingDataPreparer;method_52836()Z",
                     shift = At.Shift.AFTER
             )
     )
