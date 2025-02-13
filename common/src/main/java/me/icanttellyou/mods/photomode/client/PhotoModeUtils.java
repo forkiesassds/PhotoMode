@@ -1,6 +1,6 @@
-package me.icanttellyou.mods.photomode.common.client;
+package me.icanttellyou.mods.photomode.client;
 
-import me.icanttellyou.mods.photomode.common.mixin.AccessGameRenderer;
+import me.icanttellyou.mods.photomode.mixin.AccessGameRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.util.Identifier;
@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
 import java.io.IOException;
 import java.util.Arrays;
 
-import static me.icanttellyou.mods.photomode.common.PhotoModeCommon.LOGGER;
+import static me.icanttellyou.mods.photomode.PhotoModeCommon.LOGGER;
 
 public class PhotoModeUtils {
     private static MinecraftClient client;

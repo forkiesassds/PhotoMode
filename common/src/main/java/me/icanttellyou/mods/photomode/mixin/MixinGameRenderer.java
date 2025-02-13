@@ -1,6 +1,6 @@
-package me.icanttellyou.mods.photomode.common.mixin;
+package me.icanttellyou.mods.photomode.mixin;
 
-import me.icanttellyou.mods.photomode.common.client.PhotoModeScreen;
+import me.icanttellyou.mods.photomode.client.PhotoModeScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;

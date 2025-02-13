@@ -1,7 +1,7 @@
 package me.icanttellyou.mods.photomode.fabric;
 
-import me.icanttellyou.mods.photomode.common.client.PhotoModeScreen;
-import me.icanttellyou.mods.photomode.common.client.PhotoModeUtils;
+import me.icanttellyou.mods.photomode.client.PhotoModeScreen;
+import me.icanttellyou.mods.photomode.client.PhotoModeUtils;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

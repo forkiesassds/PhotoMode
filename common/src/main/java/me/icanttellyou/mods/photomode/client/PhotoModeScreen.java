@@ -1,6 +1,6 @@
-package me.icanttellyou.mods.photomode.common.client;
+package me.icanttellyou.mods.photomode.client;
 
-import me.icanttellyou.mods.photomode.common.mixin.AccessGameRenderer;
+import me.icanttellyou.mods.photomode.mixin.AccessGameRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.PostEffectProcessor;
 import net.minecraft.client.gui.DrawContext;

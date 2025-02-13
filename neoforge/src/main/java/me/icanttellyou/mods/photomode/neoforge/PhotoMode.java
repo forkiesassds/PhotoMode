@@ -1,7 +1,7 @@
 package me.icanttellyou.mods.photomode.neoforge;
 
-import me.icanttellyou.mods.photomode.common.client.PhotoModeScreen;
-import me.icanttellyou.mods.photomode.common.client.PhotoModeUtils;
+import me.icanttellyou.mods.photomode.client.PhotoModeScreen;
+import me.icanttellyou.mods.photomode.client.PhotoModeUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
