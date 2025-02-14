@@ -17,7 +17,7 @@ public abstract class MixinRenderSystem {
         float end = value.end();
 
         if (client.currentScreen instanceof PhotoModeScreen) {
-            float fogModifier = ((PhotoModeScreen) client.currentScreen).getFog(client.getRenderTickCounter().getTickDelta(true));
+            float fogModifier = ((PhotoModeScreen) client.currentScreen).getFog(client.getRenderTickCounter().getTickProgress(true));
             if (value.start() != Float.MAX_VALUE) start *= fogModifier;
             end *= fogModifier;
 
