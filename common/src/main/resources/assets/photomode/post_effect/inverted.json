@@ -4,7 +4,8 @@
   },
   "passes": [
     {
-      "program": "photomode:post/inverted",
+      "vertex_shader": "minecraft:post/blit",
+      "fragment_shader": "photomode:post/inverted",
       "inputs": [
         {
           "sampler_name": "In",
@@ -12,15 +13,28 @@
           "bilinear": true
         }
       ],
-      "output": "swap"
+      "output": "swap",
+      "uniforms": [
+        {
+          "name": "Intensity",
+          "type": "float"
+        }
+      ]
     },
     {
-      "program": "minecraft:post/blit",
+      "vertex_shader": "minecraft:post/blit",
+      "fragment_shader": "minecraft:post/blit",
       "inputs": [
         {
           "sampler_name": "In",
-          "target": "swap",
-          "bilinear": true
+          "target": "swap"
+        }
+      ],
+      "uniforms": [
+        {
+          "name": "ColorModulate",
+          "type": "vec4",
+          "values": [ 1.0, 1.0, 1.0, 1.0 ]
         }
       ],
       "output": "minecraft:main"
