@@ -20,7 +20,7 @@ public abstract class MixinWorldRendererVanilla {
 
     @ModifyExpressionValue(
             method = "setupTerrain",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/ChunkRenderingDataPreparer;method_52836()Z")
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/ChunkRenderingDataPreparer;updateFrustum()Z")
     )
     private boolean photoMode$shouldUpdateFrustum(boolean original) {
         if (client.currentScreen instanceof PhotoModeScreen) {
@@ -33,7 +33,7 @@ public abstract class MixinWorldRendererVanilla {
             method = "setupTerrain",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/render/ChunkRenderingDataPreparer;method_52836()Z",
+                    target = "Lnet/minecraft/client/render/ChunkRenderingDataPreparer;updateFrustum()Z",
                     shift = At.Shift.AFTER
             )
     )
