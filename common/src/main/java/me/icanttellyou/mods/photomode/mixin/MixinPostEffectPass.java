@@ -21,7 +21,7 @@ import java.util.function.Consumer;
 
 @Mixin(PostEffectPass.class)
 public abstract class MixinPostEffectPass {
-    @Inject(method = "method_67884", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderPass;drawIndexed(II)V"), locals = LocalCapture.CAPTURE_FAILHARD)
+    @Inject(method = "method_67884", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderPass;setUniform(Ljava/lang/String;[F)V"), locals = LocalCapture.CAPTURE_FAILHARD)
     private void photoMode$setupShaderUniform(
             Handle<Framebuffer> handle,
             Matrix4f matrix4f,
