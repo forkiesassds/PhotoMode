@@ -1,7 +1,6 @@
 package mod.icanttellyou.photomode.value;
 
 import mod.icanttellyou.photomode.util.Tickable;
-import net.minecraft.util.Mth;
 
 /**
  * This class is for an interpolated value.
@@ -10,17 +9,19 @@ import net.minecraft.util.Mth;
  */
 public class InterpolatedValue implements Value, Tickable {
     private final int duration;
+    private final Easing easing;
 
     private double goal;
     private double start;
 
     private int progress;
 
-    public InterpolatedValue(int duration) {
-        this(0.0D, duration);
+    public InterpolatedValue(Easing easing, int duration) {
+        this(easing, 0.0D, duration);
     }
 
-    public InterpolatedValue(double def, int duration) {
+    public InterpolatedValue(Easing easing, double def, int duration) {
+        this.easing = easing;
         this.duration = duration;
         this.setValue(def);
     }
@@ -69,8 +70,7 @@ public class InterpolatedValue implements Value, Tickable {
      */
     @Override
     public double getValue(double delta) {
-        double position = Mth.clamp((double) progress / duration + delta, 0.0D, 1.0D);
-        return start + (goal - start) * position;
+        return easing.apply(start, goal, progress, duration, delta);
     }
 
     /**
