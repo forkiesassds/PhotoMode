@@ -13,7 +13,7 @@ public class PhotoModeServices {
         final T loadedService = ServiceLoader.load(clazz)
                 .findFirst()
                 .orElseThrow(() -> new NullPointerException("Failed to load service for " + clazz.getName()));
-        LoggingUtil.log(Level.DEBUG, String.format("Loaded %s for service %s", loadedService, clazz));
+        LoggingUtil.log(Level.DEBUG, "Loaded {} for service {}", loadedService, clazz);
         return loadedService;
     }
 }

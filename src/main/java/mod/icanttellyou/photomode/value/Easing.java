@@ -4,7 +4,7 @@ import net.minecraft.util.Mth;
 
 public enum Easing {
     LINEAR((start, goal, progress, duration, delta) -> {
-        double position = Mth.clamp((double) progress / duration + delta, 0.0D, 1.0D);
+        double position = Mth.clamp((progress + delta) / duration, 0.0D, 1.0D);
         return start + (goal - start) * position;
     });
 
@@ -14,12 +14,12 @@ public enum Easing {
         this.function = function;
     }
 
-    public double apply(double start, double goal, int progress, int duration, double delta) {
+    public double apply(double start, double goal, int progress, double duration, double delta) {
         return function.apply(start, goal, progress, duration, delta);
     }
 
     @FunctionalInterface
     private interface Function {
-        double apply(double start, double goal, int progress, int duration, double delta);
+        double apply(double start, double goal, int progress, double duration, double delta);
     }
 }

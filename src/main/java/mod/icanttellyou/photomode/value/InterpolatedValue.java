@@ -8,7 +8,7 @@ import mod.icanttellyou.photomode.util.Tickable;
  * Interpolation has to run each game tick for it to function.
  */
 public class InterpolatedValue implements Value, Tickable {
-    private final int duration;
+    private final double duration;
     private final Easing easing;
 
     private double goal;
@@ -16,11 +16,11 @@ public class InterpolatedValue implements Value, Tickable {
 
     private int progress;
 
-    public InterpolatedValue(Easing easing, int duration) {
+    public InterpolatedValue(Easing easing, double duration) {
         this(easing, 0.0D, duration);
     }
 
-    public InterpolatedValue(Easing easing, double def, int duration) {
+    public InterpolatedValue(Easing easing, double def, double duration) {
         this.easing = easing;
         this.duration = duration;
         this.setValue(def);
@@ -49,7 +49,7 @@ public class InterpolatedValue implements Value, Tickable {
         this.goal = value;
         this.start = value;
 
-        this.progress = this.duration;
+        this.progress = (int) this.duration;
     }
 
     /**
