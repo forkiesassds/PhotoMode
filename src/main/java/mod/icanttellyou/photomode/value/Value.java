@@ -2,7 +2,6 @@ package mod.icanttellyou.photomode.value;
 
 /**
  * This interface provides methods for values and interpolation
- * @param <N> The type of number to use
  */
 public interface Value {
     /**
