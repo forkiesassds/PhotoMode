@@ -1,8 +1,8 @@
-package mod.icanttellyou.photomode.client;
+package mod.icanttellyou.picturemode.client;
 
-import mod.icanttellyou.photomode.value.Easing;
-import mod.icanttellyou.photomode.value.InterpolatedValue;
-import mod.icanttellyou.photomode.value.Value;
+import mod.icanttellyou.picturemode.value.Easing;
+import mod.icanttellyou.picturemode.value.InterpolatedValue;
+import mod.icanttellyou.picturemode.value.Value;
 
 public class PhotoModeState {
     private boolean enabled = false;

@@ -1,6 +1,6 @@
-package mod.icanttellyou.photomode.fabric;
+package mod.icanttellyou.picturemode.fabric;
 
-import mod.icanttellyou.photomode.services.IPlatformHelper;
+import mod.icanttellyou.picturemode.services.IPlatformHelper;
 import net.fabricmc.loader.api.FabricLoader;
 
 public class FabricPlatformHelper implements IPlatformHelper {

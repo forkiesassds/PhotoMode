@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "mod.icanttellyou.photomode.fabric.mixin",
+  "package": "mod.icanttellyou.picturemode.fabric.mixin",
   "compatibilityLevel": "JAVA_${java_version}",
   "injectors": {
     "defaultRequire": 1

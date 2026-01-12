@@ -1,15 +1,15 @@
-package mod.icanttellyou.photomode.util;
+package mod.icanttellyou.picturemode.util;
 
-import mod.icanttellyou.photomode.PhotoMode;
+import mod.icanttellyou.picturemode.PictureMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
 
 public class LoggingUtil {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PhotoMode.MOD_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PictureMode.MOD_NAME);
 
     public static void log(Level level, String message, Object... args) {
-        String template = "[" + PhotoMode.MOD_NAME + "] " + message;
+        String template = "[" + PictureMode.MOD_NAME + "] " + message;
 
         switch (level) {
             case TRACE:

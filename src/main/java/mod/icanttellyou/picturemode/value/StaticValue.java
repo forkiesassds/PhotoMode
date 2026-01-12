@@ -1,4 +1,4 @@
-package mod.icanttellyou.photomode.value;
+package mod.icanttellyou.picturemode.value;
 
 /**
  * This class is for a static, uninterpolated value.

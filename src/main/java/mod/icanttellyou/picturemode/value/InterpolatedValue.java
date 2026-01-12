@@ -1,6 +1,6 @@
-package mod.icanttellyou.photomode.value;
+package mod.icanttellyou.picturemode.value;
 
-import mod.icanttellyou.photomode.util.Tickable;
+import mod.icanttellyou.picturemode.util.Tickable;
 
 /**
  * This class is for an interpolated value.

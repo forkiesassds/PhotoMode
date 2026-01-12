@@ -1,4 +1,4 @@
-package mod.icanttellyou.photomode.value;
+package mod.icanttellyou.picturemode.value;
 
 import net.minecraft.util.Mth;
 

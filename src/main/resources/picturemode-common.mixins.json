@@ -1,9 +1,9 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "mod.icanttellyou.photomode.forgelike.mixin",
-  "refmap": "photomode.refmap.json",
+  "package": "mod.icanttellyou.picturemode.mixin",
   "compatibilityLevel": "JAVA_${java_version}",
+  "refmap": "moderner_beta.refmap.json",
   "injectors": {
     "defaultRequire": 1
   }

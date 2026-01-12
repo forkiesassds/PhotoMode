@@ -11,7 +11,7 @@ loom {
         useLegacyMixinAp = false
     }
 
-    accessWidenerPath = stonecutter.process(file("../../src/main/resources/photomode.accesswidener"), "build/dev.aw")
+    accessWidenerPath = stonecutter.process(file("../../src/main/resources/picturemode.accesswidener"), "build/dev.aw")
 
     decompilers {
         named("vineflower") { // Adds names to lambdas - useful for mixins
@@ -22,7 +22,7 @@ loom {
 
 fletchingTable {
     mixins.create("main") {
-        mixin("default", "photomode-common.mixins.json") {
+        mixin("default", "picturemode-common.mixins.json") {
             env("CLIENT")
         }
     }

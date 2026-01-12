@@ -1,4 +1,4 @@
-package mod.icanttellyou.photomode.util;
+package mod.icanttellyou.picturemode.util;
 
 /**
  * An interface for things that has to run each game tick

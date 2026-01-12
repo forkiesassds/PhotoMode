@@ -32,17 +32,17 @@ dependencies {
 
 fletchingTable {
     mixins.create("main") {
-        mixin("default", "photomode-forgelike.mixins.json") {
+        mixin("default", "picturemode-forgelike.mixins.json") {
             env("CLIENT")
         }
     }
 }
 
 mixin {
-    add(sourceSets.main.get(), "photomode.refmap.json")
+    add(sourceSets.main.get(), "picturemode.refmap.json")
 
-    config("photomode-common.mixins.json")
-    config("photomode-forgelike.mixins.json")
+    config("picturemode-common.mixins.json")
+    config("picturemode-forgelike.mixins.json")
 }
 
 legacyForge {
@@ -80,7 +80,7 @@ tasks {
         finalizedBy("reobfJar")
 
         manifest.attributes(mapOf(
-            "MixinConfigs" to "photomode-common.mixins.json,photomode-forgelike.mixins.json"
+            "MixinConfigs" to "picturemode-common.mixins.json,picturemode-forgelike.mixins.json"
         ))
     }
 
@@ -89,7 +89,7 @@ tasks {
             name = "accesstransformer.cfg"
         }
 
-        exclude("photomode.accesswidener")
+        exclude("picturemode.accesswidener")
         exclude("META-INF/at.cfg")
     }
 }

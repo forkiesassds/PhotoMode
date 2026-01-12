@@ -1,6 +1,6 @@
-package mod.icanttellyou.photomode.services;
+package mod.icanttellyou.picturemode.services;
 
-import mod.icanttellyou.photomode.util.LoggingUtil;
+import mod.icanttellyou.picturemode.util.LoggingUtil;
 import org.slf4j.event.Level;
 
 import java.util.ServiceLoader;

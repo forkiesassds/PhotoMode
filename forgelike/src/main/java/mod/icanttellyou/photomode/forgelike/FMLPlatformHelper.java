@@ -1,6 +1,6 @@
-package mod.icanttellyou.photomode.forgelike;
+package mod.icanttellyou.picturemode.forgelike;
 
-import mod.icanttellyou.photomode.services.IPlatformHelper;
+import mod.icanttellyou.picturemode.services.IPlatformHelper;
 //? if neoforge {
 import net.neoforged.fml.loading.FMLLoader;
 //?} else {

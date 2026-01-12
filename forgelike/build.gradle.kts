@@ -27,7 +27,7 @@ dependencies {
 
 fletchingTable {
     mixins.create("main") {
-        mixin("default", "photomode-forgelike.mixins.json") {
+        mixin("default", "picturemode-forgelike.mixins.json") {
             env("CLIENT")
         }
     }
@@ -74,6 +74,6 @@ tasks.processResources {
         name = "accesstransformer.cfg"
     }
 
-    exclude("photomode*.accesswidener")
+    exclude("picturemode.accesswidener")
     exclude("META-INF/at-forge.cfg")
 }
