@@ -24,8 +24,8 @@ fletchingTable {
     mixins.create("main") {
         mixin("default", "photomode-common.mixins.json") {
             env("DEFAULT")
-            env("CLIENT", "mod.bluestaggo.modernerbeta.mixin.client")
-            env("SERVER", "mod.bluestaggo.modernerbeta.mixin.server")
+            env("CLIENT", "mod.icanttellyou.photomode.mixin.client")
+            env("SERVER", "mod.icanttellyou.photomode.mixin.server")
         }
     }
 
