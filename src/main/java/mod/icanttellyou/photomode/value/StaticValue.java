@@ -2,7 +2,6 @@ package mod.icanttellyou.photomode.value;
 
 /**
  * This class is for a static, uninterpolated value.
- * @param <N> The type of number to use
  */
 public class StaticValue implements Value {
     private double number;
