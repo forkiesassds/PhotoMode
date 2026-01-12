@@ -15,19 +15,15 @@ loom {
     }
 
     runs {
-        register("datagen") {
-            server()
-            name("Data Generation")
-            vmArg("-Dfabric-api.datagen")
-            vmArg("-Dfabric-api.datagen.output-dir=${commonProject.file("src/main/generated")}")
-            vmArg("-Dfabric-api.datagen.modid=moderner_beta")
-        }
+        removeIf { it.environment == "server" }
     }
 }
 
 fletchingTable {
     mixins.create("main") {
-        mixin("default", "photomode-fabric.mixins.json")
+        mixin("default", "photomode-fabric.mixins.json") {
+            env("CLIENT")
+        }
     }
 }
 

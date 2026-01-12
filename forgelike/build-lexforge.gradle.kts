@@ -32,7 +32,9 @@ dependencies {
 
 fletchingTable {
     mixins.create("main") {
-        mixin("default", "photomode-forgelike.mixins.json")
+        mixin("default", "photomode-forgelike.mixins.json") {
+            env("CLIENT")
+        }
     }
 }
 
@@ -53,12 +55,6 @@ legacyForge {
         register("client") {
             client()
             ideName = "Minecraft Client (${project.path})"
-            gameDirectory = project.file("../../../run")
-        }
-
-        register("server") {
-            server()
-            ideName = "Minecraft Server (${project.path})"
             gameDirectory = project.file("../../../run")
         }
     }

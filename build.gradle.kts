@@ -23,15 +23,12 @@ loom {
 fletchingTable {
     mixins.create("main") {
         mixin("default", "photomode-common.mixins.json") {
-            env("DEFAULT")
-            env("CLIENT", "mod.icanttellyou.photomode.mixin.client")
-            env("SERVER", "mod.icanttellyou.photomode.mixin.server")
+            env("CLIENT")
         }
     }
 
     j52j.register("main") {
-        extension("mcmeta", "resourcepacks/*/pack.json5")
-        extension("json", "resourcepacks/*/data/**/*.json5")
+        extension("json", "**/*.json5")
     }
 }
 

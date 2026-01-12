@@ -30,11 +30,6 @@ tasks {
 
     processResources {
         dependsOn(commonResources)
-        from(commonProject.file("src/main/generated")) {
-            include("**/**")
-            exclude(".cache")
-        }
-
         from(commonProject.tasks.processResources.map { it.outputs })
     }
 

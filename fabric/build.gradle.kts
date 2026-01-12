@@ -13,11 +13,17 @@ loom {
         ideConfigGenerated(true)
         runDir = "../../../run"
     }
+
+    runs {
+        removeIf { it.environment == "server" }
+    }
 }
 
 fletchingTable {
     mixins.create("main") {
-        mixin("default", "photomode-fabric.mixins.json")
+        mixin("default", "photomode-fabric.mixins.json") {
+            env("CLIENT")
+        }
     }
 }
 
