@@ -1,0 +1,36 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+issueTrackerURL = "https://codeberg.org/icanttellyou/PhotoMode/issues"
+license = "MIT"
+
+[[mixins]]
+config = "photomode-common.mixins.json"
+
+[[mixins]]
+config = "photomode-forgelike.mixins.json"
+
+[[mods]]
+modId = "photomode"
+version = "${version}"
+displayName = "Photo Mode"
+authors = "icanttellyou"
+#credits = ""
+description = '''
+This mod adds an isometric view of the world dedicated for taking pictures.
+Ported with permission from Better than Adventure!
+'''
+#logoFile = "assets/photomode/banner.png"
+
+[[dependencies.photomode]]
+modId = "${loader}"
+mandatory = true
+versionRange = "${forgelike_loader_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.photomode]]
+modId = "minecraft"
+mandatory = true
+versionRange = "${forgelike_minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"
