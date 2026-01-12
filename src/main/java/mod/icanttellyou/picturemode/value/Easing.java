@@ -3,10 +3,11 @@ package mod.icanttellyou.picturemode.value;
 import net.minecraft.util.Mth;
 
 public enum Easing {
-    LINEAR((start, goal, progress, duration, delta) -> {
-        double position = Mth.clamp((progress + delta) / duration, 0.0D, 1.0D);
-        return start + (goal - start) * position;
-    });
+    LINEAR(Mth::lerp),
+    CUBIC((delta, start, goal) ->
+        Mth.lerp(3 * delta * delta - 2 * delta * delta * delta, start, goal)),
+    EXPONENTIAL((delta, start, goal) ->
+        Mth.lerp(1 - Math.exp(-delta), start, goal));
 
     private final Function function;
 
@@ -14,12 +15,12 @@ public enum Easing {
         this.function = function;
     }
 
-    public double apply(double start, double goal, int progress, double duration, double delta) {
-        return function.apply(start, goal, progress, duration, delta);
+    public double apply(double delta, double start, double goal) {
+        return function.apply(delta, start, goal);
     }
 
     @FunctionalInterface
     private interface Function {
-        double apply(double start, double goal, int progress, double duration, double delta);
+        double apply(double delta, double start, double goal);
     }
 }

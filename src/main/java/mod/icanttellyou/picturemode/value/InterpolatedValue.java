@@ -1,6 +1,7 @@
 package mod.icanttellyou.picturemode.value;
 
 import mod.icanttellyou.picturemode.util.Tickable;
+import net.minecraft.util.Mth;
 
 /**
  * This class is for an interpolated value.
@@ -70,12 +71,10 @@ public class InterpolatedValue implements Value, Tickable {
      */
     @Override
     public double getValue(double delta) {
-        return easing.apply(start, goal, progress, duration, delta);
+        double position = Mth.clamp((progress + delta) / duration, 0.0D, 1.0D);
+        return easing.apply(position, start, goal);
     }
 
-    /**
-     * The callback to run on game tick
-     */
     @Override
     public void onTick() {
         if (progress < duration)
