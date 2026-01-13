@@ -64,14 +64,14 @@ public abstract class GameRendererMixin {
             cir.setReturnValue(getProjectionMatrix(fov));
     }
     //? } else {
-    @WrapOperation(method = "renderLevel", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F", remap = false))
+    /*@WrapOperation(method = "renderLevel", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F", remap = false))
     private float bypassFOVComparisonInPM(float a, float b, Operation<Float> original) {
         if (pm$state.isEnabled())
             return a;
 
         return original.call(a, b);
     }
-    //? }
+    *///? }
 
     @Inject(method = {"bobView", "bobHurt"}, at = @At("HEAD"), cancellable = true)
     private void cancelBobbingInPM(CallbackInfo ci) {
