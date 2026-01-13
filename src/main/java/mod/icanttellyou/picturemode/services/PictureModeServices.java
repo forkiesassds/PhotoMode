@@ -5,7 +5,7 @@ import org.slf4j.event.Level;
 
 import java.util.ServiceLoader;
 
-public class PhotoModeServices {
+public class PictureModeServices {
     public static IPlatformHelper PLATFORM = loadService(IPlatformHelper.class);
 
 

@@ -4,7 +4,7 @@ import mod.icanttellyou.picturemode.value.Easing;
 import mod.icanttellyou.picturemode.value.InterpolatedValue;
 import mod.icanttellyou.picturemode.value.Value;
 
-public class PhotoModeState {
+public class PictureModeState {
     private boolean enabled = false;
 
     private final Value cameraRotation = new InterpolatedValue(Easing.LINEAR, 12.5D);
