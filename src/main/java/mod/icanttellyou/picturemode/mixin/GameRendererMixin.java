@@ -5,13 +5,17 @@ import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import mod.icanttellyou.picturemode.client.PictureModeClient;
 import mod.icanttellyou.picturemode.client.PictureModeState;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import org.joml.Matrix4f;
-import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -36,9 +40,14 @@ public abstract class GameRendererMixin {
     }
 
     @Inject(method = "getFov", at = @At("HEAD"), cancellable = true)
-    private void replaceFOVWithDeltaTicks(Camera camera, float partialTick, boolean useFovSetting, CallbackInfoReturnable<Float> cir) {
+    private void replaceFOVWithDeltaTicks(
+        Camera camera,
+        float partialTick,
+        boolean useFovSetting,
+        CallbackInfoReturnable</*? >=1.21.2 {*/ Float /*?} else {*//*Double*//*?}*/> cir
+    ) {
         if (pm$state.isEnabled())
-            cir.setReturnValue(partialTick);
+            cir.setReturnValue(/*? <1.21.2 {*//*(double) *//*?}*/ partialTick);
     }
 
     @Inject(method = "getProjectionMatrix", at = @At("HEAD"), cancellable = true)
@@ -87,9 +96,8 @@ public abstract class GameRendererMixin {
             ci.cancel();
     }
 
-    @Definition(id = "minecraft", field = "Lnet/minecraft/client/renderer/GameRenderer;minecraft:Lnet/minecraft/client/Minecraft;")
-    @Definition(id = "level", field = "Lnet/minecraft/client/Minecraft;level:Lnet/minecraft/client/multiplayer/ClientLevel;")
-    @Expression("this.minecraft.level != null")
+    @Definition(id = "renderLevel", local = @Local(type = boolean.class, ordinal = 0, argsOnly = true))
+    @Expression("renderLevel")
     @ModifyExpressionValue(method = "render", at = @At(value = "MIXINEXTRAS:EXPRESSION", ordinal = 1))
     private boolean hideHudInPM(boolean original) {
         if (pm$state == null)
