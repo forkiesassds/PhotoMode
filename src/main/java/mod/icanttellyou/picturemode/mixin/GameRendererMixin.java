@@ -1,0 +1,98 @@
+package mod.icanttellyou.picturemode.mixin;
+
+import com.llamalad7.mixinextras.expression.Definition;
+import com.llamalad7.mixinextras.expression.Expression;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+//? if >=1.21.6 {
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+//? }
+import mod.icanttellyou.picturemode.client.PictureModeClient;
+import mod.icanttellyou.picturemode.client.PictureModeState;
+import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.PanoramaRenderer;
+import org.joml.Matrix4f;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+@Mixin(GameRenderer.class)
+public abstract class GameRendererMixin {
+    @Unique private PictureModeState pm$state = null;
+    @Shadow @Final private Minecraft minecraft;
+
+    @Shadow public abstract float getDepthFar();
+
+    @Inject(method = "renderLevel", at = @At("HEAD"))
+    private void setupPMState(CallbackInfo ci) {
+        PictureModeState state = PictureModeClient.getState();
+
+        if (state != pm$state)
+            pm$state = state;
+    }
+
+    @Inject(method = "getFov", at = @At("HEAD"), cancellable = true)
+    private void replaceFOVWithDeltaTicks(Camera camera, float partialTick, boolean useFovSetting, CallbackInfoReturnable<Float> cir) {
+        if (pm$state.isEnabled())
+            cir.setReturnValue(partialTick);
+    }
+
+    @Inject(method = "getProjectionMatrix", at = @At("HEAD"), cancellable = true)
+    private void setupPMMatrices(float fov, CallbackInfoReturnable<Matrix4f> cir) {
+        if (!pm$state.isEnabled())
+            return;
+
+        int width = minecraft.getWindow().getWidth();
+        int height = minecraft.getWindow().getHeight();
+
+        float farPlane = getDepthFar();
+
+        cir.setReturnValue(pm$state.getProjectionMatrix(width, height, farPlane, fov));
+    }
+
+    @Inject(method = {"bobView", "bobHurt"}, at = @At("HEAD"), cancellable = true)
+    private void cancelBobbingInPM(CallbackInfo ci) {
+        if (pm$state.isEnabled())
+            ci.cancel();
+    }
+
+    @Inject(method = "renderItemInHand", at = @At("HEAD"), cancellable = true)
+    private void hideHandInPM(CallbackInfo ci) {
+        if (pm$state.isEnabled())
+            ci.cancel();
+    }
+
+    @Definition(id = "minecraft", field = "Lnet/minecraft/client/renderer/GameRenderer;minecraft:Lnet/minecraft/client/Minecraft;")
+    @Definition(id = "level", field = "Lnet/minecraft/client/Minecraft;level:Lnet/minecraft/client/multiplayer/ClientLevel;")
+    @Expression("this.minecraft.level != null")
+    @ModifyExpressionValue(method = "render", at = @At(value = "MIXINEXTRAS:EXPRESSION", ordinal = 1))
+    private boolean hideHudInPM(boolean original) {
+        return (pm$state == null || !pm$state.isEnabled()) && original;
+    }
+
+    //? if >=1.21.6 {
+    @WrapOperation(
+        method = "renderLevel",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/client/gui/components/BossHealthOverlay;shouldCreateWorldFog()Z"
+        )
+    )
+    private boolean hideSkyInPM(net.minecraft.client.gui.components.BossHealthOverlay instance, Operation<Boolean> original) {
+        return pm$state.isEnabled() || original.call(instance);
+    }
+    //? }
+
+    @Inject(method = "getPanorama", at = @At("HEAD"))
+    private void cleanupPMState(CallbackInfoReturnable<PanoramaRenderer> cir) {
+        if (pm$state != null)
+            pm$state = null;
+    }
+}
