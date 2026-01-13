@@ -3,10 +3,8 @@ package mod.icanttellyou.picturemode.mixin;
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-//? if >=1.21.6 {
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-//? }
 import mod.icanttellyou.picturemode.client.PictureModeClient;
 import mod.icanttellyou.picturemode.client.PictureModeState;
 import net.minecraft.client.Camera;
@@ -27,6 +25,8 @@ public abstract class GameRendererMixin {
     @Unique private PictureModeState pm$state = null;
     @Shadow @Final private Minecraft minecraft;
 
+    //? if >=1.21.9
+    @Shadow public abstract Matrix4f getProjectionMatrix(float fov);
     @Shadow public abstract float getDepthFar();
 
     @Inject(method = "render", at = @At("HEAD"))
@@ -56,6 +56,22 @@ public abstract class GameRendererMixin {
 
         cir.setReturnValue(pm$state.getProjectionMatrix(width, height, farPlane, fov));
     }
+
+    //? if >=1.21.9 {
+    @Inject(method = "getProjectionMatrixForCulling", at = @At("HEAD"), cancellable = true)
+    private void setupPMMatricesForCulling(float fov, CallbackInfoReturnable<Matrix4f> cir) {
+        if (pm$state.isEnabled())
+            cir.setReturnValue(getProjectionMatrix(fov));
+    }
+    //? } else {
+    @WrapOperation(method = "renderLevel", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F", remap = false))
+    private float bypassFOVComparisonInPM(float a, float b, Operation<Float> original) {
+        if (pm$state.isEnabled())
+            return a;
+
+        return original.call(a, b);
+    }
+    //? }
 
     @Inject(method = {"bobView", "bobHurt"}, at = @At("HEAD"), cancellable = true)
     private void cancelBobbingInPM(CallbackInfo ci) {
