@@ -11,10 +11,7 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import org.joml.Matrix4f;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -88,9 +85,12 @@ public abstract class GameRendererMixin {
     @Definition(id = "minecraft", field = "Lnet/minecraft/client/renderer/GameRenderer;minecraft:Lnet/minecraft/client/Minecraft;")
     @Definition(id = "level", field = "Lnet/minecraft/client/Minecraft;level:Lnet/minecraft/client/multiplayer/ClientLevel;")
     @Expression("this.minecraft.level != null")
-    @ModifyExpressionValue(method = "render", at = @At(value = "MIXINEXTRAS:EXPRESSION", ordinal = 1))
+    @ModifyExpressionValue(method = "render", at = @At(value = "MIXINEXTRAS:EXPRESSION", ordinal = 2))
     private boolean hideHudInPM(boolean original) {
-        return (pm$state == null || !pm$state.isEnabled()) && original;
+        if (pm$state == null)
+            return original;
+
+        return !pm$state.isEnabled() && original;
     }
 
     //? if >=1.21.6 {

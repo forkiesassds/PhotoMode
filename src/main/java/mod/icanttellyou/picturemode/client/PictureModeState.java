@@ -1,11 +1,9 @@
 package mod.icanttellyou.picturemode.client;
 
-import com.google.common.math.IntMath;
 import mod.icanttellyou.picturemode.value.Easing;
 import mod.icanttellyou.picturemode.value.InterpolatedValue;
 import mod.icanttellyou.picturemode.value.StaticValue;
 import mod.icanttellyou.picturemode.value.Value;
-import net.minecraft.util.Mth;
 import org.joml.Matrix4f;
 
 public class PictureModeState {
@@ -32,15 +30,8 @@ public class PictureModeState {
      * @return A {@link Matrix4f} with an orthographic projection matrix.
      */
     public Matrix4f getProjectionMatrix(int width, int height, float farPlane, double delta) {
-        float zoom = (float) cameraZoom.getValue(delta);
-        float sqZoom = zoom * zoom;
-
-        int resGCD = IntMath.gcd(width, height);
-        float widthAspect = (float) width / resGCD;
-        float heightAspect = (float) height / resGCD;
-
-        float viewWidth = Mth.clamp(width / sqZoom, widthAspect, Float.MAX_VALUE);
-        float viewHeight = Mth.clamp(height / sqZoom, heightAspect, Float.MAX_VALUE);
+        float viewWidth = (float) adjustViewportDimension(width, delta);
+        float viewHeight = (float) adjustViewportDimension(height, delta);
 
         float panX = (float) cameraPanX.getValue(delta);
         float panY = (float) cameraPanY.getValue(delta);
@@ -48,6 +39,20 @@ public class PictureModeState {
         return new Matrix4f()
             .setOrtho(-viewWidth, viewWidth, -viewHeight, viewHeight, -farPlane * 2.0F, farPlane * 2.0F)
             .translate(panX, -panY, 0.0F);
+    }
+
+    /**
+     * Adjusts a dimension (width, height) with zoom, based on the current state
+     *
+     * @param baseDimension The base dimension to adjust
+     * @param delta         The delta time for zoom values
+     * @return The dimension, adjusted to have the zoom applied
+     */
+    public double adjustViewportDimension(int baseDimension, double delta) {
+        float zoom = (float) cameraZoom.getValue(delta);
+        float sqZoom = zoom * zoom;
+
+        return baseDimension / sqZoom;
     }
 
     /**
