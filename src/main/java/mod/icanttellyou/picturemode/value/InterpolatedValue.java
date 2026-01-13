@@ -22,6 +22,9 @@ public class InterpolatedValue implements Value, Tickable {
     }
 
     public InterpolatedValue(Easing easing, double def, double duration) {
+        if (duration == 0.0D)
+            throw new IllegalArgumentException("Cannot use duration of 0! Please use StaticValue instead!");
+
         this.easing = easing;
         this.duration = duration;
         this.setValue(def);

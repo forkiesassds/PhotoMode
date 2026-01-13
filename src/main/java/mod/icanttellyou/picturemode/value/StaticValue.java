@@ -6,6 +6,14 @@ package mod.icanttellyou.picturemode.value;
 public class StaticValue implements Value {
     private double number;
 
+    public StaticValue() {
+        this(0.0D);
+    }
+
+    public StaticValue(double number) {
+        this.number = number;
+    }
+
     /**
      * Sets the goal of the value
      *
