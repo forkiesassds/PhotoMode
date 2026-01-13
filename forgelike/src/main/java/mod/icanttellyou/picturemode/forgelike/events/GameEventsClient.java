@@ -2,13 +2,18 @@ package mod.icanttellyou.picturemode.forgelike.events;
 
 import mod.icanttellyou.picturemode.PictureMode;
 import mod.icanttellyou.picturemode.client.PictureModeClient;
+import net.minecraft.client.Minecraft;
 //? if neoforge {
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+//? if <1.20.5
+//import net.neoforged.neoforge.event.TickEvent
 import net.neoforged.neoforge.event.level.LevelEvent;
 //? } else {
 /*import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -36,5 +41,27 @@ public class GameEventsClient {
     @SubscribeEvent
     public static void onLevelUnload(LevelEvent.Unload event) {
         PictureModeClient.onWorldExit();
+    }
+
+    @SubscribeEvent
+    public static void onGameTick(
+        //? if neoforge && >=1.20.5 {
+        ClientTickEvent.Pre
+        //? } else {
+        /*TickEvent.ClientTickEvent
+        *///? }
+        event
+    ) {
+        //? if (forge && <1.21.1) || <1.20.5 {
+        /*if (event.phase != TickEvent.Phase.END)
+            return;
+        *///? }
+
+        Minecraft mc = Minecraft.getInstance();
+
+        if (mc.level == null)
+            return;
+
+        PictureModeClient.getState().tick();
     }
 }

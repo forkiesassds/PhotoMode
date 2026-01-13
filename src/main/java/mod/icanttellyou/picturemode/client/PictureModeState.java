@@ -1,10 +1,17 @@
 package mod.icanttellyou.picturemode.client;
 
+import mod.icanttellyou.picturemode.util.LoggingUtil;
+import mod.icanttellyou.picturemode.util.Tickable;
 import mod.icanttellyou.picturemode.value.Easing;
 import mod.icanttellyou.picturemode.value.InterpolatedValue;
 import mod.icanttellyou.picturemode.value.StaticValue;
 import mod.icanttellyou.picturemode.value.Value;
 import org.joml.Matrix4f;
+import org.slf4j.event.Level;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PictureModeState {
     private static final double DEFAULT_ROTATION = 45.0D;
@@ -19,6 +26,12 @@ public class PictureModeState {
     private final Value cameraPanX = new InterpolatedValue(Easing.LINEAR, 2.5D);
     private final Value cameraPanY = new InterpolatedValue(Easing.LINEAR, 2.5D);
     private final Value shaderIntensity = new StaticValue(1.0D);
+
+    private final List<Tickable> tickingCallbacks = new ArrayList<>();
+
+    public PictureModeState() {
+        addTickableCallbacks(getClass(), this);
+    }
 
     /**
      * Gets the projection matrix for the Picture Mode state
@@ -69,6 +82,15 @@ public class PictureModeState {
     }
 
     /**
+     * Ticks all the ticking callbacks for this state
+     */
+    public void tick() {
+        for (Tickable tickable : tickingCallbacks) {
+            tickable.onTick();
+        }
+    }
+
+    /**
      * Resets the Picture Mode state back to defaults
      */
     public void resetState() {
@@ -97,6 +119,46 @@ public class PictureModeState {
      */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    /**
+     * Adds a callback for the tickable value to the callback list
+     *
+     * @param tickable The tickable value to add the callback for
+     */
+    public void addTickableCallback(Tickable tickable) {
+        tickingCallbacks.add(tickable);
+    }
+
+    /**
+     * Adds callbacks for tickable values to the callback list
+     *
+     * @param clazz    The class to add tickable callbacks from
+     * @param instance The instance of the class to add callbacks from
+     */
+    public void addTickableCallbacks(Class<?> clazz, Object instance) {
+        try {
+            Field[] fields = clazz.getDeclaredFields();
+
+            for (Field field : fields) {
+                if (!field.getDeclaringClass().isAssignableFrom(Tickable.class))
+                    continue;
+
+                boolean accessible = field.canAccess(instance);
+                if (!accessible) {
+                    field.setAccessible(true);
+                }
+
+                Tickable tickable = (Tickable) field.get(instance);
+                addTickableCallback(tickable);
+
+                if (!accessible) {
+                    field.setAccessible(false);
+                }
+            }
+        } catch (Exception e) {
+            LoggingUtil.log(Level.ERROR, "Failed to add ticking callbacks for class {}!", clazz.getName(), e);
+        }
     }
 
     /**

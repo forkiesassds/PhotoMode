@@ -61,8 +61,13 @@ public abstract class GameRendererMixin {
             cir.setReturnValue(getProjectionMatrix(fov));
     }
     //? } else {
-    /*@WrapOperation(method = "renderLevel", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F", remap = false))
+    /*//? if >=1.21.2 {
+    @WrapOperation(method = "renderLevel", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F", remap = false))
     private float bypassFOVComparisonInPM(float a, float b, Operation<Float> original) {
+    //? } else {
+    /^@WrapOperation(method = "renderLevel", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(DD)D", remap = false))
+    private double bypassFOVComparisonInPM(double a, double b, Operation<Double> original) {
+    ^///? }
         if (pm$state.isEnabled())
             return a;
 
@@ -85,7 +90,7 @@ public abstract class GameRendererMixin {
     @Definition(id = "minecraft", field = "Lnet/minecraft/client/renderer/GameRenderer;minecraft:Lnet/minecraft/client/Minecraft;")
     @Definition(id = "level", field = "Lnet/minecraft/client/Minecraft;level:Lnet/minecraft/client/multiplayer/ClientLevel;")
     @Expression("this.minecraft.level != null")
-    @ModifyExpressionValue(method = "render", at = @At(value = "MIXINEXTRAS:EXPRESSION", ordinal = 2))
+    @ModifyExpressionValue(method = "render", at = @At(value = "MIXINEXTRAS:EXPRESSION", ordinal = 1))
     private boolean hideHudInPM(boolean original) {
         if (pm$state == null)
             return original;
