@@ -12,7 +12,6 @@ import mod.icanttellyou.picturemode.client.PictureModeState;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.PanoramaRenderer;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,12 +29,13 @@ public abstract class GameRendererMixin {
 
     @Shadow public abstract float getDepthFar();
 
-    @Inject(method = "renderLevel", at = @At("HEAD"))
-    private void setupPMState(CallbackInfo ci) {
-        PictureModeState state = PictureModeClient.getState();
-
-        if (state != pm$state)
-            pm$state = state;
+    @Inject(method = "render", at = @At("HEAD"))
+    private void updatePMState(CallbackInfo ci) {
+        if (this.minecraft.level != null && pm$state == null) {
+            pm$state = PictureModeClient.getState();
+        } else if (this.minecraft.level == null) {
+            pm$state = null;
+        }
     }
 
     @Inject(method = "getFov", at = @At("HEAD"), cancellable = true)
@@ -45,7 +45,7 @@ public abstract class GameRendererMixin {
     }
 
     @Inject(method = "getProjectionMatrix", at = @At("HEAD"), cancellable = true)
-    private void setupPMMatrices(float fov, CallbackInfoReturnable<Matrix4f> cir) {
+    private void setupPMMatrices(/*? >=1.21.2 {*/ float /*?} else {*/ /*double *//*?}*/ fov, CallbackInfoReturnable<Matrix4f> cir) {
         if (!pm$state.isEnabled())
             return;
 
@@ -89,10 +89,4 @@ public abstract class GameRendererMixin {
         return pm$state.isEnabled() || original.call(instance);
     }
     //? }
-
-    @Inject(method = "getPanorama", at = @At("HEAD"))
-    private void cleanupPMState(CallbackInfoReturnable<PanoramaRenderer> cir) {
-        if (pm$state != null)
-            pm$state = null;
-    }
 }

@@ -16,6 +16,9 @@ public class PictureModeClient {
     }
 
     public static void onWorldLoad() {
+        if (state != null)
+            return;
+
         state = new PictureModeState();
     }
 
