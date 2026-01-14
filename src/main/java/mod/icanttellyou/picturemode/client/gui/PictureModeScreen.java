@@ -32,21 +32,23 @@ public class PictureModeScreen extends Screen {
             }));
         addRenderableWidget(new Slider(width - 150, 0, 1.0D,
             (slider, value, messageUpdate) -> {
-                int percent = (int) (value * 100.0D);
-                slider.setMessage(Component.translatable(FOG_KEY, percent));
-
-                if (!messageUpdate)
+                if (!messageUpdate) {
                     pmState.fog.setGoal(Math.pow(2.0D, 8.0D * value - 8.0D));
+                } else {
+                    int percent = (int) (value * 100.0D);
+                    slider.setMessage(Component.translatable(FOG_KEY, percent));
+                }
             }));
         addRenderableWidget(new Slider(width - 150, 0, PictureModeConstants.DEFAULT_TILT / 90.0D,
             (slider, value, messageUpdate) -> {
-                int degrees = (int) (value * 90.0D);
-                slider.setMessage(Component.translatable(TILT_KEY, degrees == 30
+                if (!messageUpdate) {
+                    pmState.cameraTilt.setGoal(value * 90.0D);
+                } else {
+                    int degrees = (int) (value * 90.0D);
+                    slider.setMessage(Component.translatable(TILT_KEY, degrees == 30
                         ? Component.translatable(DEFAULT_KEY)
                         : Component.translatable(DEGREES_KEY, degrees)));
-
-                if (!messageUpdate)
-                    pmState.cameraTilt.setGoal(value * 90.0D);
+                }
             }));
     }
 
