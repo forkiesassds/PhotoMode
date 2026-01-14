@@ -44,7 +44,7 @@ public abstract class GameRendererMixin {
         Camera camera,
         float partialTick,
         boolean useFovSetting,
-        CallbackInfoReturnable</*? >=1.21.2 {*/ Float /*?} else {*//*Double*//*?}*/> cir
+        CallbackInfoReturnable</*? >=1.21.2 {*/Float/*?} else {*//*Double*//*?}*/> cir
     ) {
         if (pm$state.isEnabled())
             cir.setReturnValue(/*? <1.21.2 {*//*(double) *//*?}*/ partialTick);

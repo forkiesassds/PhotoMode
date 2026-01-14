@@ -1,5 +1,6 @@
 package mod.icanttellyou.picturemode.client;
 
+import mod.icanttellyou.picturemode.PictureModeConstants;
 import mod.icanttellyou.picturemode.util.LoggingUtil;
 import mod.icanttellyou.picturemode.util.Tickable;
 import mod.icanttellyou.picturemode.value.Easing;
@@ -14,18 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PictureModeState {
-    private static final double DEFAULT_ROTATION = 45.0D;
-    private static final double DEFAULT_TILT = 30.0D;
-
     private boolean enabled = false;
 
-    private final Value cameraRotation = new InterpolatedValue(Easing.LINEAR, DEFAULT_ROTATION, 12.5D);
-    private final Value cameraTilt = new InterpolatedValue(Easing.LINEAR, DEFAULT_TILT, 12.5D);
-    private final Value cameraZoom = new InterpolatedValue(Easing.LINEAR, 1.0D, 12.5D);
-    private final Value fog = new InterpolatedValue(Easing.LINEAR, 1.0D, 50.0D);
-    private final Value cameraPanX = new InterpolatedValue(Easing.LINEAR, 2.5D);
-    private final Value cameraPanY = new InterpolatedValue(Easing.LINEAR, 2.5D);
-    private final Value shaderIntensity = new StaticValue(1.0D);
+    public final Value cameraRotation = new InterpolatedValue(Easing.LINEAR, PictureModeConstants.DEFAULT_ROTATION, 12.5D);
+    public final Value cameraTilt = new InterpolatedValue(Easing.LINEAR, PictureModeConstants.DEFAULT_TILT, 12.5D);
+    public final Value cameraZoom = new InterpolatedValue(Easing.LINEAR, 1.0D, 12.5D);
+    public final Value fog = new InterpolatedValue(Easing.LINEAR, 1.0D, 50.0D);
+    public final Value cameraPanX = new InterpolatedValue(Easing.LINEAR, 2.5D);
+    public final Value cameraPanY = new InterpolatedValue(Easing.LINEAR, 2.5D);
+    public final Value shaderIntensity = new StaticValue(1.0D);
 
     private final List<Tickable> tickingCallbacks = new ArrayList<>();
 
@@ -94,8 +92,8 @@ public class PictureModeState {
      * Resets the Picture Mode state back to defaults
      */
     public void resetState() {
-        cameraRotation.setValue(DEFAULT_ROTATION);
-        cameraTilt.setValue(DEFAULT_TILT);
+        cameraRotation.setValue(PictureModeConstants.DEFAULT_ROTATION);
+        cameraTilt.setValue(PictureModeConstants.DEFAULT_TILT);
         cameraZoom.setValue(1.0D);
         fog.setValue(1.0D);
         cameraPanX.setValue(0.0D);

@@ -1,7 +1,11 @@
 package mod.icanttellyou.picturemode.mixin;
 
+import com.llamalad7.mixinextras.expression.Definition;
+import com.llamalad7.mixinextras.expression.Expression;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import mod.icanttellyou.picturemode.client.PictureModeClient;
 import mod.icanttellyou.picturemode.client.PictureModeState;
 import net.minecraft.client.CloudStatus;
@@ -40,5 +44,19 @@ public abstract class LevelRendererMixin {
             return CloudStatus.OFF;
 
         return original.call(instance);
+    }
+
+    //? if >=1.21.9 {
+    @Definition(id = "spectator", local = @Local(type = boolean.class, ordinal = 0, argsOnly = true))
+    @Expression("spectator")
+    @ModifyExpressionValue(method = "cullTerrain", at = @At("MIXINEXTRAS:EXPRESSION"))
+    //? } else {
+    /*@Definition(id = "isSpectator", local = @Local(type = boolean.class, ordinal = 1, argsOnly = true))
+    @Expression("isSpectator")
+    @ModifyExpressionValue(method = "setupRender", at = @At("MIXINEXTRAS:EXPRESSION"))
+    *///? }
+    private boolean disableSmartCullInPM(boolean original) {
+        PictureModeState state = PictureModeClient.getState();
+        return !state.isEnabled() && original;
     }
 }

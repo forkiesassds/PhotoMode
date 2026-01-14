@@ -14,6 +14,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Camera.class)
 public abstract class CameraMixin {
+    @Shadow private boolean detached;
+
     @Shadow protected abstract void setRotation(float yRot, float xRot);
 
     @Inject(method = "setup", at = @At("TAIL"))
@@ -24,5 +26,6 @@ public abstract class CameraMixin {
             return;
 
         state.setupCameraAngles(delta, this::setRotation);
+        this.detached = true;
     }
 }

@@ -26,7 +26,7 @@
     "picturemode-fabric.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.16.0",
+    "fabricloader": ">=0.17.0",
     "fabric-api": "*",
     "minecraft": "${fabric_minecraft_version_range}"
   },
