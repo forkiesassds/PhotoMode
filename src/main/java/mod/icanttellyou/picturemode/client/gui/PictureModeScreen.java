@@ -1,6 +1,5 @@
 package mod.icanttellyou.picturemode.client.gui;
 
-import mod.icanttellyou.picturemode.PictureModeConstants;
 import mod.icanttellyou.picturemode.client.PictureModeClient;
 import mod.icanttellyou.picturemode.client.PictureModeState;
 import mod.icanttellyou.picturemode.client.gui.widget.Slider;
@@ -8,6 +7,8 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+
+import static mod.icanttellyou.picturemode.PictureModeConstants.*;
 
 public class PictureModeScreen extends Screen {
     private static final String DEFAULT_KEY = "gui.picturemode.default";
@@ -51,23 +52,23 @@ public class PictureModeScreen extends Screen {
                     slider.setMessage(Component.translatable(FOG_KEY, percent));
                 }
             }));
-        addRenderableWidget(new Slider(width - 150, 20, PictureModeConstants.DEFAULT_TILT / 90.0D,
+        addRenderableWidget(new Slider(width - 150, 20, DEFAULT_TILT / TILT_ANGLES,
             (slider, value, messageUpdate) -> {
                 if (!messageUpdate) {
-                    pmState.cameraTilt.setGoal(value * 90.0D, this.getDeltaTicks());
+                    pmState.cameraTilt.setGoal(value * TILT_ANGLES, this.getDeltaTicks());
                 } else {
-                    int degrees = (int) (value * 90.0D);
-                    slider.setMessage(Component.translatable(TILT_KEY, degrees == 30
+                    int degrees = (int) (value * TILT_ANGLES);
+                    slider.setMessage(Component.translatable(TILT_KEY, degrees == DEFAULT_TILT
                         ? Component.translatable(DEFAULT_KEY)
                         : Component.translatable(DEGREES_KEY, degrees)));
                 }
             }));
 
         addRenderableWidget(Button.builder(Component.literal("<"), (button) -> {
-            pmState.cameraRotation.addToGoal(45.0D, this.getDeltaTicks());
+            pmState.cameraRotation.addToGoal(ROTATION_STEP_SIZE, this.getDeltaTicks());
         }).pos(width / 2 - 49 - 2 - 20, height - 20).width(20).build());
         addRenderableWidget(Button.builder(Component.literal(">"), (button) -> {
-            pmState.cameraRotation.subtractFromGoal(45.0D, this.getDeltaTicks());
+            pmState.cameraRotation.subtractFromGoal(ROTATION_STEP_SIZE, this.getDeltaTicks());
         }).pos(width / 2 + 49 + 2, height - 20).width(20).build());
     }
 
