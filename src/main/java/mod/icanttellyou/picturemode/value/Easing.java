@@ -7,7 +7,7 @@ public enum Easing {
     CUBIC((delta, start, goal) ->
         Mth.lerp(3 * delta * delta - 2 * delta * delta * delta, start, goal)),
     EXPONENTIAL((delta, start, goal) ->
-        Mth.lerp(1 - Math.exp(-delta), start, goal));
+        Mth.lerp(1 - Math.exp(-delta * 5), start, goal));
 
     private final Function function;
 

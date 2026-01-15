@@ -12,6 +12,16 @@ public interface Value {
     void setGoal(double goal);
 
     /**
+     * Sets the goal of the value
+     *
+     * @param goal  The new goal to set to
+     * @param delta The delta ticks for proper goal setting
+     */
+    default void setGoal(double goal, double delta) {
+        setGoal(goal);
+    }
+
+    /**
      * Sets the direct value, rather than the goal
      *
      * @param value The new value to set

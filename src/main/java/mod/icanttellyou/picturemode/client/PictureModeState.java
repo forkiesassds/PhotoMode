@@ -17,12 +17,12 @@ import java.util.List;
 public class PictureModeState {
     private boolean enabled = false;
 
-    public final Value cameraRotation = new InterpolatedValue(Easing.LINEAR, PictureModeConstants.DEFAULT_ROTATION, 12.5D);
-    public final Value cameraTilt = new InterpolatedValue(Easing.LINEAR, PictureModeConstants.DEFAULT_TILT, 12.5D);
-    public final Value cameraZoom = new InterpolatedValue(Easing.LINEAR, 1.0D, 12.5D);
-    public final Value fog = new InterpolatedValue(Easing.LINEAR, 1.0D, 50.0D);
-    public final Value cameraPanX = new InterpolatedValue(Easing.LINEAR, 2.5D);
-    public final Value cameraPanY = new InterpolatedValue(Easing.LINEAR, 2.5D);
+    public final Value cameraRotation = new InterpolatedValue(Easing.EXPONENTIAL, PictureModeConstants.DEFAULT_ROTATION, 25.0D);
+    public final Value cameraTilt = new InterpolatedValue(Easing.EXPONENTIAL, PictureModeConstants.DEFAULT_TILT, 25.0D);
+    public final Value cameraZoom = new InterpolatedValue(Easing.EXPONENTIAL, 1.0D, 25.0D);
+    public final Value fog = new InterpolatedValue(Easing.EXPONENTIAL, 1.0D, 100.0D);
+    public final Value cameraPanX = new InterpolatedValue(Easing.EXPONENTIAL, 5.0D);
+    public final Value cameraPanY = new InterpolatedValue(Easing.EXPONENTIAL, 5.0D);
     public final Value shaderIntensity = new StaticValue(1.0D);
 
     private final List<Tickable> tickingCallbacks = new ArrayList<>();
@@ -139,7 +139,7 @@ public class PictureModeState {
             Field[] fields = clazz.getDeclaredFields();
 
             for (Field field : fields) {
-                if (!field.getDeclaringClass().isAssignableFrom(Tickable.class))
+                if (!field.getType().isAssignableFrom(Value.class))
                     continue;
 
                 boolean accessible = field.canAccess(instance);
@@ -147,8 +147,9 @@ public class PictureModeState {
                     field.setAccessible(true);
                 }
 
-                Tickable tickable = (Tickable) field.get(instance);
-                addTickableCallback(tickable);
+                Object value = field.get(instance);
+                if (value instanceof Tickable tickable)
+                    addTickableCallback(tickable);
 
                 if (!accessible) {
                     field.setAccessible(false);

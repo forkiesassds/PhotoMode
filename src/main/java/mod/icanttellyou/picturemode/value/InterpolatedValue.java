@@ -16,6 +16,7 @@ public class InterpolatedValue implements Value, Tickable {
     private double start;
 
     private int progress;
+    private double curDuration;
 
     public InterpolatedValue(Easing easing, double duration) {
         this(easing, 0.0D, duration);
@@ -26,7 +27,9 @@ public class InterpolatedValue implements Value, Tickable {
             throw new IllegalArgumentException("Cannot use duration of 0! Please use StaticValue instead!");
 
         this.easing = easing;
+        this.progress = (int) Math.ceil(duration);
         this.duration = duration;
+        this.curDuration = duration;
         this.setValue(def);
     }
 
@@ -37,9 +40,29 @@ public class InterpolatedValue implements Value, Tickable {
      */
     @Override
     public void setGoal(double goal) {
-        this.start = this.goal;
-        this.goal = goal;
+        this.setGoal(goal, 0.0D);
+    }
 
+    /**
+     * Sets the goal of the value
+     *
+     * @param goal  The new goal to set to
+     * @param delta The delta ticks for proper goal setting
+     */
+    @Override
+    public void setGoal(double goal, double delta) {
+        if (this.progress >= this.curDuration) {
+            this.curDuration = this.duration;
+            this.start = this.goal;
+        } else {
+            double curValue = this.getValue(delta);
+            //int direction = goal - curValue >= 0 ? 1 : -1;
+
+            this.start = curValue;
+            this.curDuration = this.duration /*+ (this.progress + delta) * direction*/;
+        }
+
+        this.goal = goal;
         this.progress = 0;
     }
 
@@ -53,6 +76,7 @@ public class InterpolatedValue implements Value, Tickable {
         this.goal = value;
         this.start = value;
 
+        this.curDuration = this.duration;
         this.progress = (int) this.duration;
     }
 
@@ -74,13 +98,13 @@ public class InterpolatedValue implements Value, Tickable {
      */
     @Override
     public double getValue(double delta) {
-        double position = Mth.clamp((progress + delta) / duration, 0.0D, 1.0D);
+        double position = Mth.clamp((progress + delta) / curDuration, 0.0D, 1.0D);
         return easing.apply(position, start, goal);
     }
 
     @Override
     public void onTick() {
-        if (progress < duration)
+        if (progress < curDuration)
             progress++;
     }
 }

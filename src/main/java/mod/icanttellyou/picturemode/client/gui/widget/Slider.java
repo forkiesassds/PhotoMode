@@ -3,7 +3,6 @@ package mod.icanttellyou.picturemode.client.gui.widget;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.network.chat.Component;
 
-@SuppressWarnings("DataFlowIssue")
 public class Slider extends AbstractSliderButton {
     private final OnUpdate onUpdate;
 
@@ -20,7 +19,7 @@ public class Slider extends AbstractSliderButton {
     }
 
     public Slider(int x, int y, int width, int height, double value, OnUpdate onUpdate) {
-        super(x, y, width, height, null, value);
+        super(x, y, width, height, Component.literal(""), value);
         this.onUpdate = onUpdate;
 
         updateMessage();
