@@ -5,6 +5,7 @@ import mod.icanttellyou.picturemode.client.PictureModeClient;
 import mod.icanttellyou.picturemode.client.PictureModeState;
 import mod.icanttellyou.picturemode.client.gui.widget.Slider;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -61,6 +62,13 @@ public class PictureModeScreen extends Screen {
                         : Component.translatable(DEGREES_KEY, degrees)));
                 }
             }));
+
+        addRenderableWidget(Button.builder(Component.literal("<"), (button) -> {
+            pmState.cameraRotation.addToGoal(45.0D, this.getDeltaTicks());
+        }).pos(width / 2 - 49 - 2 - 20, height - 20).width(20).build());
+        addRenderableWidget(Button.builder(Component.literal(">"), (button) -> {
+            pmState.cameraRotation.subtractFromGoal(45.0D, this.getDeltaTicks());
+        }).pos(width / 2 + 49 + 2, height - 20).width(20).build());
     }
 
     @Override

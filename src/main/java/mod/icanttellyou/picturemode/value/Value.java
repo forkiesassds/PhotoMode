@@ -22,6 +22,46 @@ public interface Value {
     }
 
     /**
+     * Adds a number to the current goal
+     *
+     * @param add The number to add
+     */
+    default void addToGoal(double add) {
+        double curGoal = getGoal();
+        setGoal(curGoal + add);
+    }
+
+    /**
+     * Adds a number to the current goal
+     *
+     * @param add   The number to add
+     * @param delta The delta ticks for proper goal setting
+     */
+    default void addToGoal(double add, double delta) {
+        addToGoal(add);
+    }
+
+    /**
+     * Subtracts a number from the current goal
+     *
+     * @param subtract The number to subtract
+     */
+    default void subtractFromGoal(double subtract) {
+        double curGoal = getGoal();
+        setGoal(curGoal - subtract);
+    }
+
+    /**
+     * Subtracts a number from the current goal
+     *
+     * @param subtract The number to subtract
+     * @param delta    The delta ticks for proper goal setting
+     */
+    default void subtractFromGoal(double subtract, double delta) {
+        subtractFromGoal(subtract);
+    }
+
+    /**
      * Sets the direct value, rather than the goal
      *
      * @param value The new value to set

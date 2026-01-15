@@ -16,7 +16,6 @@ public class InterpolatedValue implements Value, Tickable {
     private double start;
 
     private int progress;
-    private double curDuration;
 
     public InterpolatedValue(Easing easing, double duration) {
         this(easing, 0.0D, duration);
@@ -29,7 +28,6 @@ public class InterpolatedValue implements Value, Tickable {
         this.easing = easing;
         this.progress = (int) Math.ceil(duration);
         this.duration = duration;
-        this.curDuration = duration;
         this.setValue(def);
     }
 
@@ -51,18 +49,69 @@ public class InterpolatedValue implements Value, Tickable {
      */
     @Override
     public void setGoal(double goal, double delta) {
-        if (this.progress >= this.curDuration) {
-            this.curDuration = this.duration;
+        if (this.progress >= this.duration) {
             this.start = this.goal;
         } else {
-            double curValue = this.getValue(delta);
-            //int direction = goal - curValue >= 0 ? 1 : -1;
-
-            this.start = curValue;
-            this.curDuration = this.duration /*+ (this.progress + delta) * direction*/;
+            this.start = this.getValue(delta);
         }
 
         this.goal = goal;
+        this.progress = 0;
+    }
+
+    /**
+     * Adds a number to the current goal
+     *
+     * @param add The number to add
+     */
+    @Override
+    public void addToGoal(double add) {
+        addToGoal(add, 0.0D);
+    }
+
+    /**
+     * Adds a number to the current goal
+     *
+     * @param add   The number to add
+     * @param delta The delta ticks for proper goal setting
+     */
+    @Override
+    public void addToGoal(double add, double delta) {
+        if (this.progress >= this.duration) {
+            this.start = this.goal;
+        } else {
+            this.start = this.getValue(delta);
+        }
+
+        this.goal += add;
+        this.progress = 0;
+    }
+
+    /**
+     * Subtracts a number from the current goal
+     *
+     * @param subtract The number to subtract
+     */
+    @Override
+    public void subtractFromGoal(double subtract) {
+        subtractFromGoal(subtract, 0.0D);
+    }
+
+    /**
+     * Subtracts a number from the current goal
+     *
+     * @param subtract The number to subtract
+     * @param delta    The delta ticks for proper goal setting
+     */
+    @Override
+    public void subtractFromGoal(double subtract, double delta) {
+        if (this.progress >= this.duration) {
+            this.start = this.goal;
+        } else {
+            this.start = this.getValue(delta);
+        }
+
+        this.goal -= subtract;
         this.progress = 0;
     }
 
@@ -76,7 +125,6 @@ public class InterpolatedValue implements Value, Tickable {
         this.goal = value;
         this.start = value;
 
-        this.curDuration = this.duration;
         this.progress = (int) this.duration;
     }
 
@@ -98,13 +146,13 @@ public class InterpolatedValue implements Value, Tickable {
      */
     @Override
     public double getValue(double delta) {
-        double position = Mth.clamp((progress + delta) / curDuration, 0.0D, 1.0D);
+        double position = Mth.clamp((progress + delta) / duration, 0.0D, 1.0D);
         return easing.apply(position, start, goal);
     }
 
     @Override
     public void onTick() {
-        if (progress < curDuration)
+        if (progress < duration)
             progress++;
     }
 }
