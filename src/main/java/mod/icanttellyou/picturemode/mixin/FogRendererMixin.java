@@ -23,7 +23,7 @@ import org.joml.Vector4f;
 *///? }
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-//? if <1.21.6
+//? if <1.21.6 {
 /*import org.spongepowered.asm.mixin.injection.Coerce;
 *///? } else {
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -60,40 +60,11 @@ public abstract class FogRendererMixin {
         method = "setupFog",
         at = @At(
             value = "FIELD",
-            target = "Lnet/minecraft/client/renderer/FogRenderer$FogData;start:F",
+            target = "Lnet/minecraft/client/renderer/FogRenderer$FogData;*:F",
             opcode = Opcodes.PUTFIELD
         )
     )
-    private static void applyPMFogModiferStart(
-        @Coerce Object instance,
-        float value,
-        Operation<Void> original,
-        Camera camera,
-        FogRenderer.FogMode fogMode,
-        float farPlaneDistance,
-        boolean shouldCreateFog,
-        float partialTick
-    ) {
-        PictureModeState state = PictureModeClient.getState();
-
-        if (!state.isEnabled()) {
-            original.call(instance, value);
-            return;
-        }
-
-        float fogModifier = (float) state.fog.getValue(partialTick);
-        original.call(instance, value * fogModifier);
-    }
-
-    @WrapOperation(
-        method = "setupFog",
-        at = @At(
-            value = "FIELD",
-            target = "Lnet/minecraft/client/renderer/FogRenderer$FogData;end:F",
-            opcode = Opcodes.PUTFIELD
-        )
-    )
-    private static void applyPMFogModiferEnd(
+    private static void applyPMFogModifier(
         @Coerce Object instance,
         float value,
         Operation<Void> original,
