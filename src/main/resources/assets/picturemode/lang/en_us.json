@@ -1,6 +1,6 @@
 {
   "gui.picturemode": "Picture Mode",
-  "gui.picturemode.takescreenshot": "Take Screenshot",
+  "gui.picturemode.takeScreenshot": "Take Screenshot",
   "gui.picturemode.time": "Time of Day: %s",
   "gui.picturemode.fog": "Fog: %s%%",
   "gui.picturemode.tilt": "Tilt: %s",

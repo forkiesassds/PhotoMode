@@ -26,9 +26,18 @@ public class PictureModeClient {
         return state;
     }
 
+    /**
+     * Gets the current Picture Mode state. Does not check if the state is null.
+     *
+     * @return The current Picture Mode state, or null if not initialised
+     */
+    public static PictureModeState getStateUnsafe() {
+        return state;
+    }
+
     public static Button makePictureModeButton(Minecraft client) {
         return Button.builder(Component.translatable("gui.picturemode"), button ->
-                client.setScreen(new PictureModeScreen(Component.literal(""))))
+                client.setScreen(new PictureModeScreen(client.screen, Component.literal(""))))
             .pos(client.getWindow().getGuiScaledWidth() / 2 - 48, 8)
             .width(98)
             .build();

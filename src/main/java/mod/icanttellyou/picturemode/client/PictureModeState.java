@@ -24,6 +24,7 @@ public class PictureModeState {
     public final Value cameraPanX = new InterpolatedValue(Easing.EXPONENTIAL, 5.0D);
     public final Value cameraPanY = new InterpolatedValue(Easing.EXPONENTIAL, 5.0D);
     public final Value shaderIntensity = new StaticValue(1.0D);
+    public final Value timeOverride = new StaticValue();
 
     private final List<Tickable> tickingCallbacks = new ArrayList<>();
 
