@@ -12,3 +12,12 @@ stonecutter.active("1.21.11")
 stonecutter.tasks {
     order("build")
 }
+
+stonecutter.parameters {
+    replacements {
+        string {
+            direction = eval(current.version, "<1.21.2")
+            replace("getDeltaTracker()", "getTimer()")
+        }
+    }
+}

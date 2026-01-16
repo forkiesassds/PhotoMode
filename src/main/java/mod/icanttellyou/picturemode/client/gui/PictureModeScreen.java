@@ -7,13 +7,12 @@ import mod.icanttellyou.picturemode.client.gui.widget.Slider;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.layouts.GridLayout;
-import net.minecraft.client.gui.layouts.LinearLayout;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
 import static mod.icanttellyou.picturemode.PictureModeConstants.*;
 
-public class PictureModeScreen extends  Screen {
+public class PictureModeScreen extends Screen {
     private static final String DEFAULT_KEY = "gui.picturemode.default";
     private static final String DEGREES_KEY = "gui.picturemode.degrees";
 
@@ -56,6 +55,8 @@ public class PictureModeScreen extends  Screen {
 
     private GridLayout makeOptions() {
         GridLayout layout = new GridLayout();
+        layout.defaultCellSetting().paddingBottom(1);
+
         GridLayout.RowHelper rows = layout.createRowHelper(1);
 
         rows.addChild(new Slider(0, 0, 0.0D,
@@ -92,12 +93,10 @@ public class PictureModeScreen extends  Screen {
 
         rows.addChild(Button.builder(Component.literal("<"), button ->
                 pmState.cameraRotation.addToGoal(ROTATION_STEP_SIZE, this.getDeltaTicks()))
-            .pos(width / 2 - 49 - 2 - 20, height - 20)
             .width(20)
             .build());
         rows.addChild(Button.builder(Component.literal(">"), (button) ->
                 pmState.cameraRotation.subtractFromGoal(ROTATION_STEP_SIZE, this.getDeltaTicks()))
-            .pos(width / 2 + 49 + 2, height - 20)
             .width(20)
             .build());
 

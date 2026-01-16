@@ -35,12 +35,9 @@ public class PictureModeFabricClient implements ClientModInitializer {
     }
 
     private void afterInitScreen(Minecraft client, Screen screen, int width, int height) {
-        if (screen instanceof PauseScreen/* || usePauseScreenWorkarround.contains(screen.getClass().getSimpleName())*/) {
+        if (screen instanceof PauseScreen || PictureModeClient.PAUSE_SCREEN_CLASSES.contains(screen.getClass().getSimpleName())) {
             final List<AbstractWidget> buttons = Screens.getButtons(screen);
-
-            buttons.add(Button.builder(Component.translatable("gui.picturemode"), (button) -> {
-                client.setScreen(new PictureModeScreen(Component.literal("")));
-            }).pos(screen.width / 2 - 48, 8).width(98).build());
+            buttons.add(PictureModeClient.makePictureModeButton(client));
         }
     }
 }

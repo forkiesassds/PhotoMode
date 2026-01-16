@@ -3,6 +3,8 @@ package mod.icanttellyou.picturemode.forgelike.events;
 import mod.icanttellyou.picturemode.PictureMode;
 import mod.icanttellyou.picturemode.client.PictureModeClient;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.PauseScreen;
+import net.minecraft.client.gui.screens.Screen;
 //? if neoforge {
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -10,9 +12,11 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 //? if <1.20.5
 //import net.neoforged.neoforge.event.TickEvent
+import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 //? } else {
 /*import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -63,5 +67,14 @@ public class GameEventsClient {
             return;
 
         PictureModeClient.getState().tick();
+    }
+
+    @SubscribeEvent
+    public static void onGuiInit(ScreenEvent.Init.Post event) {
+        Screen screen = event.getScreen();
+
+        if (screen instanceof PauseScreen || PictureModeClient.PAUSE_SCREEN_CLASSES.contains(screen.getClass().getSimpleName())) {
+            event.addListener(PictureModeClient.makePictureModeButton(screen.getMinecraft()));
+        }
     }
 }
