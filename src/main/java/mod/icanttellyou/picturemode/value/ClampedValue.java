@@ -116,10 +116,8 @@ public record ClampedValue(Value base, double min, double max) implements Value,
 
     @Override
     public boolean onTick() {
-        if (base instanceof Tickable tickable) {
-            tickable.onTick();
-            return true;
-        }
+        if (base instanceof Tickable tickable)
+            return tickable.onTick();
 
         return false;
     }
