@@ -12,6 +12,7 @@ import org.slf4j.event.Level;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class PictureModeState {
@@ -19,7 +20,7 @@ public class PictureModeState {
 
     public final Value cameraRotation = new InterpolatedValue(Easing.EXPONENTIAL, PictureModeConstants.DEFAULT_ROTATION, 25.0D);
     public final Value cameraTilt = new InterpolatedValue(Easing.EXPONENTIAL, PictureModeConstants.DEFAULT_TILT, 25.0D);
-    public final Value cameraZoom = new InterpolatedValue(Easing.EXPONENTIAL, 1.0D, 25.0D);
+    public final Value cameraZoom = new InterpolatedValue(Easing.EXPONENTIAL, 1.0D, 25.0D).clamped(0.0D, Double.MAX_VALUE);
     public final Value fog = new InterpolatedValue(Easing.EXPONENTIAL, 1.0D, 100.0D);
     public final Value cameraPanX = new InterpolatedValue(Easing.EXPONENTIAL, 5.0D);
     public final Value cameraPanY = new InterpolatedValue(Easing.EXPONENTIAL, 5.0D);
@@ -84,8 +85,14 @@ public class PictureModeState {
      * Ticks all the ticking callbacks for this state
      */
     public void tick() {
-        for (Tickable tickable : tickingCallbacks) {
-            tickable.onTick();
+        Iterator<Tickable> iterator = tickingCallbacks.iterator();
+        while (iterator.hasNext()) {
+            Tickable tickable = iterator.next();
+            boolean contTick = tickable.onTick();
+
+            if (!contTick) {
+                iterator.remove();
+            }
         }
     }
 

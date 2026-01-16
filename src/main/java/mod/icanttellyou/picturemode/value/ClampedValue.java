@@ -3,34 +3,7 @@ package mod.icanttellyou.picturemode.value;
 import mod.icanttellyou.picturemode.util.Tickable;
 import net.minecraft.util.Mth;
 
-/**
- * This class is for an interpolated value.
- * <p>
- * Interpolation has to run each game tick for it to function.
- */
-public class InterpolatedValue implements Value, Tickable {
-    private final double duration;
-    private final Easing easing;
-
-    private double goal;
-    private double start;
-
-    private int progress;
-
-    public InterpolatedValue(Easing easing, double duration) {
-        this(easing, 0.0D, duration);
-    }
-
-    public InterpolatedValue(Easing easing, double def, double duration) {
-        if (duration == 0.0D)
-            throw new IllegalArgumentException("Cannot use duration of 0! Please use StaticValue instead!");
-
-        this.easing = easing;
-        this.progress = (int) Math.ceil(duration);
-        this.duration = duration;
-        this.setValue(def);
-    }
-
+public record ClampedValue(Value base, double min, double max) implements Value, Tickable {
     /**
      * Sets the goal of the value
      *
@@ -38,7 +11,7 @@ public class InterpolatedValue implements Value, Tickable {
      */
     @Override
     public void setGoal(double goal) {
-        this.setGoal(goal, 0.0D);
+        setGoal(goal, 0.0D);
     }
 
     /**
@@ -49,14 +22,7 @@ public class InterpolatedValue implements Value, Tickable {
      */
     @Override
     public void setGoal(double goal, double delta) {
-        if (this.progress >= this.duration) {
-            this.start = this.goal;
-        } else {
-            this.start = this.getValue(delta);
-        }
-
-        this.goal = goal;
-        this.progress = 0;
+        base.setGoal(Mth.clamp(goal, min, max), delta);
     }
 
     /**
@@ -77,14 +43,15 @@ public class InterpolatedValue implements Value, Tickable {
      */
     @Override
     public void addToGoal(double add, double delta) {
-        if (this.progress >= this.duration) {
-            this.start = this.goal;
-        } else {
-            this.start = this.getValue(delta);
-        }
+        double goal = base.getGoal();
+        double added = goal + add;
+        double clamped = added > max
+            ? add - (added - max)
+            : (added < min
+                ? add - (min - added)
+                : add);
 
-        this.goal += add;
-        this.progress = 0;
+        base.addToGoal(clamped, delta);
     }
 
     /**
@@ -105,14 +72,15 @@ public class InterpolatedValue implements Value, Tickable {
      */
     @Override
     public void subtractFromGoal(double subtract, double delta) {
-        if (this.progress >= this.duration) {
-            this.start = this.goal;
-        } else {
-            this.start = this.getValue(delta);
-        }
+        double goal = base.getGoal();
+        double subtracted = goal - subtract;
+        double clamped = subtracted > max
+            ? subtract - (subtracted - max)
+            : (subtracted < min
+                ? subtract - (min - subtracted)
+                : subtract);
 
-        this.goal -= subtract;
-        this.progress = 0;
+        base.subtractFromGoal(clamped, delta);
     }
 
     /**
@@ -122,10 +90,7 @@ public class InterpolatedValue implements Value, Tickable {
      */
     @Override
     public void setValue(double value) {
-        this.goal = value;
-        this.start = value;
-
-        this.progress = (int) this.duration;
+        base.setValue(value);
     }
 
     /**
@@ -135,7 +100,7 @@ public class InterpolatedValue implements Value, Tickable {
      */
     @Override
     public double getGoal() {
-        return this.goal;
+        return base.getGoal();
     }
 
     /**
@@ -146,15 +111,16 @@ public class InterpolatedValue implements Value, Tickable {
      */
     @Override
     public double getValue(double delta) {
-        double position = Mth.clamp((progress + delta) / duration, 0.0D, 1.0D);
-        return easing.apply(position, start, goal);
+        return base.getValue(delta);
     }
 
     @Override
     public boolean onTick() {
-        if (progress < duration)
-            progress++;
+        if (base instanceof Tickable tickable) {
+            tickable.onTick();
+            return true;
+        }
 
-        return true;
+        return false;
     }
 }

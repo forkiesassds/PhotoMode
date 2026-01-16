@@ -7,6 +7,8 @@ package mod.icanttellyou.picturemode.util;
 public interface Tickable {
     /**
      * The callback to run on game tick
+     *
+     * @return Status on if the callback should continue
      */
-    void onTick();
+    boolean onTick();
 }

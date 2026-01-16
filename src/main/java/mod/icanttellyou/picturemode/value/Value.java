@@ -82,4 +82,15 @@ public interface Value {
      * @return The value
      */
     double getValue(double delta);
+
+    /**
+     * Wraps this value to a clamped value
+     *
+     * @param min The minimum possible value
+     * @param max The maximum possible value
+     * @return The value wrapped to be clamped
+     */
+    default Value clamped(double min, double max) {
+        return new ClampedValue(this, min, max);
+    }
 }
