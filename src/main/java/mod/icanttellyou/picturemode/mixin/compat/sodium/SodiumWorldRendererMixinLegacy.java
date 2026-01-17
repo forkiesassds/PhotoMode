@@ -27,8 +27,9 @@ public class SodiumWorldRendererMixinLegacy {
     @Shadow
     private Minecraft client;
 
-    @Definition(id = "dirty", local = @Local(type = boolean.class, ordinal = 0))
-    @Expression("dirty")
+    @Definition(id = "lastFogDistance", field = "Lme/jellysquid/mods/sodium/client/render/SodiumWorldRenderer;lastFogDistance:F")
+    @Definition(id = "fogDistance", local = @Local(type = float.class, ordinal = 2))
+    @Expression("fogDistance != this.lastFogDistance")
     @ModifyExpressionValue(method = "setupTerrain", at = @At("MIXINEXTRAS:EXPRESSION"))
     private boolean checkIfPMZoomChanged(boolean original) {
         PictureModeState state = PictureModeClient.getState();
