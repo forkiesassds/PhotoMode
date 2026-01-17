@@ -46,17 +46,13 @@ public abstract class LevelRendererMixin {
         return original.call(instance);
     }
 
-    //? if >=1.21.9 {
-    @Definition(id = "spectator", local = @Local(type = boolean.class, ordinal = 0, argsOnly = true))
-    @Expression("spectator")
-    @ModifyExpressionValue(method = "cullTerrain", at = @At("MIXINEXTRAS:EXPRESSION"))
-    //? } else {
+    //? if <1.21.9 {
     /*@Definition(id = "isSpectator", local = @Local(type = boolean.class, ordinal = 1, argsOnly = true))
     @Expression("isSpectator")
     @ModifyExpressionValue(method = "setupRender", at = @At("MIXINEXTRAS:EXPRESSION"))
-    *///? }
     private boolean disableSmartCullInPM(boolean original) {
         PictureModeState state = PictureModeClient.getState();
         return !state.isEnabled() && original;
     }
+    *///? }
 }

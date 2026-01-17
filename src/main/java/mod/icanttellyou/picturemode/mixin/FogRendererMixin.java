@@ -16,16 +16,11 @@ import mod.icanttellyou.picturemode.client.PictureModeState;
 import net.minecraft.client.renderer.FogRenderer;
 *///? }
 import net.minecraft.client.Camera;
-//? if >=1.21.6 {
+//? if >=1.21.6
 import org.joml.Vector4f;
-//? } else {
-/*import org.objectweb.asm.Opcodes;
-*///? }
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-//? if <1.21.6 {
-/*import org.spongepowered.asm.mixin.injection.Coerce;
-*///? } else {
+//? if >=1.21.6 {
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 //? }
@@ -59,14 +54,12 @@ public abstract class FogRendererMixin {
     /*@WrapOperation(
         method = "setupFog",
         at = @At(
-            value = "FIELD",
-            target = "Lnet/minecraft/client/renderer/FogRenderer$FogData;*:F",
-            opcode = Opcodes.PUTFIELD
+            value = "INVOKE",
+            target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogStart(F)V"
         )
     )
-    private static void applyPMFogModifier(
-        @Coerce Object instance,
-        float value,
+    private static void applyPMFogModifierStart(
+        float f,
         Operation<Void> original,
         Camera camera,
         FogRenderer.FogMode fogMode,
@@ -77,12 +70,39 @@ public abstract class FogRendererMixin {
         PictureModeState state = PictureModeClient.getState();
 
         if (!state.isEnabled()) {
-            original.call(instance, value);
+            original.call(f);
             return;
         }
 
         float fogModifier = (float) state.fog.getValue(partialTick);
-        original.call(instance, value * fogModifier);
+        original.call(f * fogModifier);
+    }
+
+    @WrapOperation(
+        method = "setupFog",
+        at = @At(
+            value = "INVOKE",
+            target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogEnd(F)V"
+        )
+    )
+    private static void applyPMFogModifierEnd(
+        float f,
+        Operation<Void> original,
+        Camera camera,
+        FogRenderer.FogMode fogMode,
+        float farPlaneDistance,
+        boolean shouldCreateFog,
+        float partialTick
+    ) {
+        PictureModeState state = PictureModeClient.getState();
+
+        if (!state.isEnabled()) {
+            original.call(f);
+            return;
+        }
+
+        float fogModifier = (float) state.fog.getValue(partialTick);
+        original.call(f * fogModifier);
     }
     *///? }
 }

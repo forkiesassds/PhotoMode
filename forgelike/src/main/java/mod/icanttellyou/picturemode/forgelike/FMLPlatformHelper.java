@@ -9,6 +9,12 @@ import net.neoforged.fml.loading.FMLLoader;
 
 public class FMLPlatformHelper implements IPlatformHelper {
     public boolean isModPresent(String mod) {
+        //? if <1.21 {
+        /*if (mod.equals("sodium")) {
+            return isModPresent("embeddium") || isModPresent("rubidium");
+        }
+        *///? }
+
         return FMLLoader/*? >=1.21.9 {*/.getCurrent()/*?}*/.getLoadingModList().getModFileById(mod) != null;
     }
 

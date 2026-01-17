@@ -2,6 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "mod.icanttellyou.picturemode.mixin",
+  "plugin": "mod.icanttellyou.picturemode.mixin.PictureModeMixinPlugin",
   "compatibilityLevel": "JAVA_${java_version}",
   "refmap": "picturemode.refmap.json",
   "injectors": {
