@@ -41,7 +41,7 @@ public class SodiumWorldRendererMixinLegacy {
         method = "setupTerrain",
         at = @At(
             value = "FIELD",
-            target = "Lme/jellysquid/mods/sodium/client/render/SodiumWorldRenderer;lastFogDistance:D",
+            target = "Lme/jellysquid/mods/sodium/client/render/SodiumWorldRenderer;lastFogDistance:F",
             shift = At.Shift.AFTER,
             opcode = Opcodes.PUTFIELD
         )
