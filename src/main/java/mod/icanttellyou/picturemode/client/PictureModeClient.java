@@ -1,17 +1,6 @@
 package mod.icanttellyou.picturemode.client;
 
-import mod.icanttellyou.picturemode.client.gui.PictureModeScreen;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.network.chat.Component;
-
-import java.util.List;
-
 public class PictureModeClient {
-    public static final List<String> PAUSE_SCREEN_CLASSES = List.of(
-        "NostalgicPauseScreen"
-    );
-
     private static PictureModeState state;
 
     /**
@@ -33,14 +22,6 @@ public class PictureModeClient {
      */
     public static PictureModeState getStateUnsafe() {
         return state;
-    }
-
-    public static Button makePictureModeButton(Minecraft client) {
-        return Button.builder(Component.translatable("gui.picturemode"), button ->
-                client.setScreen(new PictureModeScreen(client.screen, Component.literal(""))))
-            .pos(client.getWindow().getGuiScaledWidth() / 2 - 48, 8)
-            .width(98)
-            .build();
     }
 
     public static void onWorldLoad() {
