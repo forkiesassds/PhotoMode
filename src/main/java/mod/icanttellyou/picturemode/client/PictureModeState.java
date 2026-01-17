@@ -62,10 +62,10 @@ public class PictureModeState {
      * @return The dimension, adjusted to have the zoom applied
      */
     public double adjustViewportDimension(int baseDimension, double delta) {
-        float zoom = (float) cameraZoom.getValue(delta);
-        float sqZoom = zoom * zoom;
+        double zoom = cameraZoom.getValue(delta);
+        double expZoom = Math.pow(2.0D, zoom);
 
-        return baseDimension / sqZoom;
+        return baseDimension / expZoom;
     }
 
     /**
