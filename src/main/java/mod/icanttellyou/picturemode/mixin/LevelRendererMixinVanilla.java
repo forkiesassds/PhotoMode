@@ -67,9 +67,13 @@ public class LevelRendererMixinVanilla {
     @Definition(id = "spectator", local = @Local(type = boolean.class, ordinal = 0, argsOnly = true))
     @Expression("spectator")
     @ModifyExpressionValue(method = "cullTerrain", at = @At("MIXINEXTRAS:EXPRESSION"))
+    //? } else {
+    /*@Definition(id = "isSpectator", local = @Local(type = boolean.class, ordinal = 1, argsOnly = true))
+    @Expression("isSpectator")
+    @ModifyExpressionValue(method = "setupRender", at = @At("MIXINEXTRAS:EXPRESSION"))
+    *///? }
     private boolean disableSmartCullInPM(boolean original) {
         PictureModeState state = PictureModeClient.getState();
         return !state.isEnabled() && original;
     }
-    //? }
 }
