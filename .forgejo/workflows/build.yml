@@ -1,0 +1,58 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - '**/*.java'
+      - '**/*.gradle'
+      - '**/*.kts'
+      - '**/*.json'
+      - '**/*.properties'
+      - '.forgejo/workflows/build.yml'
+    tags:
+      - '!**'
+  pull_request:
+    branches:
+      - '**'
+    paths:
+      - '**/*.java'
+      - '**/*.gradle'
+      - '**/*.kts'
+      - '**/*.json'
+      - '**/*.properties'
+
+jobs:
+  build:
+
+    runs-on: codeberg-large
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 21
+      uses: https://github.com/actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+    - name: Build artifacts
+      run: ./gradlew build
+      env:
+        CI: 'true'
+    - name: Get build hash
+      id: get-build-hash
+      run: |
+        echo "id=$(echo ${{forgejo.sha}} | cut -c 1-7)" >> $FORGEJO_OUTPUT
+    - name: Get branch name
+      id: get-branch
+      shell: bash
+      run: |
+        echo "branch=$(echo ${FORGEJO_HEAD_REF:-${FORGEJO_REF#refs/heads/}} | sed -e 's/[ \t:\/\\"<>|*?]/-/g' -e 's/--*/-/g')" >> $FORGEJO_OUTPUT
+    - name: Upload build artifacts
+      uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+      with:
+        name: PictureMode-${{steps.get-branch.outputs.branch}}-${{steps.get-build-hash.outputs.id}}
+        path: |
+          build/libs/fabric
+          build/libs/neoforge
+          build/libs/forge
