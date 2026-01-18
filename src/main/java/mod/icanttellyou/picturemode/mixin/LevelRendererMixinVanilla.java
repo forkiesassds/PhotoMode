@@ -69,6 +69,6 @@ public class LevelRendererMixinVanilla {
     @ModifyExpressionValue(method = /*? >=1.21.9 {*/ "cullTerrain" /*?} else {*/ /*"setupRender" *//*?}*/, at = @At("MIXINEXTRAS:EXPRESSION"))
     private boolean disableSmartCullInPM(boolean original) {
         PictureModeState state = PictureModeClient.getState();
-        return state.isEnabled() && original;
+        return !state.isEnabled() && original;
     }
 }
