@@ -17,7 +17,7 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
       - name: Build and publish
-        run: ./gradlew build publishMods --stacktrace
+        run: ./gradlew build publishMods --stacktrace --no-daemon
         env:
           CI: 'true'
           FORGEJO_TOKEN: ${{secrets.FORGEJO_TOKEN}}
