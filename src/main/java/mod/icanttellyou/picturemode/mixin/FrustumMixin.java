@@ -24,7 +24,7 @@ public class FrustumMixin {
         double width = state.adjustViewportDimension(mc.getWindow().getWidth(), delta);
         double height = state.adjustViewportDimension(mc.getWindow().getHeight(), delta);
 
-        if (width < offset || height < offset) {
+        if (width < offset * Frustum.OFFSET_STEP || height < offset * Frustum.OFFSET_STEP) {
             cir.setReturnValue((Frustum) (Object) this);
         }
     }
