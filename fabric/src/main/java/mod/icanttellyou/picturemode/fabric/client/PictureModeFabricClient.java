@@ -1,4 +1,4 @@
-package mod.icanttellyou.picturemode.fabric;
+package mod.icanttellyou.picturemode.fabric.client;
 
 import mod.icanttellyou.picturemode.client.PictureModeClient;
 import net.fabricmc.api.ClientModInitializer;

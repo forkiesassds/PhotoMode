@@ -18,7 +18,7 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "mod.icanttellyou.picturemode.fabric.PictureModeFabricClient"
+      "mod.icanttellyou.picturemode.fabric.client.PictureModeFabricClient"
     ]
   },
   "mixins": [
