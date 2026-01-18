@@ -19,9 +19,9 @@ import org.spongepowered.asm.mixin.injection.At;
     //"me.jellysquid.mods.sodium.client.render.chunk.RenderSectionManager"
 }, remap = false)
 public abstract class RenderSectionManagerMixin {
-    @Definition(id = "minecraft", field = "Lnet/minecraft/client/renderer/LevelRenderer;minecraft:Lnet/minecraft/client/Minecraft;")
     @Definition(id = "smartCull", field = "Lnet/minecraft/client/Minecraft;smartCull:Z")
-    @Expression("this.minecraft.smartCull")
+    @Definition(id = "getInstance", method = "Lnet/minecraft/client/Minecraft;getInstance()Lnet/minecraft/client/Minecraft;")
+    @Expression("getInstance().smartCull")
     @ModifyExpressionValue(method = "shouldUseOcclusionCulling", at = @At("MIXINEXTRAS:EXPRESSION"))
     private boolean disableSmartCullInPM(boolean original) {
         PictureModeState state = PictureModeClient.getState();
