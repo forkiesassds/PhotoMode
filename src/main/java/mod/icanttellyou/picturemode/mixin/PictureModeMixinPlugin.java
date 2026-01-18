@@ -15,8 +15,8 @@ public class PictureModeMixinPlugin implements IMixinConfigPlugin {
     private static final Supplier<Boolean> TRUE = () -> true;
     private static final Map<String, Supplier<Boolean>> CONDITIONS = ImmutableMap.of(
         //? if <=1.21.1
-        //"mod.icanttellyou.picturemode.mixin.compat.sodium.SodiumWorldRendererMixinLegacy", () -> PictureModeServices.PLATFORM.isModPresent("sodium"),
-        "mod.icanttellyou.picturemode.mixin.compat.sodium.SodiumWorldRendererMixin", () -> PictureModeServices.PLATFORM.isModPresent("sodium"),
+        //"mod.icanttellyou.picturemode.mixin.compat.sodium.SodiumWorldRendererMixin", () -> PictureModeServices.PLATFORM.isModPresent("sodium"),
+        "mod.icanttellyou.picturemode.mixin.compat.sodium.RenderSectionManagerMixin", () -> PictureModeServices.PLATFORM.isModPresent("sodium"),
         "mod.icanttellyou.picturemode.mixin.compat.sodium.DefaultChunkRendererMixin", () -> PictureModeServices.PLATFORM.isModPresent("sodium"),
         "mod.icanttellyou.picturemode.mixin.LevelRendererMixinVanilla", () -> !PictureModeServices.PLATFORM.isModPresent("sodium")
     );
