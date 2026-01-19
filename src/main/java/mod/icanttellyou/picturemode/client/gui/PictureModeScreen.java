@@ -1,5 +1,6 @@
 package mod.icanttellyou.picturemode.client.gui;
 
+import com.mojang.blaze3d.platform.Window;
 import mod.icanttellyou.picturemode.client.PictureModeClient;
 import mod.icanttellyou.picturemode.client.PictureModeState;
 import mod.icanttellyou.picturemode.client.gui.layout.AnchorLayout;
@@ -29,6 +30,13 @@ public class PictureModeScreen extends Screen {
     private final Screen parent;
     private final PictureModeState pmState;
     private final AnchorLayout layout;
+
+    private double cameraPanXStart;
+    private double cameraPanYStart;
+    private double cameraRotationStart;
+
+    private double mouseXStart;
+    private double mouseYStart;
 
     public PictureModeScreen(Screen parent, Component title) {
         super(title);
@@ -163,6 +171,63 @@ public class PictureModeScreen extends Screen {
             pmState.cameraZoom.addToGoal(0.25D, this.getDeltaTicks());
         }
 
+        return true;
+    }
+
+    @Override
+    //? if >=1.21.9 {
+    public boolean mouseDragged(net.minecraft.client.input.MouseButtonEvent event, double deltaX, double deltaY) {
+        double mouseX = event.x();
+        double mouseY = event.y();
+
+        int button = event.button();
+    //? } else {
+    /*public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+    *///? }
+
+        Window window = minecraft.getWindow();
+        mouseX *= (double) window.getScreenWidth() / window.getGuiScaledWidth();
+        mouseY *= (double) window.getScreenHeight() / window.getGuiScaledHeight();
+
+        float delta = this.getDeltaTicks();
+
+        if (!super.mouseDragged(event, deltaX, deltaY)) {
+            if (button == 0) {
+                double zoom = pmState.cameraZoom.getValue(this.getDeltaTicks());
+                double div = Math.pow(2.0, zoom) / 3.0D;
+
+                pmState.cameraPanX.setGoal(cameraPanXStart + (mouseX - mouseXStart) / div, delta);
+                pmState.cameraPanY.setGoal(cameraPanYStart + (mouseY - mouseYStart) / div, delta);
+            } else {
+                pmState.cameraRotation.setGoal(cameraRotationStart + (mouseX - mouseXStart) / 128.0F * ROTATION_STEP_SIZE, delta);
+            }
+        }
+        return true;
+    }
+
+    @Override
+    //? if >=1.21.9 {
+    public boolean mouseClicked(net.minecraft.client.input.MouseButtonEvent event, boolean isDoubleClick) {
+        double mouseX = event.x();
+        double mouseY = event.y();
+    //? } else {
+    /*public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    *///? }
+
+        Window window = minecraft.getWindow();
+        mouseX *= (double) window.getScreenWidth() / window.getGuiScaledWidth();
+        mouseY *= (double) window.getScreenHeight() / window.getGuiScaledHeight();
+
+        if (!super.mouseClicked(event, isDoubleClick)) {
+            mouseXStart = mouseX;
+            mouseYStart = mouseY;
+
+            float delta = this.getDeltaTicks();
+
+            cameraPanXStart = pmState.cameraPanX.getValue(delta);
+            cameraPanYStart = pmState.cameraPanY.getValue(delta);
+            cameraRotationStart = pmState.cameraRotation.getValue(delta);
+        }
         return true;
     }
 

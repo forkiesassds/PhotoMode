@@ -20,6 +20,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LevelRenderer.class)
 public class LevelRendererMixinVanilla {
     @Unique private double pm$lastZoom = Double.MIN_VALUE;
+    @Unique private double pm$lastPanX = Double.MIN_VALUE;
+    @Unique private double pm$lastPanY = Double.MIN_VALUE;
 
     @Shadow @Final private Minecraft minecraft;
 
@@ -37,7 +39,8 @@ public class LevelRendererMixinVanilla {
         PictureModeState state = PictureModeClient.getState();
         double delta = /*? >=1.21 {*/ minecraft.getDeltaTracker().getGameTimeDeltaPartialTick(true) /*?} else {*/ /*minecraft.getFrameTime() *//*?}*/;
 
-        return original || (state.isEnabled() && state.cameraZoom.getValue(delta) != pm$lastZoom);
+        return original || (state.isEnabled() && (state.cameraZoom.getValue(delta) != pm$lastZoom ||
+                state.cameraPanX.getValue(delta) != pm$lastPanX || state.cameraPanY.getValue(delta) != pm$lastPanY));
     }
 
     @Inject(
@@ -61,6 +64,8 @@ public class LevelRendererMixinVanilla {
 
         double delta = /*? >=1.21 {*/ minecraft.getDeltaTracker().getGameTimeDeltaPartialTick(true) /*?} else {*/ /*minecraft.getFrameTime() *//*?}*/;
         this.pm$lastZoom = state.cameraZoom.getValue(delta);
+        this.pm$lastPanX = state.cameraPanX.getValue(delta);
+        this.pm$lastPanY = state.cameraPanY.getValue(delta);
     }
 
     @Definition(id = "minecraft", field = "Lnet/minecraft/client/renderer/LevelRenderer;minecraft:Lnet/minecraft/client/Minecraft;")

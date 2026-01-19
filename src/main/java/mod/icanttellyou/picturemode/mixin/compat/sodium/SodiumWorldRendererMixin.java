@@ -21,11 +21,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Pseudo
 @Mixin(targets = "me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer", remap = false)
 public class SodiumWorldRendererMixin {
-    @Unique
-    private double pm$lastZoom = Double.MIN_VALUE;
+    @Unique private double pm$lastZoom = Double.MIN_VALUE;
+    @Unique private double pm$lastPanX = Double.MIN_VALUE;
+    @Unique private double pm$lastPanY = Double.MIN_VALUE;
 
-    @Shadow
-    private Minecraft client;
+    @Shadow private Minecraft client;
 
     @Definition(id = "lastFogDistance", field = "Lme/jellysquid/mods/sodium/client/render/SodiumWorldRenderer;lastFogDistance:F")
     @Definition(id = "fogDistance", local = @Local(type = float.class, ordinal = 2))
@@ -35,7 +35,8 @@ public class SodiumWorldRendererMixin {
         PictureModeState state = PictureModeClient.getState();
         double delta = /^? >=1.21 {^/ client.getDeltaTracker().getGameTimeDeltaPartialTick(true) /^?} else {^/ /^client.getFrameTime() ^//^?}^/;
 
-        return original || (state.isEnabled() && state.cameraZoom.getValue(delta) != pm$lastZoom);
+        return original || (state.isEnabled() && (state.cameraZoom.getValue(delta) != pm$lastZoom ||
+                state.cameraPanX.getValue(delta) != pm$lastPanX || state.cameraPanY.getValue(delta) != pm$lastPanY));
     }
 
     @Inject(
@@ -55,6 +56,8 @@ public class SodiumWorldRendererMixin {
 
         double delta = /^? >=1.21 {^/ client.getDeltaTracker().getGameTimeDeltaPartialTick(true) /^?} else {^/ /^client.getFrameTime() ^//^?}^/;
         this.pm$lastZoom = state.cameraZoom.getValue(delta);
+        this.pm$lastPanX = state.cameraPanX.getValue(delta);
+        this.pm$lastPanY = state.cameraPanY.getValue(delta);
     }
 }
 *///? }
