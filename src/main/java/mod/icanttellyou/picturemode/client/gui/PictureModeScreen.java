@@ -191,7 +191,7 @@ public class PictureModeScreen extends Screen {
 
         float delta = this.getDeltaTicks();
 
-        if (!super.mouseDragged(event, deltaX, deltaY)) {
+        if (!super.mouseDragged(/*? >=1.21.9 {*/ event, /*? } else {*/ /*mouseX, mouseY, button, *//*?}*/ deltaX, deltaY)) {
             if (button == 0) {
                 double zoom = pmState.cameraZoom.getValue(this.getDeltaTicks());
                 double div = Math.pow(2.0, zoom) / 3.0D;
@@ -199,7 +199,7 @@ public class PictureModeScreen extends Screen {
                 pmState.cameraPanX.setGoal(cameraPanXStart + (mouseX - mouseXStart) / div, delta);
                 pmState.cameraPanY.setGoal(cameraPanYStart + (mouseY - mouseYStart) / div, delta);
             } else {
-                pmState.cameraRotation.setGoal(cameraRotationStart + (mouseX - mouseXStart) / 128.0F * ROTATION_STEP_SIZE, delta);
+                pmState.cameraRotation.setGoal(cameraRotationStart + (mouseX - mouseXStart) * (ROTATION_STEP_SIZE / 128.0D), delta);
             }
         }
         return true;
@@ -218,7 +218,7 @@ public class PictureModeScreen extends Screen {
         mouseX *= (double) window.getScreenWidth() / window.getGuiScaledWidth();
         mouseY *= (double) window.getScreenHeight() / window.getGuiScaledHeight();
 
-        if (!super.mouseClicked(event, isDoubleClick)) {
+        if (!super.mouseClicked(/*? >=1.21.9 {*/ event, isDoubleClick /*? } else {*/ /*mouseX, mouseY, button *//*?}*/)) {
             mouseXStart = mouseX;
             mouseYStart = mouseY;
 
