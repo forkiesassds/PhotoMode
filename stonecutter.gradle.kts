@@ -19,5 +19,10 @@ stonecutter.parameters {
             direction = eval(current.version, "<1.21.2")
             replace("getDeltaTracker()", "getTimer()")
         }
+
+        string {
+            direction = eval(current.version, "<1.21.11")
+            replace("Identifier", "ResourceLocation")
+        }
     }
 }

@@ -30,7 +30,7 @@ public abstract class PauseScreenMixin extends Screen {
 
         Level level = this.minecraft.level;
         boolean disabled = level.dimensionTypeRegistration().is(TagKey.create(Registries.DIMENSION_TYPE,
-                Identifier.parse("picturemode:disabled")));
+                Identifier.tryParse("picturemode:disabled")));
 
         pmButton.active = !disabled;
         this.addRenderableWidget(pmButton);
