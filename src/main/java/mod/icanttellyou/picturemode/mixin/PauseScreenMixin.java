@@ -1,12 +1,12 @@
 package mod.icanttellyou.picturemode.mixin;
 
+import mod.icanttellyou.picturemode.PictureMode;
 import mod.icanttellyou.picturemode.client.gui.PictureModeScreen;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,7 +30,7 @@ public abstract class PauseScreenMixin extends Screen {
 
         Level level = this.minecraft.level;
         boolean disabled = level.dimensionTypeRegistration().is(TagKey.create(Registries.DIMENSION_TYPE,
-                Identifier.tryParse("picturemode:disabled")));
+            PictureMode.createId("disabled")));
 
         pmButton.active = !disabled;
         this.addRenderableWidget(pmButton);

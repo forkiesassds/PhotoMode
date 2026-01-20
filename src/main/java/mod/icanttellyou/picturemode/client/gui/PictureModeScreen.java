@@ -4,11 +4,15 @@ import com.mojang.blaze3d.platform.Window;
 import mod.icanttellyou.picturemode.client.PictureModeClient;
 import mod.icanttellyou.picturemode.client.PictureModeState;
 import mod.icanttellyou.picturemode.client.gui.layout.AnchorLayout;
+import mod.icanttellyou.picturemode.client.gui.widget.FadingStringWidget;
 import mod.icanttellyou.picturemode.client.gui.widget.Slider;
 import mod.icanttellyou.picturemode.util.LevelUtils;
+import mod.icanttellyou.picturemode.util.Tickable;
+import net.minecraft.SharedConstants;
 import net.minecraft.client.Screenshot;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -24,12 +28,15 @@ public class PictureModeScreen extends Screen {
     private static final String TILT_KEY = "gui.picturemode.tilt";
 
     private static final String TAKE_SCREENSHOT_KEY = "gui.picturemode.takeScreenshot";
+    private static final String HELP_TEXT_KEY = "gui.picturemode.helpText";
 
     private boolean isTakingScreenshot;
 
-    private final Screen parent;
     private final PictureModeState pmState;
+
+    private final Screen parent;
     private final AnchorLayout layout;
+    private FadingStringWidget helpText;
 
     private double cameraPanXStart;
     private double cameraPanYStart;
@@ -56,7 +63,8 @@ public class PictureModeScreen extends Screen {
             super.render(graphics, mouseX, mouseY, partialTick);
         } else {
             Screenshot.grab(minecraft.gameDirectory, minecraft.getMainRenderTarget(), message -> {
-                //TODO: help text display
+                helpText.setMessage(message);
+                repositionElements();
             });
             isTakingScreenshot = false;
         }
@@ -135,11 +143,26 @@ public class PictureModeScreen extends Screen {
 
     private GridLayout makeActions() {
         GridLayout layout = new GridLayout();
-        layout.defaultCellSetting()
+        layout.defaultCellSetting().alignHorizontallyCenter();
+
+        GridLayout actions = new GridLayout();
+        actions.defaultCellSetting()
             .alignHorizontallyCenter()
             .paddingHorizontal(1);
 
-        GridLayout.RowHelper rows = layout.createRowHelper(3);
+        GridLayout.RowHelper columns = layout.createRowHelper(1);
+        GridLayout.RowHelper rows = actions.createRowHelper(3);
+
+        this.helpText = new FadingStringWidget(Component.translatable(HELP_TEXT_KEY),
+            this.font, SharedConstants.TICKS_PER_SECOND * 5, true);
+        //? if >=1.21.11 {
+        this.helpText.setComponentClickHandler(style ->
+            defaultHandleGameClickEvent(style.getClickEvent(), minecraft, this));
+        //? } else {
+        /*this.helpText.setComponentClickHandler(this::handleComponentClicked);
+        *///? }
+
+        columns.addChild(this.helpText, rows.newCellSettings().paddingBottom(12));
 
         rows.addChild(Button.builder(Component.literal("<"), button ->
                 pmState.cameraRotation.addToGoal(ROTATION_STEP_SIZE, this.getDeltaTicks()))
@@ -154,6 +177,7 @@ public class PictureModeScreen extends Screen {
             .width(20)
             .build());
 
+        columns.addChild(actions);
         return layout;
     }
 
@@ -185,13 +209,13 @@ public class PictureModeScreen extends Screen {
     /*public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
     *///? }
 
-        Window window = minecraft.getWindow();
-        mouseX *= (double) window.getScreenWidth() / window.getGuiScaledWidth();
-        mouseY *= (double) window.getScreenHeight() / window.getGuiScaledHeight();
-
         float delta = this.getDeltaTicks();
 
         if (!super.mouseDragged(/*? >=1.21.9 {*/ event, /*? } else {*/ /*mouseX, mouseY, button, *//*?}*/ deltaX, deltaY)) {
+            Window window = minecraft.getWindow();
+            mouseX *= (double) window.getScreenWidth() / window.getGuiScaledWidth();
+            mouseY *= (double) window.getScreenHeight() / window.getGuiScaledHeight();
+
             if (button == 0) {
                 double zoom = pmState.cameraZoom.getValue(this.getDeltaTicks());
                 double div = Math.pow(2.0, zoom) / 3.0D;
@@ -214,11 +238,11 @@ public class PictureModeScreen extends Screen {
     /*public boolean mouseClicked(double mouseX, double mouseY, int button) {
     *///? }
 
-        Window window = minecraft.getWindow();
-        mouseX *= (double) window.getScreenWidth() / window.getGuiScaledWidth();
-        mouseY *= (double) window.getScreenHeight() / window.getGuiScaledHeight();
-
         if (!super.mouseClicked(/*? >=1.21.9 {*/ event, isDoubleClick /*? } else {*/ /*mouseX, mouseY, button *//*?}*/)) {
+            Window window = minecraft.getWindow();
+            mouseX *= (double) window.getScreenWidth() / window.getGuiScaledWidth();
+            mouseY *= (double) window.getScreenHeight() / window.getGuiScaledHeight();
+
             mouseXStart = mouseX;
             mouseYStart = mouseY;
 
@@ -227,6 +251,8 @@ public class PictureModeScreen extends Screen {
             cameraPanXStart = pmState.cameraPanX.getValue(delta);
             cameraPanYStart = pmState.cameraPanY.getValue(delta);
             cameraRotationStart = pmState.cameraRotation.getValue(delta);
+
+            helpText.fadeOut();
         }
         return true;
     }
@@ -234,6 +260,15 @@ public class PictureModeScreen extends Screen {
     @Override
     public void removed() {
         this.pmState.setEnabled(false);
+    }
+
+    @Override
+    public void tick() {
+        for (GuiEventListener eventListener : this.children()) {
+            if (eventListener instanceof Tickable tickable) {
+                tickable.onTick();
+            }
+        }
     }
 
     @Override
