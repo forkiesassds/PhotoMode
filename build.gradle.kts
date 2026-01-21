@@ -10,6 +10,7 @@ loom {
     mixin {
         useLegacyMixinAp = false
     }
+
     decompilers {
         named("vineflower") { // Adds names to lambdas - useful for mixins
             options.put("mark-corresponding-synthetics", "1")
