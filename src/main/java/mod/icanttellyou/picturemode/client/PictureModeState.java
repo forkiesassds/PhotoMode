@@ -125,6 +125,8 @@ public class PictureModeState {
         cameraPanX.setValue(0.0D);
         cameraPanY.setValue(0.0D);
 //        shaderIntensity.setValue(1.0D);
+
+        showPlayer = true;
     }
 
     /**
