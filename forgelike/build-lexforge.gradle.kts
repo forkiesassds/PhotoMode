@@ -66,7 +66,7 @@ tasks {
         finalizedBy("reobfJar")
 
         manifest.attributes(mapOf(
-            "MixinConfigs" to "picturemode-common.mixins.json,picturemode-forgelike.mixins.json"
+            "MixinConfigs" to "picturemode-common.mixins.json"
         ))
     }
 }
