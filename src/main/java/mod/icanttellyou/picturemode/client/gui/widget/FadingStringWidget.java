@@ -28,6 +28,7 @@ public class FadingStringWidget extends AbstractStringWidget implements Tickable
     private TextOverflow textOverflow = TextOverflow.CLAMPED;
 
     private final InterpolatedValue alphaFade = new InterpolatedValue(Easing.LINEAR, 1.0D, (double) SharedConstants.TICKS_PER_SECOND / 2);
+    private boolean wasMouseOver = false;
     private boolean haltFading;
     private final int defaultTicksUntilFade;
     private int ticksUntilFade;
@@ -111,8 +112,10 @@ public class FadingStringWidget extends AbstractStringWidget implements Tickable
         if (this.isMouseOver(mouseX, mouseY)) {
             this.resetFade();
             this.haltFading = true;
-        } else {
+            this.wasMouseOver = true;
+        } else if (this.wasMouseOver) {
             this.haltFading = false;
+            this.wasMouseOver = false;
         }
 
         //? if >=1.21.11 {
