@@ -2,6 +2,7 @@ package mod.icanttellyou.picturemode.forgelike.events;
 
 import mod.icanttellyou.picturemode.PictureMode;
 import mod.icanttellyou.picturemode.client.PictureModeClient;
+import mod.icanttellyou.picturemode.client.PictureModeState;
 import net.minecraft.client.Minecraft;
 //? if neoforge {
 import net.neoforged.api.distmarker.Dist;
@@ -58,10 +59,11 @@ public class GameEventsClient {
         *///? }
 
         Minecraft mc = Minecraft.getInstance();
+        PictureModeState state = PictureModeClient.getStateUnsafe();
 
-        if (mc.level == null)
+        if (mc.level == null || state == null)
             return;
 
-        PictureModeClient.getState().tick();
+        state.tick();
     }
 }
