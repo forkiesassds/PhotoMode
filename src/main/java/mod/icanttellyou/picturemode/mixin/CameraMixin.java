@@ -26,6 +26,6 @@ public abstract class CameraMixin {
             return;
 
         state.setupCameraAngles(delta, this::setRotation);
-        this.detached = true;
+        this.detached = state.isPlayerShown();
     }
 }

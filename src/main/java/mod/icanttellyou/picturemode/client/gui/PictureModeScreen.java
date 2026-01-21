@@ -15,6 +15,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
 import static mod.icanttellyou.picturemode.PictureModeConstants.*;
@@ -23,6 +24,8 @@ public class PictureModeScreen extends Screen {
     private static final String DEFAULT_KEY = "gui.picturemode.default";
     private static final String DEGREES_KEY = "gui.picturemode.degrees";
 
+    private static final String CENTER_CAMERA_KEY = "gui.picturemode.centerCamera";
+    private static final String SHOW_PLAYER_KEY = "gui.picturemode.showPlayer";
     private static final String TIME_KEY = "gui.picturemode.time";
     private static final String FOG_KEY = "gui.picturemode.fog";
     private static final String TILT_KEY = "gui.picturemode.tilt";
@@ -37,6 +40,7 @@ public class PictureModeScreen extends Screen {
     private final Screen parent;
     private final AnchorLayout layout;
     private FadingStringWidget helpText;
+    private Button centerCameraButton;
 
     private double cameraPanXStart;
     private double cameraPanYStart;
@@ -59,6 +63,9 @@ public class PictureModeScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        centerCameraButton.active =
+            (pmState.cameraPanX.getValue(partialTick) != 0.0D || pmState.cameraPanY.getValue(partialTick) != 0.0D) &&
+                    (pmState.cameraPanX.getGoal() != 0.0D || pmState.cameraPanY.getGoal() != 0.0D);
         if (!isTakingScreenshot) {
             super.render(graphics, mouseX, mouseY, partialTick);
         } else {
@@ -101,6 +108,20 @@ public class PictureModeScreen extends Screen {
 
         GridLayout.RowHelper rows = layout.createRowHelper(1);
 
+        rows.addChild(centerCameraButton = Button.builder(Component.translatable(CENTER_CAMERA_KEY),
+            button -> {
+                pmState.cameraPanX.setGoal(0.0D, this.getDeltaTicks());
+                pmState.cameraPanY.setGoal(0.0D, this.getDeltaTicks());
+            })
+            .build());
+        rows.addChild(Button.builder(Component.translatable(SHOW_PLAYER_KEY,
+                                CommonComponents.optionStatus(pmState.isPlayerShown())),
+            button -> {
+                pmState.togglePlayerShown();
+                button.setMessage(Component.translatable(SHOW_PLAYER_KEY,
+                        CommonComponents.optionStatus(pmState.isPlayerShown())));
+            })
+            .build());
         rows.addChild(new Slider(0, 0, DEFAULT_TILT / TILT_ANGLES,
             (slider, value, messageUpdate) -> {
                 if (!messageUpdate) {

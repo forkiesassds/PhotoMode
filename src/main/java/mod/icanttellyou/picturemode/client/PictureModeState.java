@@ -24,8 +24,10 @@ public class PictureModeState {
     public final Value fog = new InterpolatedValue(Easing.EXPONENTIAL, 1.0D, 100.0D);
     public final Value cameraPanX = new InterpolatedValue(Easing.EXPONENTIAL, 5.0D);
     public final Value cameraPanY = new InterpolatedValue(Easing.EXPONENTIAL, 5.0D);
-    public final Value shaderIntensity = new StaticValue(1.0D);
+//    public final Value shaderIntensity = new StaticValue(1.0D);
     public final Value timeOverride = new StaticValue();
+
+    private boolean showPlayer = true;
 
     private final List<Tickable> tickingCallbacks = new ArrayList<>();
 
@@ -82,6 +84,22 @@ public class PictureModeState {
     }
 
     /**
+     * Is the player to be shown in Picture Mode.
+     *
+     * @return Returns boolean on if the player is to be shown.
+     */
+    public boolean isPlayerShown() {
+        return showPlayer;
+    }
+
+    /**
+     * Toggles on if the player is to be shown in Picture Mode.
+     */
+    public void togglePlayerShown() {
+        showPlayer = !showPlayer;
+    }
+
+    /**
      * Ticks all the ticking callbacks for this state
      */
     public void tick() {
@@ -106,7 +124,7 @@ public class PictureModeState {
         fog.setValue(1.0D);
         cameraPanX.setValue(0.0D);
         cameraPanY.setValue(0.0D);
-        shaderIntensity.setValue(1.0D);
+//        shaderIntensity.setValue(1.0D);
     }
 
     /**
