@@ -7,8 +7,6 @@ plugins {
 }
 
 loom {
-    accessWidenerPath = stonecutter.process(commonProject.file("../../src/main/resources/picturemode.accesswidener"), "build/dev.aw")
-
     runConfigs.all {
         ideConfigGenerated(true)
         runDir = "../../../run"
@@ -16,14 +14,6 @@ loom {
 
     runs {
         removeIf { it.environment == "server" }
-    }
-}
-
-fletchingTable {
-    mixins.create("main") {
-        mixin("default", "picturemode-fabric.mixins.json") {
-            env("CLIENT")
-        }
     }
 }
 

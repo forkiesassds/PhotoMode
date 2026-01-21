@@ -4,10 +4,11 @@
   "version": "${version}",
 
   "name": "Picture Mode",
-  "description": "This mod adds an isometric view of the world dedicated for taking pictures.\nPorted with permission from Better than Adventure!",
+  "description": "This mod adds an isometric view of the world dedicated for taking pictures.\nInspired by the Photo Mode from Better Than Adventure!",
   "authors": ["icanttellyou"],
   "contributors": [],
   "contact": {
+    "homepage": "https://modrinth.com/project/picture-mode",
     "sources": "https://codeberg.org/icanttellyou/PictureMode",
     "issues": "https://codeberg.org/icanttellyou/PictureMode/issues"
   },
@@ -22,13 +23,11 @@
     ]
   },
   "mixins": [
-    "picturemode-common.mixins.json",
-    "picturemode-fabric.mixins.json"
+    "picturemode-common.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.17.0",
     "fabric-api": "*",
     "minecraft": "${fabric_minecraft_version_range}"
-  },
-  "accessWidener": "picturemode.accesswidener"
+  }
 }

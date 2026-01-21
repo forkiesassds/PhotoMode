@@ -25,20 +25,7 @@ neoForge {
 dependencies {
 }
 
-fletchingTable {
-    mixins.create("main") {
-        mixin("default", "picturemode-forgelike.mixins.json") {
-            env("CLIENT")
-        }
-    }
-}
-
 neoForge {
-    val at = rootProject.file("forgelike/src/main/resources/META-INF/at.cfg") //project.file("build/resources/main/META-INF/accesstransformer.cfg")
-
-    accessTransformers.from(at.absolutePath)
-    validateAccessTransformers = true
-
     runs {
         register("client") {
             client()
@@ -69,11 +56,4 @@ tasks.processResources {
             name = "neoforge.mods.toml"
         }
     }
-
-    filesMatching("META-INF/at.cfg") {
-        name = "accesstransformer.cfg"
-    }
-
-    exclude("picturemode.accesswidener")
-    exclude("META-INF/at-forge.cfg")
 }

@@ -10,9 +10,6 @@ loom {
     mixin {
         useLegacyMixinAp = false
     }
-
-    accessWidenerPath = stonecutter.process(file("../../src/main/resources/picturemode.accesswidener"), "build/dev.aw")
-
     decompilers {
         named("vineflower") { // Adds names to lambdas - useful for mixins
             options.put("mark-corresponding-synthetics", "1")

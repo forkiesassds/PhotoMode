@@ -30,27 +30,13 @@ dependencies {
     implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.5.0") as Any)
 }
 
-fletchingTable {
-    mixins.create("main") {
-        mixin("default", "picturemode-forgelike.mixins.json") {
-            env("CLIENT")
-        }
-    }
-}
-
 mixin {
     add(sourceSets.main.get(), "picturemode.refmap.json")
 
     config("picturemode-common.mixins.json")
-    config("picturemode-forgelike.mixins.json")
 }
 
 legacyForge {
-    val at = rootProject.file("forgelike/src/main/resources/META-INF/at-forge.cfg") //project.file("build/resources/main/META-INF/accesstransformer.cfg")
-
-    accessTransformers.from(at.absolutePath)
-    validateAccessTransformers = true
-
     runs {
         register("client") {
             client()
@@ -82,14 +68,5 @@ tasks {
         manifest.attributes(mapOf(
             "MixinConfigs" to "picturemode-common.mixins.json,picturemode-forgelike.mixins.json"
         ))
-    }
-
-    processResources {
-        filesMatching("META-INF/at-forge.cfg") {
-            name = "accesstransformer.cfg"
-        }
-
-        exclude("picturemode.accesswidener")
-        exclude("META-INF/at.cfg")
     }
 }

@@ -6,18 +6,16 @@ license = "MIT"
 [[mixins]]
 config = "picturemode-common.mixins.json"
 
-[[mixins]]
-config = "picturemode-forgelike.mixins.json"
-
 [[mods]]
 modId = "picturemode"
 version = "${version}"
 displayName = "Picture Mode"
+displayURL = "https://modrinth.com/project/picture-mode"
 authors = "icanttellyou"
 #credits = ""
 description = '''
 This mod adds an isometric view of the world dedicated for taking pictures.
-Ported with permission from Better than Adventure!
+Inspired by the Photo Mode from Better Than Adventure!
 '''
 #logoFile = "assets/picturemode/banner.png"
 
