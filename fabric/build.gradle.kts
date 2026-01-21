@@ -38,10 +38,18 @@ dependencies {
 
 tasks {
     processResources {
-        exclude("assets/moderner_beta/banner.png")
+        exclude("assets/picturemode/banner.png")
     }
 
     remapJar {
         destinationDirectory = rootProject.layout.buildDirectory.dir("libs/$loader")
+    }
+}
+
+publishMods {
+    file.set(tasks.remapJar.get().archiveFile)
+
+    modrinth {
+        requires("fabric-api")
     }
 }

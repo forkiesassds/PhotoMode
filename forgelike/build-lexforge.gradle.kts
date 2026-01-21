@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm")
     id("com.google.devtools.ksp")
     id("dev.kikugie.fletching-table")
+    id("me.modmuss50.mod-publish-plugin")
 }
 
 project.ext["loader"] = "forge"
@@ -73,4 +74,8 @@ tasks {
     processResources {
         exclude("assets/picturemode/icon.png")
     }
+}
+
+publishMods {
+    file.set(tasks.jar.get().archiveFile)
 }

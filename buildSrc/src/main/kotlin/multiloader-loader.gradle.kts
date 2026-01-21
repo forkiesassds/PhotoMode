@@ -2,6 +2,7 @@ plugins {
     id("java")
     id("idea")
     id("multiloader-common")
+    id("me.modmuss50.mod-publish-plugin")
 }
 
 val commonJava: Configuration by configurations.creating {
@@ -21,6 +22,33 @@ dependencies {
     commonJava(project(path = commonPath, configuration = "commonJava"))
     commonResources(project(path = commonPath, configuration = "commonResources"))
 }
+
+publishMods {
+    displayName = "Picture Mode " + commonMod.version
+    version = project.version.toString() + "-" + loader
+
+    changelog = rootProject.file("CHANGELOG.md").readText()
+    type = STABLE
+
+    modLoaders.addAll(supported_loaders!!)
+
+    modrinth {
+        accessToken = System.getenv("MODRINTH_TOKEN")
+        projectId = commonMod.prop("modrinth_project_id")
+        minecraftVersions.addAll(commonMod.prop("supported_versions").split(",").toList())
+    }
+
+    github {
+        accessToken = System.getenv("_GITHUB_TOKEN")
+        parent(project(":").tasks.named("publishGithub"))
+    }
+
+    forgejo {
+        accessToken = System.getenv("FORGEJO_TOKEN")
+        parent(project(":").tasks.named("publishForgejo"))
+    }
+}
+
 
 tasks {
     compileJava {
