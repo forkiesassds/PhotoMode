@@ -17,7 +17,7 @@ description = '''
 This mod adds an isometric view of the world dedicated for taking pictures.
 Inspired by the Photo Mode from Better than Adventure!
 '''
-#logoFile = "assets/picturemode/banner.png"
+logoFile = "assets/picturemode/banner.png"
 
 [[dependencies.picturemode]]
 modId = "${loader}"

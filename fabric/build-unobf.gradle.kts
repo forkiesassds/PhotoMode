@@ -29,3 +29,7 @@ dependencies {
         compileOnly("com.terraformersmc:modmenu:${commonMod.prop("mod_menu_version")}")
     }
 }
+
+tasks.processResources {
+    exclude("assets/moderner_beta/banner.png")
+}

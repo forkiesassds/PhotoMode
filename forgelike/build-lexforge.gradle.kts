@@ -69,4 +69,8 @@ tasks {
             "MixinConfigs" to "picturemode-common.mixins.json"
         ))
     }
+
+    processResources {
+        exclude("assets/picturemode/icon.png")
+    }
 }

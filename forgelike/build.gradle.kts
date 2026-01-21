@@ -56,4 +56,6 @@ tasks.processResources {
             name = "neoforge.mods.toml"
         }
     }
+
+    exclude("assets/picturemode/icon.png")
 }

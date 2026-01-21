@@ -36,6 +36,12 @@ dependencies {
     }
 }
 
-tasks.remapJar {
-    destinationDirectory = rootProject.layout.buildDirectory.dir("libs/$loader")
+tasks {
+    processResources {
+        exclude("assets/moderner_beta/banner.png")
+    }
+
+    remapJar {
+        destinationDirectory = rootProject.layout.buildDirectory.dir("libs/$loader")
+    }
 }
