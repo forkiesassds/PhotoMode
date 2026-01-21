@@ -19,7 +19,6 @@ public class PictureModeMixinPlugin implements IMixinConfigPlugin {
         "mod.icanttellyou.picturemode.mixin.compat.sodium.RenderSectionManagerMixin", () -> PictureModeServices.PLATFORM.isModPresent("sodium"),
         "mod.icanttellyou.picturemode.mixin.compat.sodium.DefaultChunkRendererMixin", () -> PictureModeServices.PLATFORM.isModPresent("sodium"),
         "mod.icanttellyou.picturemode.mixin.compat.nt.NostalgicPauseScreenMixin", () -> PictureModeServices.PLATFORM.isModPresent("nostalgic_tweaks"),
-        "mod.icanttellyou.picturemode.mixin.compat.nt.OverworldFogRendererMixin", () -> PictureModeServices.PLATFORM.isModPresent("nostalgic_tweaks"),
         "mod.icanttellyou.picturemode.mixin.LevelRendererMixinVanilla", () -> !PictureModeServices.PLATFORM.isModPresent("sodium")
     );
 
