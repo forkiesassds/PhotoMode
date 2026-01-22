@@ -77,5 +77,5 @@ tasks {
 }
 
 publishMods {
-    file.set(tasks.jar.get().archiveFile)
+    file.set(tasks.getByName<Jar>("reobfJar").archiveFile)
 }
