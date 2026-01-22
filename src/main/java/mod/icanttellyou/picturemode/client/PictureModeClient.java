@@ -1,5 +1,12 @@
 package mod.icanttellyou.picturemode.client;
 
+import mod.icanttellyou.picturemode.client.gui.PictureModeScreen;
+import mod.icanttellyou.picturemode.util.LevelUtils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+
 public class PictureModeClient {
     private static PictureModeState state;
 
@@ -22,6 +29,26 @@ public class PictureModeClient {
      */
     public static PictureModeState getStateUnsafe() {
         return state;
+    }
+
+    public static Button makePMButton(Minecraft minecraft, Screen screen) {
+        Button pmButton = Button.builder(Component.translatable("gui.picturemode"),
+            button -> {
+                if (LevelUtils.isPMDisabledForDimension(minecraft.level)) {
+                    button.active = false;
+                    return;
+                }
+
+                minecraft.setScreen(new PictureModeScreen(screen, Component.literal("")));
+            })
+            .pos(screen.width / 2 - 48, 8)
+            .width(98)
+            .build();
+
+        boolean disabled = LevelUtils.isPMDisabledForDimension(minecraft.level);
+
+        pmButton.active = !disabled;
+        return pmButton;
     }
 
     public static void onWorldLoad() {
