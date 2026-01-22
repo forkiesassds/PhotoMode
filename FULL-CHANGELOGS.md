@@ -1,3 +1,8 @@
+# 1.0.4
+
+## Fixes
+- Fixed crash on Forge 1.20.1
+
 # 1.0.3
 
 ## Fixes
