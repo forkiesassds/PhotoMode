@@ -17,6 +17,7 @@ import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Util;
 
 import static mod.icanttellyou.picturemode.PictureModeConstants.*;
 
@@ -41,6 +42,7 @@ public class PictureModeScreen extends Screen {
     private final AnchorLayout layout;
     private FadingStringWidget helpText;
     private Button centerCameraButton;
+    private long openedAtMilis;
 
     private double cameraPanXStart;
     private double cameraPanYStart;
@@ -54,6 +56,8 @@ public class PictureModeScreen extends Screen {
         this.parent = parent;
         this.pmState = PictureModeClient.getState();
         this.layout = new AnchorLayout(0, 0);
+
+        this.openedAtMilis = Util.getMillis();
     }
 
     @Override
@@ -233,6 +237,9 @@ public class PictureModeScreen extends Screen {
         float delta = this.getDeltaTicks();
 
         if (!super.mouseDragged(/*? >=1.21.9 {*/ event, /*? } else {*/ /*mouseX, mouseY, button, *//*?}*/ deltaX, deltaY)) {
+            if (openedAtMilis + PANNING_INITIAL_DELAY_MS < Util.getMillis())
+                return true;
+
             Window window = minecraft.getWindow();
             mouseX *= (double) window.getScreenWidth() / window.getGuiScaledWidth();
             mouseY *= (double) window.getScreenHeight() / window.getGuiScaledHeight();

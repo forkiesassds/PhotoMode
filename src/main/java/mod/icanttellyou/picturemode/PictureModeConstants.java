@@ -6,4 +6,6 @@ public class PictureModeConstants {
 
     public static final double DEFAULT_ROTATION = ROTATION_STEP_SIZE * 1;
     public static final double DEFAULT_TILT = 30.0D;
+
+    public static final long PANNING_INITIAL_DELAY_MS = 250L;
 }

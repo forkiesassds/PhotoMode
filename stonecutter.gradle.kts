@@ -55,6 +55,7 @@ stonecutter.parameters {
         string {
             direction = eval(current.version, "<1.21.11")
             replace("Identifier", "ResourceLocation")
+            replace("net.minecraft.util.Util", "net.minecraft.Util")
         }
     }
 }
