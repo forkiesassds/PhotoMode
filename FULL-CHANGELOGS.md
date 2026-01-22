@@ -1,3 +1,8 @@
+# 1.0.5
+
+## Fixes
+- Fixed multiplayer related crashes
+
 # 1.0.4
 
 ## Fixes
