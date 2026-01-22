@@ -3,10 +3,10 @@ package mod.icanttellyou.picturemode.util;
 import mod.icanttellyou.picturemode.PictureMode;
 //? if >=1.21.11 {
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.timeline.Timeline;
 import net.minecraft.world.timeline.Timelines;
 //? }
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
 
