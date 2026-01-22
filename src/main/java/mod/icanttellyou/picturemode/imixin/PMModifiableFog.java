@@ -15,17 +15,28 @@ public interface PMModifiableFog {
      * values for the current Picture Mode state.
      *
      * @param data         The {@link FogData} instance to modify
-     * @param deltaTracker The {@link DeltaTracker} for getting current fog modifier
+     * @param partialTick  The delta ticks for used for getting the current fog modifier
      */
-    default void pictureMode$modifyFog(FogData data, DeltaTracker deltaTracker) {
+    default void pictureMode$modifyFog(FogData data, double partialTick) {
         PictureModeState state = PictureModeClient.getState();
 
         if (!state.isEnabled())
             return;
 
-        float fogModifier = (float) state.fog.getValue(deltaTracker.getGameTimeDeltaPartialTick(true));
+        float fogModifier = (float) state.fog.getValue(partialTick);
         data.environmentalStart *= fogModifier;
         data.environmentalEnd *= fogModifier;
+    }
+
+    /**
+     * Modifies the {@link net.minecraft.client.renderer.fog.environment.FogEnvironment}
+     * values for the current Picture Mode state.
+     *
+     * @param data         The {@link FogData} instance to modify
+     * @param deltaTracker The {@link DeltaTracker} for getting current fog modifier
+     */
+    default void pictureMode$modifyFog(FogData data, DeltaTracker deltaTracker) {
+        pictureMode$modifyFog(data, deltaTracker.getGameTimeDeltaPartialTick(true));
     }
 }
 //? }

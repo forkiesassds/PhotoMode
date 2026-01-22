@@ -17,6 +17,14 @@ loom {
     }
 }
 
+fletchingTable {
+    mixins.create("main") {
+        mixin("default", "picturemode-fabric.mixins.json") {
+            env("CLIENT")
+        }
+    }
+}
+
 dependencies {
     minecraft("com.mojang:minecraft:${commonMod.mc}")
 

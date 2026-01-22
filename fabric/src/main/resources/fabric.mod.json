@@ -23,7 +23,8 @@
     ]
   },
   "mixins": [
-    "picturemode-common.mixins.json"
+    "picturemode-common.mixins.json",
+    "picturemode-fabric.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.17.0",

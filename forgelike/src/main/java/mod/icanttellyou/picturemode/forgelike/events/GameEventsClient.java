@@ -3,6 +3,8 @@ package mod.icanttellyou.picturemode.forgelike.events;
 import mod.icanttellyou.picturemode.PictureMode;
 import mod.icanttellyou.picturemode.client.PictureModeClient;
 import mod.icanttellyou.picturemode.client.PictureModeState;
+//? if >=1.21.6
+import mod.icanttellyou.picturemode.imixin.PMModifiableFog;
 import net.minecraft.client.Minecraft;
 //? if neoforge {
 import net.neoforged.api.distmarker.Dist;
@@ -11,9 +13,13 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 //? if <1.20.5
 //import net.neoforged.neoforge.event.TickEvent
+//? if >=1.21.6
+import net.neoforged.neoforge.client.event.ScreenEvent;
+import net.neoforged.neoforge.client.event.ViewportEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 //? } else {
 /*import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -40,8 +46,9 @@ public class GameEventsClient {
     }
 
     @SubscribeEvent
-    public static void onLevelUnload(LevelEvent.Unload event) {
-        PictureModeClient.onWorldExit();
+    public static void onGuiPostInit(ScreenEvent.Init.Post event) {
+        if (Minecraft.getInstance().level == null)
+            PictureModeClient.onWorldExit();
     }
 
     @SubscribeEvent
@@ -66,4 +73,13 @@ public class GameEventsClient {
 
         state.tick();
     }
+
+    //? if neoforge && >=1.21.6 {
+    @SubscribeEvent
+    public static void onFogSetup(ViewportEvent.RenderFog event) {
+        if (event.getEnvironment() instanceof PMModifiableFog pmModifiableFog) {
+            pmModifiableFog.pictureMode$modifyFog(event.getFogData(), event.getPartialTick());
+        }
+    }
+    //? }
 }

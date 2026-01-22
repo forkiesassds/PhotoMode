@@ -1,5 +1,5 @@
 //? if >=1.21.6 {
-package mod.icanttellyou.picturemode.mixin;
+package mod.icanttellyou.picturemode.fabric.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import mod.icanttellyou.picturemode.imixin.PMModifiableFog;
