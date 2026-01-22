@@ -22,7 +22,7 @@ public abstract class CameraMixin {
     private void setupPMRotation(@Coerce BlockGetter level, Entity entity, boolean detached, boolean mirror, float delta, CallbackInfo ci) {
         PictureModeState state = PictureModeClient.getState();
 
-        if (!state.isEnabled())
+        if (state == null || !state.isEnabled())
             return;
 
         state.setupCameraAngles(delta, this::setRotation);

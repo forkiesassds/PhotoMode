@@ -28,7 +28,7 @@ public abstract class ClientLevelMixin extends Level {
     @Override
     public long getDayTime() {
         long dayTime = super.getDayTime();
-        PictureModeState state = PictureModeClient.getStateUnsafe();
+        PictureModeState state = PictureModeClient.getState();
 
         if (state == null || !state.isEnabled())
             return dayTime;

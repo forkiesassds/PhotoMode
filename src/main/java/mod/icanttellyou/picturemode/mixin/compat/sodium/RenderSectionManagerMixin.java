@@ -22,6 +22,6 @@ public abstract class RenderSectionManagerMixin {
     private void disableSmartCullInPM(CallbackInfoReturnable<Boolean> cir) {
         PictureModeState state = PictureModeClient.getState();
         boolean original = cir.getReturnValueZ();
-        cir.setReturnValue(!state.isEnabled() && original);
+        cir.setReturnValue((state == null || !state.isEnabled()) && original);
     }
 }

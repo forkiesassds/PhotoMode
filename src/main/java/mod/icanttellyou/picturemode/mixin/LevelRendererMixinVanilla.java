@@ -59,7 +59,7 @@ public class LevelRendererMixinVanilla {
     private void storeLastPMZoom(CallbackInfo ci) {
         PictureModeState state = PictureModeClient.getState();
 
-        if (!state.isEnabled())
+        if (state == null || !state.isEnabled())
             return;
 
         double delta = /*? >=1.21 {*/ minecraft.getDeltaTracker().getGameTimeDeltaPartialTick(true) /*?} else {*/ /*minecraft.getFrameTime() *//*?}*/;
@@ -74,6 +74,6 @@ public class LevelRendererMixinVanilla {
     @ModifyExpressionValue(method = /*? >=1.21.9 {*/ "cullTerrain" /*?} else {*/ /*"setupRender" *//*?}*/, at = @At("MIXINEXTRAS:EXPRESSION"))
     private boolean disableSmartCullInPM(boolean original) {
         PictureModeState state = PictureModeClient.getState();
-        return !state.isEnabled() && original;
+        return (state == null || !state.isEnabled()) && original;
     }
 }

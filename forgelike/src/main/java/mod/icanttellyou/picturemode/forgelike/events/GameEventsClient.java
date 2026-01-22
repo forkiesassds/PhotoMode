@@ -10,18 +10,16 @@ import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 //? if <1.20.5
 //import net.neoforged.neoforge.event.TickEvent
-import net.neoforged.neoforge.client.event.ScreenEvent;
 //? if >=1.21.6
 import net.neoforged.neoforge.client.event.ViewportEvent;
+import net.neoforged.neoforge.event.level.LevelEvent;
 //? } else {
 /*import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 *///? }
@@ -41,14 +39,13 @@ import net.minecraftforge.fml.common.Mod;
 )
 public class GameEventsClient {
     @SubscribeEvent
-    public static void onLogin(ClientPlayerNetworkEvent.LoggingIn event) {
+    public static void onLevelLoad(LevelEvent.Load event) {
         PictureModeClient.onWorldLoad();
     }
 
     @SubscribeEvent
-    public static void onGuiPostInit(ScreenEvent.Init.Post event) {
-        if (Minecraft.getInstance().level == null)
-            PictureModeClient.onWorldExit();
+    public static void onLevelUnload(LevelEvent.Unload event) {
+        PictureModeClient.onWorldExit();
     }
 
     @SubscribeEvent
@@ -66,7 +63,7 @@ public class GameEventsClient {
         *///? }
 
         Minecraft mc = Minecraft.getInstance();
-        PictureModeState state = PictureModeClient.getStateUnsafe();
+        PictureModeState state = PictureModeClient.getState();
 
         if (mc.level == null || state == null)
             return;

@@ -35,7 +35,7 @@ public class SodiumWorldRendererMixin {
         PictureModeState state = PictureModeClient.getState();
         double delta = /^? >=1.21 {^/ client.getDeltaTracker().getGameTimeDeltaPartialTick(true) /^?} else {^/ /^client.getFrameTime() ^//^?}^/;
 
-        return original || (state.isEnabled() && (state.cameraZoom.getValue(delta) != pm$lastZoom ||
+        return original || (state != null && state.isEnabled() && (state.cameraZoom.getValue(delta) != pm$lastZoom ||
                 state.cameraPanX.getValue(delta) != pm$lastPanX || state.cameraPanY.getValue(delta) != pm$lastPanY));
     }
 
@@ -51,7 +51,7 @@ public class SodiumWorldRendererMixin {
     private void storeLastPMZoom(CallbackInfo ci) {
         PictureModeState state = PictureModeClient.getState();
 
-        if (!state.isEnabled())
+        if (state == null || !state.isEnabled())
             return;
 
         double delta = /^? >=1.21 {^/ client.getDeltaTracker().getGameTimeDeltaPartialTick(true) /^?} else {^/ /^client.getFrameTime() ^//^?}^/;

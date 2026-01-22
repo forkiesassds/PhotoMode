@@ -22,7 +22,7 @@ public abstract class DefaultChunkRendererMixin {
     private static void bypassVisibleFacesCheckInPM(int originX, int originY, int originZ, int chunkX, int chunkY, int chunkZ, CallbackInfoReturnable<Integer> cir) {
         PictureModeState state = PictureModeClient.getState();
 
-        if (state.isEnabled())
+        if (state != null && state.isEnabled())
             cir.setReturnValue(-1);
     }
 }

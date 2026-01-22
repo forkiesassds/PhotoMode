@@ -36,7 +36,7 @@ public abstract class LevelRendererMixin {
     private CloudStatus hideCloudsInPM(Options instance, Operation<CloudStatus> original) {
         PictureModeState state = PictureModeClient.getState();
 
-        if (state.isEnabled())
+        if (state == null || state.isEnabled())
             return CloudStatus.OFF;
 
         return original.call(instance);

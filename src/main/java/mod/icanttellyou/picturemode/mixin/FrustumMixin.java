@@ -14,7 +14,7 @@ public class FrustumMixin {
     private void bypassOffsettingIfInPM(int offset, CallbackInfoReturnable<Frustum> cir) {
         PictureModeState state = PictureModeClient.getState();
 
-        if (!state.isEnabled())
+        if (state == null || !state.isEnabled())
             return;
 
         cir.setReturnValue((Frustum) (Object) this);

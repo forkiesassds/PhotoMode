@@ -33,7 +33,7 @@ public abstract class GameRendererMixin {
     @Inject(method = "render", at = @At("HEAD"))
     private void updatePMState(CallbackInfo ci) {
         if (pm$state == null)
-            pm$state = PictureModeClient.getStateUnsafe();
+            pm$state = PictureModeClient.getState();
     }
 
     @Inject(method = "getFov", at = @At("HEAD"), cancellable = true)

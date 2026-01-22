@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 public class RenderSystemMixin {
     @ModifyVariable(method = "setShaderFogStart", at = @At(value = "HEAD"), argsOnly = true)
     private static float applyPMFogModifierStart(float f) {
-        PictureModeState state = PictureModeClient.getStateUnsafe();
+        PictureModeState state = PictureModeClient.getState();
 
         if (state == null || !state.isEnabled() || f == Float.MAX_VALUE) {
             return f;
@@ -27,7 +27,7 @@ public class RenderSystemMixin {
 
     @ModifyVariable(method = "setShaderFogEnd", at = @At(value = "HEAD"), argsOnly = true)
     private static float applyPMFogModifierEnd(float f) {
-        PictureModeState state = PictureModeClient.getStateUnsafe();
+        PictureModeState state = PictureModeClient.getState();
 
         if (state == null || !state.isEnabled()) {
             return f;
