@@ -1,13 +1,12 @@
 package mod.icanttellyou.picturemode.mixin.compat.sodium;
 
-import com.llamalad7.mixinextras.expression.Definition;
-import com.llamalad7.mixinextras.expression.Expression;
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import mod.icanttellyou.picturemode.client.PictureModeClient;
 import mod.icanttellyou.picturemode.client.PictureModeState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @SuppressWarnings("UnresolvedMixinReference")
 @Pseudo
@@ -19,12 +18,10 @@ import org.spongepowered.asm.mixin.injection.At;
     //"me.jellysquid.mods.sodium.client.render.chunk.RenderSectionManager"
 }, remap = false)
 public abstract class RenderSectionManagerMixin {
-    @Definition(id = "smartCull", field = "Lnet/minecraft/client/Minecraft;smartCull:Z")
-    @Definition(id = "getInstance", method = "Lnet/minecraft/client/Minecraft;getInstance()Lnet/minecraft/client/Minecraft;")
-    @Expression("getInstance().smartCull")
-    @ModifyExpressionValue(method = "shouldUseOcclusionCulling", at = @At("MIXINEXTRAS:EXPRESSION"))
-    private boolean disableSmartCullInPM(boolean original) {
+    @Inject(method = "shouldUseOcclusionCulling", at = @At("RETURN"), cancellable = true)
+    private void disableSmartCullInPM(CallbackInfoReturnable<Boolean> cir) {
         PictureModeState state = PictureModeClient.getState();
-        return !state.isEnabled() && original;
+        boolean original = cir.getReturnValueZ();
+        cir.setReturnValue(!state.isEnabled() && original);
     }
 }
