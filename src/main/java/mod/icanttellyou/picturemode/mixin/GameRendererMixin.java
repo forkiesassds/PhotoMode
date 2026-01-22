@@ -32,11 +32,8 @@ public abstract class GameRendererMixin {
 
     @Inject(method = "render", at = @At("HEAD"))
     private void updatePMState(CallbackInfo ci) {
-        if (this.minecraft.level != null && pm$state == null) {
-            pm$state = PictureModeClient.getState();
-        } else if (this.minecraft.level == null) {
-            pm$state = null;
-        }
+        if (pm$state == null)
+            pm$state = PictureModeClient.getStateUnsafe();
     }
 
     @Inject(method = "getFov", at = @At("HEAD"), cancellable = true)
