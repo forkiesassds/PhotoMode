@@ -42,7 +42,8 @@ public class PictureModeScreen extends Screen {
     private final AnchorLayout layout;
     private FadingStringWidget helpText;
     private Button centerCameraButton;
-    private long openedAtMilis;
+
+    private final long openedAtMillis;
 
     private double cameraPanXStart;
     private double cameraPanYStart;
@@ -57,7 +58,7 @@ public class PictureModeScreen extends Screen {
         this.pmState = PictureModeClient.getState();
         this.layout = new AnchorLayout(0, 0);
 
-        this.openedAtMilis = Util.getMillis();
+        this.openedAtMillis = Util.getMillis();
     }
 
     @Override
@@ -237,7 +238,7 @@ public class PictureModeScreen extends Screen {
         float delta = this.getDeltaTicks();
 
         if (!super.mouseDragged(/*? >=1.21.9 {*/ event, /*? } else {*/ /*mouseX, mouseY, button, *//*?}*/ deltaX, deltaY)) {
-            if (openedAtMilis + PANNING_INITIAL_DELAY_MS < Util.getMillis())
+            if (openedAtMillis + PANNING_INITIAL_DELAY_MS >= Util.getMillis())
                 return true;
 
             Window window = minecraft.getWindow();
