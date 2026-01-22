@@ -1,3 +1,8 @@
+# 1.0.3
+
+## Fixes
+- Fixed crash when entering the pause screen pre-maturely
+
 # 1.0.2
 
 ## Fixes
