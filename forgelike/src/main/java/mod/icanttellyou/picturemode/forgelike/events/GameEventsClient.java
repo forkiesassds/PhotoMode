@@ -13,8 +13,8 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 //? if <1.20.5
 //import net.neoforged.neoforge.event.TickEvent
-//? if >=1.21.6
 import net.neoforged.neoforge.client.event.ScreenEvent;
+//? if >=1.21.6
 import net.neoforged.neoforge.client.event.ViewportEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 //? } else {
