@@ -23,18 +23,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin {
-    @Unique private PictureModeState pm$state = null;
     @Shadow @Final private Minecraft minecraft;
 
     //? if >=1.21.9
     @Shadow public abstract Matrix4f getProjectionMatrix(float fov);
     @Shadow public abstract float getDepthFar();
-
-    @Inject(method = "render", at = @At("HEAD"))
-    private void updatePMState(CallbackInfo ci) {
-        if (pm$state == null)
-            pm$state = PictureModeClient.getState();
-    }
 
     @Inject(method = "getFov", at = @At("HEAD"), cancellable = true)
     private void replaceFOVWithDeltaTicks(
@@ -43,13 +36,17 @@ public abstract class GameRendererMixin {
         boolean useFovSetting,
         CallbackInfoReturnable</*? >=1.21.2 {*/Float/*?} else {*//*Double*//*?}*/> cir
     ) {
-        if (pm$state.isEnabled())
+        PictureModeState state = PictureModeClient.getState();
+
+        if (state != null && state.isEnabled())
             cir.setReturnValue(/*? <1.21.2 {*//*(double) *//*?}*/ partialTick);
     }
 
     @Inject(method = "getProjectionMatrix", at = @At("HEAD"), cancellable = true)
     private void setupPMMatrices(/*? >=1.21.2 {*/ float /*?} else {*/ /*double *//*?}*/ fov, CallbackInfoReturnable<Matrix4f> cir) {
-        if (!pm$state.isEnabled())
+        PictureModeState state = PictureModeClient.getState();
+
+        if (state == null || !state.isEnabled())
             return;
 
         int width = minecraft.getWindow().getWidth();
@@ -57,13 +54,15 @@ public abstract class GameRendererMixin {
 
         float farPlane = getDepthFar();
 
-        cir.setReturnValue(pm$state.getProjectionMatrix(width, height, farPlane, fov));
+        cir.setReturnValue(state.getProjectionMatrix(width, height, farPlane, fov));
     }
 
     //? if >=1.21.9 {
     @Inject(method = "getProjectionMatrixForCulling", at = @At("HEAD"), cancellable = true)
     private void setupPMMatricesForCulling(float fov, CallbackInfoReturnable<Matrix4f> cir) {
-        if (pm$state.isEnabled())
+        PictureModeState state = PictureModeClient.getState();
+
+        if (state != null && state.isEnabled())
             cir.setReturnValue(getProjectionMatrix(fov));
     }
     //? } else {
@@ -74,7 +73,9 @@ public abstract class GameRendererMixin {
     /^@WrapOperation(method = "renderLevel", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(DD)D", remap = false))
     private double bypassFOVComparisonInPM(double a, double b, Operation<Double> original) {
     ^///? }
-        if (pm$state.isEnabled())
+        PictureModeState state = PictureModeClient.getState();
+
+        if (state != null && state.isEnabled())
             return a;
 
         return original.call(a, b);
@@ -83,13 +84,17 @@ public abstract class GameRendererMixin {
 
     @Inject(method = {"bobView", "bobHurt"}, at = @At("HEAD"), cancellable = true)
     private void cancelBobbingInPM(CallbackInfo ci) {
-        if (pm$state.isEnabled())
+        PictureModeState state = PictureModeClient.getState();
+
+        if (state != null && state.isEnabled())
             ci.cancel();
     }
 
     @Inject(method = "renderItemInHand", at = @At("HEAD"), cancellable = true)
     private void hideHandInPM(CallbackInfo ci) {
-        if (pm$state.isEnabled())
+        PictureModeState state = PictureModeClient.getState();
+
+        if (state != null && state.isEnabled())
             ci.cancel();
     }
 
@@ -97,10 +102,12 @@ public abstract class GameRendererMixin {
     @Expression("renderLevel")
     @ModifyExpressionValue(method = "render", at = @At(value = "MIXINEXTRAS:EXPRESSION", ordinal = 1))
     private boolean hideHudInPM(boolean original) {
-        if (pm$state == null)
+        PictureModeState state = PictureModeClient.getState();
+
+        if (state == null)
             return original;
 
-        return !pm$state.isEnabled() && original;
+        return !state.isEnabled() && original;
     }
 
     //? if >=1.21.6 {
@@ -112,7 +119,12 @@ public abstract class GameRendererMixin {
         )
     )
     private boolean hideSkyInPM(net.minecraft.client.gui.components.BossHealthOverlay instance, Operation<Boolean> original) {
-        return pm$state.isEnabled() || original.call(instance);
+        PictureModeState state = PictureModeClient.getState();
+
+        if (state == null)
+            return original.call(instance);
+
+        return state.isEnabled() || original.call(instance);
     }
     //? }
 }
