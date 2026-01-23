@@ -21,7 +21,7 @@ public abstract class LevelRendererMixin {
     private void hideSkyInPM(CallbackInfo ci) {
         PictureModeState state = PictureModeClient.getState();
 
-        if (state.isEnabled())
+        if (state != null && state.isEnabled())
             ci.cancel();
     }
     *///? }
