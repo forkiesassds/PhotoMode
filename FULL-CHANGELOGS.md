@@ -1,3 +1,9 @@
+# 1.0.8
+
+## Fixes
+- Fixed Picture Mode crashing the game after switching dimensions on Forge and NeoForge
+- Fixed multiplayer related crash on Fabric
+
 # 1.0.7
 
 ## Fixes

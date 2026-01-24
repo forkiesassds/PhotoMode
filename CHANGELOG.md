@@ -1,2 +1,3 @@
 ## Fixes
-- Fixed crash on versions older than 1.21.11
+- Fixed Picture Mode crashing the game after switching dimensions on Forge and NeoForge
+- Fixed multiplayer related crash on Fabric
