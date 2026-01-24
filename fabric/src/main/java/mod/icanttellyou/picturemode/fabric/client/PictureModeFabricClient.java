@@ -8,8 +8,6 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 public class PictureModeFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        ClientPlayConnectionEvents.JOIN.register((handler, server, client) ->
-                PictureModeClient.onWorldLoad());
         ClientPlayConnectionEvents.DISCONNECT.register((listener, mc) ->
                 PictureModeClient.onWorldExit());
 
