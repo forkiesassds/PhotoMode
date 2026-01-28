@@ -51,6 +51,10 @@ public class PictureModeState {
         float panX = (float) cameraPanX.getValue(delta);
         float panY = (float) cameraPanY.getValue(delta);
 
+        if (Float.isInfinite(farPlane)) {
+            farPlane = 9999.0F;
+        }
+
         return new Matrix4f()
             .setOrtho(-viewWidth, viewWidth, -viewHeight, viewHeight, -farPlane * 2.0F, farPlane * 2.0F)
             .translate(panX, -panY, 0.0F);

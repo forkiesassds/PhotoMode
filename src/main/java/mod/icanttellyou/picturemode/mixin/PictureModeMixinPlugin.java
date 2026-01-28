@@ -19,7 +19,11 @@ public class PictureModeMixinPlugin implements IMixinConfigPlugin {
         "mod.icanttellyou.picturemode.mixin.compat.sodium.RenderSectionManagerMixin", () -> PictureModeServices.PLATFORM.isModPresent("sodium"),
         "mod.icanttellyou.picturemode.mixin.compat.sodium.DefaultChunkRendererMixin", () -> PictureModeServices.PLATFORM.isModPresent("sodium"),
         "mod.icanttellyou.picturemode.mixin.compat.nt.NostalgicPauseScreenMixin", () -> PictureModeServices.PLATFORM.isModPresent("nostalgic_tweaks"),
-        "mod.icanttellyou.picturemode.mixin.LevelRendererMixinVanilla", () -> !PictureModeServices.PLATFORM.isModPresent("sodium")
+        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.BlockRendererMixin", () -> PictureModeServices.PLATFORM.isModPresent("vulkanmod"),
+        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.DrawBuffersMixin", () -> PictureModeServices.PLATFORM.isModPresent("vulkanmod"),
+        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.SectionGraphMixin", () -> PictureModeServices.PLATFORM.isModPresent("vulkanmod"),
+        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.VFrustumMixin", () -> PictureModeServices.PLATFORM.isModPresent("vulkanmod"),
+        "mod.icanttellyou.picturemode.mixin.LevelRendererMixinVanilla", () -> !PictureModeServices.PLATFORM.isModPresent("sodium") && !PictureModeServices.PLATFORM.isModPresent("vulkanmod")
     );
 
     @Override
