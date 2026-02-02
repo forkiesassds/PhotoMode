@@ -71,15 +71,15 @@ public class PictureModeScreen extends Screen {
         centerCameraButton.active =
             (pmState.cameraPanX.getValue(partialTick) != 0.0D || pmState.cameraPanY.getValue(partialTick) != 0.0D) &&
                     (pmState.cameraPanX.getGoal() != 0.0D || pmState.cameraPanY.getGoal() != 0.0D);
-        if (!isTakingScreenshot) {
-            super.render(graphics, mouseX, mouseY, partialTick);
-        } else {
+        if (isTakingScreenshot) {
             Screenshot.grab(minecraft.gameDirectory, minecraft.getMainRenderTarget(), message -> {
                 helpText.setMessage(message);
                 repositionElements();
             });
             isTakingScreenshot = false;
         }
+
+        super.render(graphics, mouseX, mouseY, partialTick);
     }
 
     @Override
