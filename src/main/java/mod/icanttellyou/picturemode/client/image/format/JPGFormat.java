@@ -29,7 +29,7 @@ public class JPGFormat implements NativeImageFormat {
                 //? } else {
                 /*((mod.icanttellyou.picturemode.mixin.NativeImageAccessor) (Object) image).getPixels(),
                 *///? }
-                CONFIG.quality.value()
+                75
             );
 
             writeCallback.throwIfException();
