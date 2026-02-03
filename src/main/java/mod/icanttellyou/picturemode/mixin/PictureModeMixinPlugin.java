@@ -1,6 +1,7 @@
 package mod.icanttellyou.picturemode.mixin;
 
 import com.google.common.collect.ImmutableMap;
+import mod.icanttellyou.picturemode.PictureMode;
 import mod.icanttellyou.picturemode.services.PictureModeServices;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
@@ -19,11 +20,12 @@ public class PictureModeMixinPlugin implements IMixinConfigPlugin {
         "mod.icanttellyou.picturemode.mixin.compat.sodium.RenderSectionManagerMixin", () -> PictureModeServices.PLATFORM.isModPresent("sodium"),
         "mod.icanttellyou.picturemode.mixin.compat.sodium.DefaultChunkRendererMixin", () -> PictureModeServices.PLATFORM.isModPresent("sodium"),
         "mod.icanttellyou.picturemode.mixin.compat.nt.NostalgicPauseScreenMixin", () -> PictureModeServices.PLATFORM.isModPresent("nostalgic_tweaks"),
-        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.BlockRendererMixin", () -> PictureModeServices.PLATFORM.isModPresent("vulkanmod"),
-        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.DrawBuffersMixin", () -> PictureModeServices.PLATFORM.isModPresent("vulkanmod"),
-        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.SectionGraphMixin", () -> PictureModeServices.PLATFORM.isModPresent("vulkanmod"),
-        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.VFrustumMixin", () -> PictureModeServices.PLATFORM.isModPresent("vulkanmod"),
-        "mod.icanttellyou.picturemode.mixin.LevelRendererMixinVanilla", () -> !PictureModeServices.PLATFORM.isModPresent("sodium") && !PictureModeServices.PLATFORM.isModPresent("vulkanmod")
+        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.BlockRendererMixin", () -> PictureMode.HAS_VULKANMOD,
+        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.DrawBuffersMixin", () -> PictureMode.HAS_VULKANMOD,
+        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.SectionGraphMixin", () -> PictureMode.HAS_VULKANMOD,
+        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.VFrustumMixin", () -> PictureMode.HAS_VULKANMOD,
+        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.WorldRendererMixin", () -> PictureMode.HAS_VULKANMOD,
+        "mod.icanttellyou.picturemode.mixin.LevelRendererMixinVanilla", () -> !PictureModeServices.PLATFORM.isModPresent("sodium") && !PictureMode.HAS_VULKANMOD
     );
 
     @Override

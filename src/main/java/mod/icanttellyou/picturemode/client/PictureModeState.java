@@ -1,5 +1,6 @@
 package mod.icanttellyou.picturemode.client;
 
+import mod.icanttellyou.picturemode.PictureMode;
 import mod.icanttellyou.picturemode.PictureModeConstants;
 import mod.icanttellyou.picturemode.util.LoggingUtil;
 import mod.icanttellyou.picturemode.util.Tickable;
@@ -7,6 +8,7 @@ import mod.icanttellyou.picturemode.value.Easing;
 import mod.icanttellyou.picturemode.value.InterpolatedValue;
 import mod.icanttellyou.picturemode.value.StaticValue;
 import mod.icanttellyou.picturemode.value.Value;
+import net.minecraft.client.Minecraft;
 import org.joml.Matrix4f;
 import org.slf4j.event.Level;
 
@@ -149,6 +151,13 @@ public class PictureModeState {
      */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+
+        //HACK: Reload all chunks if using VulkanMod.
+        // This is because when Backface Culling is enabled,
+        // some chunks do not render at all until they're refreshed.
+        if (PictureMode.HAS_VULKANMOD) {
+            Minecraft.getInstance().levelRenderer.allChanged();
+        }
     }
 
     /**
