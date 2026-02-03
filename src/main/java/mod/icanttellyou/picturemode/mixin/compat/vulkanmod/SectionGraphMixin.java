@@ -7,8 +7,11 @@ import mod.icanttellyou.picturemode.client.PictureModeState;
 import net.minecraft.client.Minecraft;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 
+@SuppressWarnings("UnresolvedMixinReference")
+@Pseudo
 @Mixin(targets = "net.vulkanmod.render.chunk.graph.SectionGraph", remap = false)
 public abstract class SectionGraphMixin {
     @WrapOperation(
