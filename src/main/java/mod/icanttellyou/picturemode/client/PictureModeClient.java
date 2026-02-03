@@ -1,5 +1,6 @@
 package mod.icanttellyou.picturemode.client;
 
+import mod.icanttellyou.picturemode.client.config.PictureModeClientConfig;
 import mod.icanttellyou.picturemode.client.gui.PictureModeScreen;
 import mod.icanttellyou.picturemode.util.LevelUtils;
 import net.minecraft.client.Minecraft;
@@ -9,6 +10,7 @@ import net.minecraft.network.chat.Component;
 
 public class PictureModeClient {
     private static PictureModeState state;
+    public static PictureModeClientConfig config;
 
     /**
      * Gets the current Picture Mode state

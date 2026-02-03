@@ -1,6 +1,7 @@
 package mod.icanttellyou.picturemode.client.image.format;
 
 import com.mojang.blaze3d.platform.NativeImage;
+import com.mojang.serialization.Codec;
 import mod.icanttellyou.picturemode.client.image.ImageWriteCallback;
 import org.lwjgl.stb.STBImage;
 import org.lwjgl.stb.STBImageWrite;
@@ -35,6 +36,30 @@ public class JPGFormat implements NativeImageFormat {
             writeCallback.throwIfException();
             if (write == 0)
                 throw new IOException("Failed to write image: " + STBImage.stbi_failure_reason());
+        }
+    }
+
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Codec<Config> getConfigProviderCodec() {
+        return Config.CODEC;
+    }
+
+    public static class Config implements ConfigProvider {
+        public static final Codec<Config> CODEC = Codec.intRange(0, 100).optionalFieldOf("quality", 75).codec()
+                .xmap(Config::new, config -> config.quality);
+
+        public int quality;
+
+        public Config(int quality) {
+            this.quality = quality;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public Codec<Config> getCodec() {
+            return CODEC;
         }
     }
 }

@@ -1,6 +1,7 @@
 package mod.icanttellyou.picturemode.client.image.format;
 
 import com.mojang.blaze3d.platform.NativeImage;
+import com.mojang.serialization.Codec;
 import mod.icanttellyou.picturemode.util.LoggingUtil;
 import org.slf4j.event.Level;
 
@@ -42,5 +43,18 @@ public interface NativeImageFormat {
         }
 
         return height;
+    }
+
+    /**
+     * Gets the codec for format's config provider
+     *
+     * @return The format's config provider codec
+     */
+    default <P extends ConfigProvider> Codec<P> getConfigProviderCodec() {
+        return Codec.EMPTY.codec().xmap(a -> null, a -> null);
+    }
+
+    interface ConfigProvider {
+        <P extends ConfigProvider> Codec<P> getCodec();
     }
 }

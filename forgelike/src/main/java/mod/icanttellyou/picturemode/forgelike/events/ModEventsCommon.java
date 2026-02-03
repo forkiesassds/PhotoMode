@@ -19,13 +19,12 @@ import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 /*@Mod(PictureMode.MOD_ID)
 @Mod.EventBusSubscriber(
 *///?}
-    modid = PictureMode.MOD_ID,
+    modid = PictureMode.MOD_ID
     //? if neoforge && <1.21.1 {
-    /*bus = EventBusSubscriber.Bus.MOD,
+    /*, bus = EventBusSubscriber.Bus.MOD
     *///?} else if forge {
-    /*bus = Mod.EventBusSubscriber.Bus.MOD,
+    /*, bus = Mod.EventBusSubscriber.Bus.MOD
     *///?}
-    value = Dist.CLIENT
 )
 public class ModEventsCommon {
     @SubscribeEvent

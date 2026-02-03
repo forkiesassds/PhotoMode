@@ -27,4 +27,21 @@ public class NativeImageFormats {
 
         return format;
     }
+
+    /**
+     * Gets the ID for the given {@link NativeImageFormat}
+     *
+     * @param format The format to get the ID for.
+     * @return The ID for the given format.
+     */
+    public static String getFormatId(NativeImageFormat format) {
+        if (!FORMATS.containsValue(format))
+            throw new IllegalArgumentException("Format " + format + " is not registered!");
+
+        return FORMATS.entrySet().stream()
+                .filter(entry -> entry.getValue() == format)
+                .findFirst()
+                .orElseThrow()
+                .getKey();
+    }
 }
