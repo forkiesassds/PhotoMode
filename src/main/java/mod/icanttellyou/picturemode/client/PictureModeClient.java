@@ -2,6 +2,7 @@ package mod.icanttellyou.picturemode.client;
 
 import mod.icanttellyou.picturemode.client.config.PictureModeClientConfig;
 import mod.icanttellyou.picturemode.client.gui.PictureModeScreen;
+import mod.icanttellyou.picturemode.services.PictureModeServices;
 import mod.icanttellyou.picturemode.util.LevelUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
@@ -9,6 +10,9 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
 public class PictureModeClient {
+    public static final boolean HAS_SODIUM = PictureModeServices.PLATFORM.isModPresent("sodium");
+    public static final boolean HAS_VULKANMOD = PictureModeServices.PLATFORM.isModPresent("vulkanmod");
+
     private static PictureModeState state;
     public static PictureModeClientConfig config;
 

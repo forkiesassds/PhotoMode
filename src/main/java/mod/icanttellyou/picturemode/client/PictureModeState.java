@@ -7,6 +7,7 @@ import mod.icanttellyou.picturemode.value.Easing;
 import mod.icanttellyou.picturemode.value.InterpolatedValue;
 import mod.icanttellyou.picturemode.value.StaticValue;
 import mod.icanttellyou.picturemode.value.Value;
+import net.minecraft.client.Minecraft;
 import org.joml.Matrix4f;
 import org.slf4j.event.Level;
 
@@ -50,6 +51,10 @@ public class PictureModeState {
 
         float panX = (float) cameraPanX.getValue(delta);
         float panY = (float) cameraPanY.getValue(delta);
+
+        if (Float.isInfinite(farPlane)) {
+            farPlane = 9999.0F;
+        }
 
         return new Matrix4f()
             .setOrtho(-viewWidth, viewWidth, -viewHeight, viewHeight, -farPlane * 2.0F, farPlane * 2.0F)
@@ -145,6 +150,13 @@ public class PictureModeState {
      */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+
+        //HACK: Reload all chunks if using VulkanMod.
+        // This is because when Backface Culling is enabled,
+        // some chunks do not render at all until they're refreshed.
+        if (PictureModeClient.HAS_VULKANMOD) {
+            Minecraft.getInstance().levelRenderer.allChanged();
+        }
     }
 
     /**
