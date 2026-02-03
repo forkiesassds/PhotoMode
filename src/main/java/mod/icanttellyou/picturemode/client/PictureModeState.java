@@ -1,6 +1,5 @@
 package mod.icanttellyou.picturemode.client;
 
-import mod.icanttellyou.picturemode.PictureMode;
 import mod.icanttellyou.picturemode.PictureModeConstants;
 import mod.icanttellyou.picturemode.util.LoggingUtil;
 import mod.icanttellyou.picturemode.util.Tickable;
@@ -155,7 +154,7 @@ public class PictureModeState {
         //HACK: Reload all chunks if using VulkanMod.
         // This is because when Backface Culling is enabled,
         // some chunks do not render at all until they're refreshed.
-        if (PictureMode.HAS_VULKANMOD) {
+        if (PictureModeClient.HAS_VULKANMOD) {
             Minecraft.getInstance().levelRenderer.allChanged();
         }
     }
