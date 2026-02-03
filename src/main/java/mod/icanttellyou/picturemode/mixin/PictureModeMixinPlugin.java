@@ -16,7 +16,7 @@ public class PictureModeMixinPlugin implements IMixinConfigPlugin {
     private static final Supplier<Boolean> TRUE = () -> true;
     private static final Map<String, Supplier<Boolean>> CONDITIONS = ImmutableMap.of(
         //? if <=1.21.1
-        //"mod.icanttellyou.picturemode.mixin.compat.sodium.SodiumWorldRendererMixin", () -> PictureMode.HAS_SODIUM,
+        //"mod.icanttellyou.picturemode.mixin.compat.sodium.SodiumWorldRendererMixin", () -> PictureModeClient.HAS_SODIUM,
         "mod.icanttellyou.picturemode.mixin.compat.sodium.RenderSectionManagerMixin", () -> PictureModeClient.HAS_SODIUM,
         "mod.icanttellyou.picturemode.mixin.compat.sodium.DefaultChunkRendererMixin", () -> PictureModeClient.HAS_SODIUM,
         "mod.icanttellyou.picturemode.mixin.compat.nt.NostalgicPauseScreenMixin", () -> PictureModeServices.PLATFORM.isModPresent("nostalgic_tweaks"),
