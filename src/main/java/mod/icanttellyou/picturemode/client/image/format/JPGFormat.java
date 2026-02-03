@@ -39,7 +39,6 @@ public class JPGFormat implements NativeImageFormat {
         }
     }
 
-
     @SuppressWarnings("unchecked")
     @Override
     public Codec<Config> getConfigProviderCodec() {
