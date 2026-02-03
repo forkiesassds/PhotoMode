@@ -16,16 +16,16 @@ public class PictureModeMixinPlugin implements IMixinConfigPlugin {
     private static final Supplier<Boolean> TRUE = () -> true;
     private static final Map<String, Supplier<Boolean>> CONDITIONS = ImmutableMap.of(
         //? if <=1.21.1
-        //"mod.icanttellyou.picturemode.mixin.compat.sodium.SodiumWorldRendererMixin", () -> PictureModeServices.PLATFORM.isModPresent("sodium"),
-        "mod.icanttellyou.picturemode.mixin.compat.sodium.RenderSectionManagerMixin", () -> PictureModeServices.PLATFORM.isModPresent("sodium"),
-        "mod.icanttellyou.picturemode.mixin.compat.sodium.DefaultChunkRendererMixin", () -> PictureModeServices.PLATFORM.isModPresent("sodium"),
+        //"mod.icanttellyou.picturemode.mixin.compat.sodium.SodiumWorldRendererMixin", () -> PictureMode.HAS_SODIUM,
+        "mod.icanttellyou.picturemode.mixin.compat.sodium.RenderSectionManagerMixin", () -> PictureMode.HAS_SODIUM,
+        "mod.icanttellyou.picturemode.mixin.compat.sodium.DefaultChunkRendererMixin", () -> PictureMode.HAS_SODIUM,
         "mod.icanttellyou.picturemode.mixin.compat.nt.NostalgicPauseScreenMixin", () -> PictureModeServices.PLATFORM.isModPresent("nostalgic_tweaks"),
         "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.BlockRendererMixin", () -> PictureMode.HAS_VULKANMOD,
         "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.DrawBuffersMixin", () -> PictureMode.HAS_VULKANMOD,
         "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.SectionGraphMixin", () -> PictureMode.HAS_VULKANMOD,
         "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.VFrustumMixin", () -> PictureMode.HAS_VULKANMOD,
         "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.WorldRendererMixin", () -> PictureMode.HAS_VULKANMOD,
-        "mod.icanttellyou.picturemode.mixin.LevelRendererMixinVanilla", () -> !PictureModeServices.PLATFORM.isModPresent("sodium") && !PictureMode.HAS_VULKANMOD
+        "mod.icanttellyou.picturemode.mixin.LevelRendererMixinVanilla", () -> !PictureMode.HAS_SODIUM && !PictureMode.HAS_VULKANMOD
     );
 
     @Override

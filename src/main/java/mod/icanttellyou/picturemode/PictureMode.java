@@ -7,6 +7,7 @@ public class PictureMode {
     public static final String MOD_ID = "picturemode";
     public static final String MOD_NAME = "Picture Mode";
 
+    public static final boolean HAS_SODIUM = PictureModeServices.PLATFORM.isModPresent("sodium");
     public static final boolean HAS_VULKANMOD = PictureModeServices.PLATFORM.isModPresent("vulkanmod");
 
     public static Identifier createId(String name) {
