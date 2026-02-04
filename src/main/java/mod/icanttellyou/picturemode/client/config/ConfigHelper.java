@@ -34,7 +34,7 @@ public class ConfigHelper {
             if (configProvider == null)
                 continue;
 
-            configProvider.provideConfigOptions(builder, categoryBuilder);
+            configProvider.getGUIOptionsProvider().provide(builder, categoryBuilder);
         }
 
         return builder

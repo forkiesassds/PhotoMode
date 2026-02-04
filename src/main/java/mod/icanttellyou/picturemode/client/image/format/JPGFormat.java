@@ -94,28 +94,29 @@ public class JPGFormat implements NativeImageFormat {
         }
 
         /**
-         * Provides the config GUI options for the format
+         * Gets the config GUI options provider
          *
-         * @param builder      The config GUI builder instance
-         * @param mainCategory The main category builder instance
+         * @return The config GUI options provider for the format
          */
         @Override
-        public void provideConfigOptions(
-            YetAnotherConfigLib.Builder builder,
-            ConfigCategory.Builder mainCategory
-        ) {
-            mainCategory.group(OptionGroup.createBuilder()
-                .name(ConfigHelper.getConfigText("format.jpg.settings"))
-                .option(Option.<Integer>createBuilder()
-                    .name(ConfigHelper.getConfigText("format.jpg.quality.name"))
-                    .description(OptionDescription.of(ConfigHelper.getConfigText("format.jpg.quality.desc")))
-                    .binding(75,
-                        () -> this.quality, newVal -> this.quality = newVal)
-                    .controller(opt -> IntegerSliderControllerBuilder.create(opt)
-                        .range(0, 100)
-                        .step(1))
-                    .build())
-                .build());
+        public GUIOptionsProvider getGUIOptionsProvider() {
+            return new GUIOptionsProvider() {
+                @Override
+                public void provide(YetAnotherConfigLib.Builder builder, ConfigCategory.Builder mainCategory) {
+                    mainCategory.group(OptionGroup.createBuilder()
+                    .name(ConfigHelper.getConfigText("format.jpg.settings"))
+                    .option(Option.<Integer>createBuilder()
+                        .name(ConfigHelper.getConfigText("format.jpg.quality.name"))
+                        .description(OptionDescription.of(ConfigHelper.getConfigText("format.jpg.quality.desc")))
+                        .binding(75,
+                            () -> Config.this.quality, newVal -> Config.this.quality = newVal)
+                        .controller(opt -> IntegerSliderControllerBuilder.create(opt)
+                            .range(0, 100)
+                            .step(1))
+                        .build())
+                    .build());
+                }
+            };
         }
     }
 }

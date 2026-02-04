@@ -171,14 +171,33 @@ public interface NativeImageFormat {
         <P extends ConfigProvider> Codec<P> getCodec();
 
         /**
-         * Provides the config GUI options for the format
+         * Gets the config GUI options provider
          *
-         * @param builder      The config GUI builder instance
-         * @param mainCategory The main category builder instance
+         * @return The config GUI options provider for the format
          */
-        default void provideConfigOptions(
-            YetAnotherConfigLib.Builder builder,
-            ConfigCategory.Builder mainCategory
-        ) {}
+        default GUIOptionsProvider getGUIOptionsProvider() {
+            return new GUIOptionsProvider() {
+                @Override
+                public void provide(YetAnotherConfigLib.Builder builder, ConfigCategory.Builder mainCategory) {}
+            };
+        }
+
+        /**
+         * A class for providing GUI options
+         *
+         * @apiNote This is a class, as to avoid loading YACL at runtime.
+         */
+        abstract class GUIOptionsProvider {
+            /**
+             * Provides the config GUI options for the format
+             *
+             * @param builder      The config GUI builder instance
+             * @param mainCategory The main category builder instance
+             */
+            public abstract void provide(
+                YetAnotherConfigLib.Builder builder,
+                ConfigCategory.Builder mainCategory
+            );
+        }
     }
 }
