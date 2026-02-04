@@ -36,6 +36,8 @@ dependencies {
     } else {
         compileOnly("com.terraformersmc:modmenu:${commonMod.prop("mod_menu_version")}")
     }
+
+    implementation("dev.isxander:yet-another-config-lib:${commonMod.prop("yacl_version")}-fabric")
 }
 
 tasks.processResources {

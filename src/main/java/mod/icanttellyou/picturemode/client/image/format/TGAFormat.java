@@ -12,6 +12,16 @@ import java.nio.channels.WritableByteChannel;
 
 public class TGAFormat implements NativeImageFormat {
     /**
+     * Gets the name of the format
+     *
+     * @return The format name
+     */
+    @Override
+    public String getFormatName() {
+        return "tga";
+    }
+
+    /**
      * Writes the image to a buffer
      *
      * @param image   The image to write

@@ -40,6 +40,7 @@ dependencies {
     })
 
     modCompileOnly("net.fabricmc:fabric-loader:${commonMod.prop("fabric_loader_version")}")
+    modCompileOnly("dev.isxander:yet-another-config-lib:${commonMod.prop("yacl_version")}-fabric")
 }
 
 val commonJava: Configuration by configurations.creating {

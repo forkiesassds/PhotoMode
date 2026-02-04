@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Coerce;
 
+@SuppressWarnings("UnresolvedMixinReference")
 @Pseudo
 @Mixin(targets = "net.vulkanmod.render.chunk.build.renderer.BlockRenderer", remap = false)
 public class BlockRendererMixin {

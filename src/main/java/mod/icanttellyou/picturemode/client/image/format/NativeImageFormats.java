@@ -1,16 +1,21 @@
 package mod.icanttellyou.picturemode.client.image.format;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 public class NativeImageFormats {
-    public static final Map<String, NativeImageFormat> FORMATS = new HashMap<>();
+    public static final NativeImageFormat PNG_FORMAT = new PNGFormat();
+    public static final NativeImageFormat JPG_FORMAT = new JPGFormat();
+    public static final NativeImageFormat TGA_FORMAT = new TGAFormat();
+    public static final NativeImageFormat BMP_FORMAT = new BMPFormat();
+
+    public static final Set<NativeImageFormat> FORMATS = new HashSet<>();
 
     static {
-        FORMATS.put("png", new PNGFormat());
-        FORMATS.put("jpg", new JPGFormat());
-        FORMATS.put("tga", new TGAFormat());
-        FORMATS.put("bmp", new BMPFormat());
+        FORMATS.add(PNG_FORMAT);
+        FORMATS.add(JPG_FORMAT);
+        FORMATS.add(TGA_FORMAT);
+        FORMATS.add(BMP_FORMAT);
     }
 
     /**
@@ -20,28 +25,14 @@ public class NativeImageFormats {
      * @return The {@link NativeImageFormat} for the given file type
      */
     public static NativeImageFormat getFormat(String fileType) {
-        NativeImageFormat format = FORMATS.get(fileType);
+        NativeImageFormat format = FORMATS.stream()
+            .filter(f -> f.getFormatName().equals(fileType))
+            .findFirst()
+            .orElse(null);
 
         if (format == null)
             throw new IllegalArgumentException(fileType + " is not a valid format!");
 
         return format;
-    }
-
-    /**
-     * Gets the ID for the given {@link NativeImageFormat}
-     *
-     * @param format The format to get the ID for.
-     * @return The ID for the given format.
-     */
-    public static String getFormatId(NativeImageFormat format) {
-        if (!FORMATS.containsValue(format))
-            throw new IllegalArgumentException("Format " + format + " is not registered!");
-
-        return FORMATS.entrySet().stream()
-                .filter(entry -> entry.getValue() == format)
-                .findFirst()
-                .orElseThrow()
-                .getKey();
     }
 }

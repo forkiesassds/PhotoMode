@@ -24,6 +24,7 @@ neoForge {
 }
 
 dependencies {
+    implementation("dev.isxander:yet-another-config-lib:${commonMod.prop("yacl_version")}-neoforge")
 }
 
 neoForge {

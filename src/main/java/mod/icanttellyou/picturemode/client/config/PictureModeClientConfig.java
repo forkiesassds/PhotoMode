@@ -19,77 +19,27 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Iterator;
 import java.util.Map;
 
 public class PictureModeClientConfig {
-    @SuppressWarnings("unchecked")
     public static final Codec<PictureModeClientConfig> CODEC =
         RecordCodecBuilder.create(instance -> instance.group(
-                Codec.STRING.fieldOf("format").xmap(NativeImageFormats::getFormat, NativeImageFormats::getFormatId)
+                Codec.STRING.fieldOf("format").xmap(NativeImageFormats::getFormat, NativeImageFormat::getFormatName)
                         .forGetter(conf -> conf.format),
-                Codec.<Map<String, NativeImageFormat.ConfigProvider>>of(new Encoder<>() {
-                    @Override
-                    public <T> DataResult<T> encode(Map<String, NativeImageFormat.ConfigProvider> o, DynamicOps<T> ops, T t) {
-                        RecordBuilder<T> mapBuilder = ops.mapBuilder();
-
-                        for (Map.Entry<String, NativeImageFormat.ConfigProvider> entry : o.entrySet()) {
-                            String formatKey = entry.getKey();
-                            NativeImageFormat.ConfigProvider formatConfig = entry.getValue();
-
-                            DataResult<T> key = Codec.STRING.encodeStart(ops, formatKey);
-                            DataResult<T> value = formatConfig.getCodec().encodeStart(ops, formatConfig);
-
-                            if (value.error().isPresent()) {
-                                //noinspection OptionalGetWithoutIsPresent
-                                return DataResult.error(() -> "Failed to encode config for format " + formatKey + ": "
-                                        + value.error().get());
-                            }
-
-                            mapBuilder.add(key, value);
-                        }
-                        return mapBuilder.build(ops.emptyMap());
-                    }
-                }, new Decoder<>() {
-                    @Override
-                    public <T> DataResult<Pair<Map<String, NativeImageFormat.ConfigProvider>, T>> decode(DynamicOps<T> ops, T t) {
-                        DataResult<MapLike<T>> mapResult = ops.getMap(t);
-                        MapLike<T> map = mapResult.result().orElseThrow();
-
-                        ImmutableMap.Builder<String, NativeImageFormat.ConfigProvider> mapBuilder = ImmutableMap.builder();
-                        Iterator<Pair<T, T>> iterator = map.entries().iterator();
-                        while (iterator.hasNext()) {
-                            Pair<T, T> entry = iterator.next();
-                            String key = Codec.STRING.parse(ops, entry.getFirst()).result().orElseThrow();
-
-                            NativeImageFormat fileFormat = NativeImageFormats.FORMATS.get(key);
-                            if (fileFormat == null) {
-                                return DataResult.error(() -> "No such format as " + key + " exists");
-                            }
-
-                            Codec<NativeImageFormat.ConfigProvider> codec = fileFormat.getConfigProviderCodec();
-                            DataResult<NativeImageFormat.ConfigProvider> configResult = codec.parse(ops, entry.getSecond());
-
-                            if (configResult.error().isPresent()) {
-                                //noinspection OptionalGetWithoutIsPresent
-                                return DataResult.error(() -> "Failed to parse format " + key + ": " +
-                                        configResult.error().get().message());
-                            }
-                            NativeImageFormat.ConfigProvider config = configResult.result().orElseThrow();
-
-                            mapBuilder.put(key, config);
-                        }
-
-                        return DataResult.success(Pair.of(mapBuilder.build(), ops.empty()));
-                    }
-                }).fieldOf("format_settings").forGetter(conf -> conf.formatSettings)
+                NativeImageFormat.ConfigProvider.CONFIG_MAP_CODEC.fieldOf("format_settings")
+                        .forGetter(conf -> conf.formatSettings)
         ).apply(instance, PictureModeClientConfig::new));
 
     public NativeImageFormat format;
     public Map<String, NativeImageFormat.ConfigProvider> formatSettings;
 
     public PictureModeClientConfig() {
-        this(NativeImageFormats.getFormat("png"), ImmutableMap.of());
+        this(
+            NativeImageFormats.getFormat("png"),
+            NativeImageFormats.FORMATS.stream()
+                .collect(ImmutableMap.toImmutableMap(NativeImageFormat::getFormatName,
+                        NativeImageFormat::provideConfigProvider))
+        );
     }
 
     public PictureModeClientConfig(NativeImageFormat format, Map<String, NativeImageFormat.ConfigProvider> formatSettings) {

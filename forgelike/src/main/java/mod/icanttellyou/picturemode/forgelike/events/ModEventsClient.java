@@ -2,16 +2,22 @@ package mod.icanttellyou.picturemode.forgelike.events;
 
 import mod.icanttellyou.picturemode.PictureMode;
 import mod.icanttellyou.picturemode.client.PictureModeClient;
+import mod.icanttellyou.picturemode.client.config.ConfigHelper;
 import mod.icanttellyou.picturemode.client.config.PictureModeClientConfig;
+import mod.icanttellyou.picturemode.services.PictureModeServices;
 //? if neoforge {
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 //? } else {
 /*import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -33,13 +39,18 @@ import net.minecraftforge.fml.loading.FMLPaths;
 public class ModEventsClient {
     @SubscribeEvent
     public static void onInitialize(FMLClientSetupEvent event) {
-        /*if (FMLLoader.getLoadingModList().getModFileById("yet_another_config_lib_v3") != null) {
+        if (PictureModeServices.PLATFORM.isModPresent("yet_another_config_lib_v3")) {
             ModLoadingContext.get().registerExtensionPoint(
-                    IConfigScreenFactory.class,
-                    () -> (client, parent) ->
-                            ConfigHelper.getConfigScreen(parent, FMLPaths.CONFIGDIR.get(), PictureModeClient.config)
+                //? if neoforge {
+                IConfigScreenFactory.class,
+                () ->
+                //? } else {
+                /*ConfigScreenHandler.ConfigScreenFactory.class,
+                () -> new ConfigScreenHandler.ConfigScreenFactory
+                *///? }
+                ((client, parent) -> ConfigHelper.getConfigScreen(parent, FMLPaths.CONFIGDIR.get(), PictureModeClient.config))
             );
-        }*/
+        }
 
         PictureModeClient.config = PictureModeClientConfig.readConfig(FMLPaths.CONFIGDIR.get());
     }

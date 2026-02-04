@@ -34,6 +34,7 @@ dependencies {
     minecraft("com.mojang:minecraft:${commonMod.mc}")
 
     compileOnly("net.fabricmc:fabric-loader:${commonMod.propOrNull("fabric_loader_version")}")
+    compileOnly("dev.isxander:yet-another-config-lib:${commonMod.prop("yacl_version")}-fabric")
 }
 
 val commonJava: Configuration by configurations.creating {

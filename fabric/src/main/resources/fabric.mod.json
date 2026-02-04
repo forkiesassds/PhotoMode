@@ -20,6 +20,9 @@
   "entrypoints": {
     "client": [
       "mod.icanttellyou.picturemode.fabric.client.PictureModeFabricClient"
+    ],
+    "modmenu": [
+      "mod.icanttellyou.picturemode.fabric.client.ModMenuIntegration"
     ]
   },
   "mixins": [

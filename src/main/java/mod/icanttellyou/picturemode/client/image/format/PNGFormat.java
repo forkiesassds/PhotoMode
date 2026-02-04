@@ -10,6 +10,16 @@ import java.nio.channels.WritableByteChannel;
 
 public class PNGFormat implements NativeImageFormat {
     /**
+     * Gets the name of the format
+     *
+     * @return The format name
+     */
+    @Override
+    public String getFormatName() {
+        return "png";
+    }
+
+    /**
      * Writes the image to a buffer
      *
      * @param image   The image to write
