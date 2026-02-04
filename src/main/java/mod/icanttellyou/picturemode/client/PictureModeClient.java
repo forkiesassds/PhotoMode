@@ -10,8 +10,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
 public class PictureModeClient {
-    public static final boolean HAS_SODIUM = PictureModeServices.PLATFORM.isModPresent("sodium");
-    public static final boolean HAS_VULKANMOD = PictureModeServices.PLATFORM.isModPresent("vulkanmod");
 
     private static PictureModeState state;
     public static PictureModeClientConfig config;

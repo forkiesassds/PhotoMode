@@ -1,7 +1,7 @@
 package mod.icanttellyou.picturemode.mixin;
 
 import com.google.common.collect.ImmutableMap;
-import mod.icanttellyou.picturemode.client.PictureModeClient;
+import mod.icanttellyou.picturemode.client.ModStatus;
 import mod.icanttellyou.picturemode.services.PictureModeServices;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
@@ -16,16 +16,16 @@ public class PictureModeMixinPlugin implements IMixinConfigPlugin {
     private static final Supplier<Boolean> TRUE = () -> true;
     private static final Map<String, Supplier<Boolean>> CONDITIONS = ImmutableMap.of(
         //? if <=1.21.1
-        //"mod.icanttellyou.picturemode.mixin.compat.sodium.SodiumWorldRendererMixin", () -> PictureModeClient.HAS_SODIUM,
-        "mod.icanttellyou.picturemode.mixin.compat.sodium.RenderSectionManagerMixin", () -> PictureModeClient.HAS_SODIUM,
-        "mod.icanttellyou.picturemode.mixin.compat.sodium.DefaultChunkRendererMixin", () -> PictureModeClient.HAS_SODIUM,
+        //"mod.icanttellyou.picturemode.mixin.compat.sodium.SodiumWorldRendererMixin", () -> ModStatus.HAS_SODIUM,
+        "mod.icanttellyou.picturemode.mixin.compat.sodium.RenderSectionManagerMixin", () -> ModStatus.HAS_SODIUM,
+        "mod.icanttellyou.picturemode.mixin.compat.sodium.DefaultChunkRendererMixin", () -> ModStatus.HAS_SODIUM,
         "mod.icanttellyou.picturemode.mixin.compat.nt.NostalgicPauseScreenMixin", () -> PictureModeServices.PLATFORM.isModPresent("nostalgic_tweaks"),
-        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.BlockRendererMixin", () -> PictureModeClient.HAS_VULKANMOD,
-        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.DrawBuffersMixin", () -> PictureModeClient.HAS_VULKANMOD,
-        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.SectionGraphMixin", () -> PictureModeClient.HAS_VULKANMOD,
-        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.VFrustumMixin", () -> PictureModeClient.HAS_VULKANMOD,
-        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.WorldRendererMixin", () -> PictureModeClient.HAS_VULKANMOD,
-        "mod.icanttellyou.picturemode.mixin.LevelRendererMixinVanilla", () -> !PictureModeClient.HAS_SODIUM && !PictureModeClient.HAS_VULKANMOD
+        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.BlockRendererMixin", () -> ModStatus.HAS_VULKANMOD,
+        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.DrawBuffersMixin", () -> ModStatus.HAS_VULKANMOD,
+        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.SectionGraphMixin", () -> ModStatus.HAS_VULKANMOD,
+        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.VFrustumMixin", () -> ModStatus.HAS_VULKANMOD,
+        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.WorldRendererMixin", () -> ModStatus.HAS_VULKANMOD,
+        "mod.icanttellyou.picturemode.mixin.LevelRendererMixinVanilla", () -> !ModStatus.HAS_SODIUM && !ModStatus.HAS_VULKANMOD
     );
 
     @Override

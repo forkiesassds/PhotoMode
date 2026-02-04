@@ -154,7 +154,7 @@ public class PictureModeState {
         //HACK: Reload all chunks if using VulkanMod.
         // This is because when Backface Culling is enabled,
         // some chunks do not render at all until they're refreshed.
-        if (PictureModeClient.HAS_VULKANMOD) {
+        if (ModStatus.HAS_VULKANMOD) {
             Minecraft.getInstance().levelRenderer.allChanged();
         }
     }
