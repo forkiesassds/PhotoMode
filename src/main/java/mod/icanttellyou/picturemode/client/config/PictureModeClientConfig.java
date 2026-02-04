@@ -35,10 +35,11 @@ public class PictureModeClientConfig {
 
     public PictureModeClientConfig() {
         this(
-            NativeImageFormats.getFormat("png"),
+            NativeImageFormats.PNG_FORMAT,
             NativeImageFormats.FORMATS.stream()
-                .collect(ImmutableMap.toImmutableMap(NativeImageFormat::getFormatName,
-                        NativeImageFormat::provideConfigProvider))
+                .map(f -> Pair.of(f.getFormatName(), f.provideConfigProvider()))
+                .filter(entry -> entry.getFirst() != null && entry.getSecond() != null)
+                .collect(ImmutableMap.toImmutableMap(Pair::getFirst, Pair::getSecond))
         );
     }
 
