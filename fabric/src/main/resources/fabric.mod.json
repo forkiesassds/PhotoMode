@@ -33,5 +33,8 @@
     "fabricloader": ">=0.17.0",
     "fabric-api": "*",
     "minecraft": "${fabric_minecraft_version_range}"
+  },
+  "recommends": {
+    "yet_another_config_lib_v3": "*"
   }
 }

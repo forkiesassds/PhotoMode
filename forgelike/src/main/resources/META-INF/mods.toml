@@ -32,3 +32,11 @@ mandatory = true
 versionRange = "${forgelike_minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"
+
+[[dependencies.picturemode]]
+modId = "yet_another_config_lib_v3"
+mandatory = false
+type = "optional"
+versionRange = "*"
+ordering = "NONE"
+side = "CLIENT"

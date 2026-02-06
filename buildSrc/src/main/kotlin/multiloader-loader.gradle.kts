@@ -36,6 +36,8 @@ publishMods {
         accessToken = System.getenv("MODRINTH_TOKEN")
         projectId = commonMod.prop("modrinth_project_id")
         minecraftVersions.addAll(commonMod.prop("supported_versions").split(",").toList())
+
+        optional("yacl")
     }
 
     github {
