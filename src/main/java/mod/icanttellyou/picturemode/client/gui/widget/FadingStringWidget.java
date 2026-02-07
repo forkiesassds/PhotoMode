@@ -12,11 +12,11 @@ import net.minecraft.locale.Language;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.Style;
+//? if <1.21.11
+//import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.function.Consumer;
+//? if <1.21.11
+//import org.jetbrains.annotations.Nullable;
 
 public class FadingStringWidget extends AbstractStringWidget implements Tickable {
     private static final int TEXT_MARGIN = 2;
@@ -33,8 +33,8 @@ public class FadingStringWidget extends AbstractStringWidget implements Tickable
     private final int defaultTicksUntilFade;
     private int ticksUntilFade;
 
-    @Nullable
-    private Consumer<Style> componentClickHandler = null;
+    //? <1.21.11
+    //private @Nullable java.util.function.Consumer<Style> componentClickHandler = null;
 
     public FadingStringWidget(int x, int y, int width, int height, Component message, Font font, int ticksUntilFade, boolean haltFading) {
         super(x, y, width, height, message, font);
@@ -210,7 +210,7 @@ public class FadingStringWidget extends AbstractStringWidget implements Tickable
         return super.mouseClicked(mouseX, mouseY, button);
     }
 
-    public void setComponentClickHandler(@Nullable Consumer<Style> componentClickHandler) {
+    public void setComponentClickHandler(@Nullable java.util.function.Consumer<Style> componentClickHandler) {
         this.componentClickHandler = componentClickHandler;
     }
     *///? }
