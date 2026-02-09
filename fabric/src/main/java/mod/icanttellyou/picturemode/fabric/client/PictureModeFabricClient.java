@@ -1,6 +1,7 @@
 package mod.icanttellyou.picturemode.fabric.client;
 
 import mod.icanttellyou.picturemode.client.PictureModeClient;
+import mod.icanttellyou.picturemode.client.PictureModeState;
 import mod.icanttellyou.picturemode.client.config.PictureModeClientConfig;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -16,8 +17,10 @@ public class PictureModeFabricClient implements ClientModInitializer {
                 PictureModeClient.onWorldExit());
 
         ClientTickEvents.START_CLIENT_TICK.register(client -> {
-            if (client.level != null)
-                PictureModeClient.getState().tick();
+            PictureModeState state = PictureModeClient.getState();
+
+            if (client.level != null && state != null)
+                state.tick();
         });
     }
 }
