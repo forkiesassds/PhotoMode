@@ -15,6 +15,7 @@ import java.util.function.Supplier;
 public class PictureModeMixinPlugin implements IMixinConfigPlugin {
     private static final Supplier<Boolean> TRUE = () -> true;
     private static final Map<String, Supplier<Boolean>> CONDITIONS = ImmutableMap.ofEntries(
+        //? if >=1.21.9
         Map.entry("mod.icanttellyou.picturemode.mixin.compat.journeymap.DebugEntryMixin", () -> ModStatus.HAS_JOURNEYMAP),
         Map.entry("mod.icanttellyou.picturemode.mixin.compat.journeymap.HudOverlayHandlerMixin", () -> ModStatus.HAS_JOURNEYMAP),
         //? if <=1.21.1

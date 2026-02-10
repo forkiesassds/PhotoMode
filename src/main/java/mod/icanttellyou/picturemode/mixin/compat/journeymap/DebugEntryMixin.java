@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @SuppressWarnings("UnresolvedMixinReference")
 @Pseudo
-@Mixin(targets = "journeymap.client.ui.debug.DebugEntry")
+@Mixin(targets = "journeymap.client.ui.debug.DebugEntry", remap = false)
 public abstract class DebugEntryMixin {
     @Inject(method = "display", at = @At("HEAD"), cancellable = true)
     private void disableJMDebugStatsInPM(CallbackInfo ci) {
