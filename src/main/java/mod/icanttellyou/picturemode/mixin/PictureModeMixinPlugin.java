@@ -14,18 +14,20 @@ import java.util.function.Supplier;
 
 public class PictureModeMixinPlugin implements IMixinConfigPlugin {
     private static final Supplier<Boolean> TRUE = () -> true;
-    private static final Map<String, Supplier<Boolean>> CONDITIONS = ImmutableMap.of(
+    private static final Map<String, Supplier<Boolean>> CONDITIONS = ImmutableMap.ofEntries(
+        Map.entry("mod.icanttellyou.picturemode.mixin.compat.journeymap.DebugEntryMixin", () -> ModStatus.HAS_JOURNEYMAP),
+        Map.entry("mod.icanttellyou.picturemode.mixin.compat.journeymap.HudOverlayHandlerMixin", () -> ModStatus.HAS_JOURNEYMAP),
         //? if <=1.21.1
-        //"mod.icanttellyou.picturemode.mixin.compat.sodium.SodiumWorldRendererMixin", () -> ModStatus.HAS_SODIUM,
-        "mod.icanttellyou.picturemode.mixin.compat.sodium.RenderSectionManagerMixin", () -> ModStatus.HAS_SODIUM,
-        "mod.icanttellyou.picturemode.mixin.compat.sodium.DefaultChunkRendererMixin", () -> ModStatus.HAS_SODIUM,
-        "mod.icanttellyou.picturemode.mixin.compat.nt.NostalgicPauseScreenMixin", () -> PictureModeServices.PLATFORM.isModPresent("nostalgic_tweaks"),
-        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.BlockRendererMixin", () -> ModStatus.HAS_VULKANMOD,
-        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.DrawBuffersMixin", () -> ModStatus.HAS_VULKANMOD,
-        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.SectionGraphMixin", () -> ModStatus.HAS_VULKANMOD,
-        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.VFrustumMixin", () -> ModStatus.HAS_VULKANMOD,
-        "mod.icanttellyou.picturemode.mixin.compat.vulkanmod.WorldRendererMixin", () -> ModStatus.HAS_VULKANMOD,
-        "mod.icanttellyou.picturemode.mixin.LevelRendererMixinVanilla", () -> !ModStatus.HAS_SODIUM && !ModStatus.HAS_VULKANMOD
+        //Map.entry("mod.icanttellyou.picturemode.mixin.compat.sodium.SodiumWorldRendererMixin", () -> ModStatus.HAS_SODIUM),
+        Map.entry("mod.icanttellyou.picturemode.mixin.compat.sodium.RenderSectionManagerMixin", () -> ModStatus.HAS_SODIUM),
+        Map.entry("mod.icanttellyou.picturemode.mixin.compat.sodium.DefaultChunkRendererMixin", () -> ModStatus.HAS_SODIUM),
+        Map.entry("mod.icanttellyou.picturemode.mixin.compat.nt.NostalgicPauseScreenMixin", () -> PictureModeServices.PLATFORM.isModPresent("nostalgic_tweaks")),
+        Map.entry("mod.icanttellyou.picturemode.mixin.compat.vulkanmod.BlockRendererMixin", () -> ModStatus.HAS_VULKANMOD),
+        Map.entry("mod.icanttellyou.picturemode.mixin.compat.vulkanmod.DrawBuffersMixin", () -> ModStatus.HAS_VULKANMOD),
+        Map.entry("mod.icanttellyou.picturemode.mixin.compat.vulkanmod.SectionGraphMixin", () -> ModStatus.HAS_VULKANMOD),
+        Map.entry("mod.icanttellyou.picturemode.mixin.compat.vulkanmod.VFrustumMixin", () -> ModStatus.HAS_VULKANMOD),
+        Map.entry("mod.icanttellyou.picturemode.mixin.compat.vulkanmod.WorldRendererMixin", () -> ModStatus.HAS_VULKANMOD),
+        Map.entry("mod.icanttellyou.picturemode.mixin.LevelRendererMixinVanilla", () -> !ModStatus.HAS_SODIUM && !ModStatus.HAS_VULKANMOD)
     );
 
     @Override
