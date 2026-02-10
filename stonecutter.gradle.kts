@@ -50,6 +50,19 @@ stonecutter.parameters {
         string {
             direction = eval(current.version, "<1.21.2")
             replace("getDeltaTracker()", "getTimer()")
+            replace("InSampler", "DiffuseSampler")
+            replace("InDepthSampler", "DiffuseDepthSampler")
+            replace("minecraft:post/", "minecraft:program/")
+        }
+
+        string {
+            direction = eval(current.version, "<1.21.6")
+            replace("\"vertex_shader\": \"minecraft:core/screenquad\"", "\"vertex_shader\": \"minecraft:post/blit\"")
+        }
+
+        string {
+            direction = eval(current.version, "<1.21.9")
+            replace("#version 330", "#version 150")
         }
 
         string {

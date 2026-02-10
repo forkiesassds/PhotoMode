@@ -12,7 +12,7 @@ version = "${version}"
 displayName = "Picture Mode"
 displayURL = "https://modrinth.com/project/picture-mode"
 authors = "icanttellyou"
-#credits = ""
+credits = "Bestsoft100"
 description = '''
 This mod adds an isometric view of the world dedicated for taking pictures.
 Inspired by the Photo Mode from Better than Adventure!
