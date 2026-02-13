@@ -32,6 +32,17 @@
   "picturemode.config.format.tga": "TGA (lossless, uncompressed)",
   "picturemode.config.format.bmp": "BMP (lossless, uncompressed)",
 
+  "picturemode.config.screenshotSettings.name": "Screenshot Settings",
+  "picturemode.config.screenshotSettings.defaultRes": "Default",
+  "picturemode.config.screenshotSettings.fixedWidth.name": "Fixed Width",
+  "picturemode.config.screenshotSettings.fixedWidth.desc": "The fixed width to use when taking screenshots.",
+  "picturemode.config.screenshotSettings.fixedHeight.name": "Fixed Height",
+  "picturemode.config.screenshotSettings.fixedHeight.desc": "The fixed height to use when taking screenshots.",
+  "picturemode.config.screenshotSettings.resMultiplier.name": "Resolution Multiplier",
+  "picturemode.config.screenshotSettings.resMultiplier.desc": "The multiplier to use for the width and height used for when taking screenshots.",
+  "picturemode.config.screenshotSettings.resMultiplier.display": "%sx (%sx%s)",
+
+
   "picturemode.config.format.jpg.settings": "JPEG Format Settings",
   "picturemode.config.format.jpg.quality.name": "Quality",
   "picturemode.config.format.jpg.quality.desc": "The quality of the resulting image. Higher quality values use more disk space per image.\n\n(0 is lowest quality, whilst 100 is best quality.)"

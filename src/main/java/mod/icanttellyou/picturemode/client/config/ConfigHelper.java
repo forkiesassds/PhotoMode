@@ -5,9 +5,12 @@ import dev.isxander.yacl3.api.controller.CyclingListControllerBuilder;
 import mod.icanttellyou.picturemode.PictureMode;
 import mod.icanttellyou.picturemode.client.image.format.NativeImageFormat;
 import mod.icanttellyou.picturemode.client.image.format.NativeImageFormats;
+import mod.icanttellyou.picturemode.util.LoggingUtil;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import org.slf4j.event.Level;
 
+import java.lang.reflect.Field;
 import java.nio.file.Path;
 
 public class ConfigHelper {
@@ -30,6 +33,18 @@ public class ConfigHelper {
         YetAnotherConfigLib.Builder builder = YetAnotherConfigLib.createBuilder()
             .title(getConfigText("title"));
 
+        try {
+            for (Field f : config.getClass().getFields()) {
+                if (!AbstractGUIOptionsProviderFactory.class.isAssignableFrom(f.getType()))
+                    continue;
+
+                AbstractGUIOptionsProviderFactory factory = (AbstractGUIOptionsProviderFactory) f.get(config);
+                factory.getGUIOptionsProvider().provide(builder, categoryBuilder);
+            }
+        } catch (Exception e) {
+            LoggingUtil.log(Level.ERROR, "Failed to populate some GUI entries!", e);
+        }
+
         for (NativeImageFormat.ConfigProvider configProvider : config.formatSettings.values()) {
             if (configProvider == null)
                 continue;
@@ -45,5 +60,9 @@ public class ConfigHelper {
 
     public static Component getConfigText(String text) {
         return Component.translatable(PictureMode.MOD_ID + ".config." + text);
+    }
+
+    public static Component getConfigText(String text, Object... keys) {
+        return Component.translatable(PictureMode.MOD_ID + ".config." + text, keys);
     }
 }

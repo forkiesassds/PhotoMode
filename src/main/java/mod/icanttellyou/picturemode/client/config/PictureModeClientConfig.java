@@ -9,6 +9,7 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import mod.icanttellyou.picturemode.PictureMode;
+import mod.icanttellyou.picturemode.client.image.ScreenshotHandler;
 import mod.icanttellyou.picturemode.client.image.format.NativeImageFormat;
 import mod.icanttellyou.picturemode.client.image.format.NativeImageFormats;
 import mod.icanttellyou.picturemode.util.LoggingUtil;
@@ -27,11 +28,14 @@ public class PictureModeClientConfig {
                 Codec.STRING.fieldOf("format").xmap(NativeImageFormats::getFormat, NativeImageFormat::getFormatName)
                         .forGetter(conf -> conf.format),
                 NativeImageFormat.ConfigProvider.CONFIG_MAP_CODEC.fieldOf("format_settings")
-                        .forGetter(conf -> conf.formatSettings)
+                        .forGetter(conf -> conf.formatSettings),
+                ScreenshotHandler.Settings.CODEC.fieldOf("screenshot_settings")
+                        .forGetter(conf -> conf.screenshotSettings)
         ).apply(instance, PictureModeClientConfig::new));
 
     public NativeImageFormat format;
     public Map<String, NativeImageFormat.ConfigProvider> formatSettings;
+    public ScreenshotHandler.Settings screenshotSettings;
 
     public PictureModeClientConfig() {
         this(
@@ -39,13 +43,19 @@ public class PictureModeClientConfig {
             NativeImageFormats.FORMATS.stream()
                 .map(f -> Pair.of(f.getFormatName(), f.provideConfigProvider()))
                 .filter(entry -> entry.getFirst() != null && entry.getSecond() != null)
-                .collect(ImmutableMap.toImmutableMap(Pair::getFirst, Pair::getSecond))
+                .collect(ImmutableMap.toImmutableMap(Pair::getFirst, Pair::getSecond)),
+            new ScreenshotHandler.Settings(0, 0, 1.0F)
         );
     }
 
-    public PictureModeClientConfig(NativeImageFormat format, Map<String, NativeImageFormat.ConfigProvider> formatSettings) {
+    public PictureModeClientConfig(
+        NativeImageFormat format,
+        Map<String, NativeImageFormat.ConfigProvider> formatSettings,
+        ScreenshotHandler.Settings screenshotSettings
+    ) {
         this.format = format;
         this.formatSettings = formatSettings;
+        this.screenshotSettings = screenshotSettings;
     }
 
     private final static String CONFIG_PATH = PictureMode.MOD_ID + "/" + PictureMode.MOD_ID + "_client.json";
