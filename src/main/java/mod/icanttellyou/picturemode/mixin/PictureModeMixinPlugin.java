@@ -23,6 +23,8 @@ public class PictureModeMixinPlugin implements IMixinConfigPlugin {
         Map.entry("mod.icanttellyou.picturemode.mixin.compat.sodium.RenderSectionManagerMixin", () -> ModStatus.HAS_SODIUM),
         Map.entry("mod.icanttellyou.picturemode.mixin.compat.sodium.DefaultChunkRendererMixin", () -> ModStatus.HAS_SODIUM),
         Map.entry("mod.icanttellyou.picturemode.mixin.compat.nt.NostalgicPauseScreenMixin", () -> PictureModeServices.PLATFORM.isModPresent("nostalgic_tweaks")),
+        //? if >=1.21.6
+        Map.entry("mod.icanttellyou.picturemode.mixin.compat.voxy.VoxyRenderSystemMixin", () -> ModStatus.HAS_VOXY),
         Map.entry("mod.icanttellyou.picturemode.mixin.compat.vulkanmod.BlockRendererMixin", () -> ModStatus.HAS_VULKANMOD),
         Map.entry("mod.icanttellyou.picturemode.mixin.compat.vulkanmod.DrawBuffersMixin", () -> ModStatus.HAS_VULKANMOD),
         Map.entry("mod.icanttellyou.picturemode.mixin.compat.vulkanmod.SectionGraphMixin", () -> ModStatus.HAS_VULKANMOD),
