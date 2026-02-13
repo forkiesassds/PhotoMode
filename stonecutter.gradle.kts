@@ -58,6 +58,7 @@ stonecutter.parameters {
         string {
             direction = eval(current.version, "<1.21.6")
             replace("\"vertex_shader\": \"minecraft:core/screenquad\"", "\"vertex_shader\": \"minecraft:post/blit\"")
+            replace("\"value\": ", "\"values\": ")
         }
 
         string {
