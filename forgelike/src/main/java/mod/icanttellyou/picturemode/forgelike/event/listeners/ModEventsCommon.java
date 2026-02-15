@@ -1,8 +1,7 @@
-package mod.icanttellyou.picturemode.forgelike.events;
+package mod.icanttellyou.picturemode.forgelike.event.listeners;
 
 import mod.icanttellyou.picturemode.PictureMode;
 //? if neoforge {
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;

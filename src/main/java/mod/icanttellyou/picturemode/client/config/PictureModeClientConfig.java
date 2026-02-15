@@ -9,9 +9,9 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import mod.icanttellyou.picturemode.PictureMode;
-import mod.icanttellyou.picturemode.client.image.ScreenshotHandler;
 import mod.icanttellyou.picturemode.client.image.format.NativeImageFormat;
 import mod.icanttellyou.picturemode.client.image.format.NativeImageFormats;
+import mod.icanttellyou.picturemode.client.image.screenshot.ScreenshotSettings;
 import mod.icanttellyou.picturemode.util.LoggingUtil;
 import org.slf4j.event.Level;
 
@@ -29,13 +29,13 @@ public class PictureModeClientConfig {
                         .forGetter(conf -> conf.format),
                 NativeImageFormat.ConfigProvider.CONFIG_MAP_CODEC.fieldOf("format_settings")
                         .forGetter(conf -> conf.formatSettings),
-                ScreenshotHandler.Settings.CODEC.fieldOf("screenshot_settings")
+                ScreenshotSettings.CODEC.fieldOf("screenshot_settings")
                         .forGetter(conf -> conf.screenshotSettings)
         ).apply(instance, PictureModeClientConfig::new));
 
     public NativeImageFormat format;
     public Map<String, NativeImageFormat.ConfigProvider> formatSettings;
-    public ScreenshotHandler.Settings screenshotSettings;
+    public ScreenshotSettings screenshotSettings;
 
     public PictureModeClientConfig() {
         this(
@@ -44,14 +44,14 @@ public class PictureModeClientConfig {
                 .map(f -> Pair.of(f.getFormatName(), f.provideConfigProvider()))
                 .filter(entry -> entry.getFirst() != null && entry.getSecond() != null)
                 .collect(ImmutableMap.toImmutableMap(Pair::getFirst, Pair::getSecond)),
-            new ScreenshotHandler.Settings(0, 0, 1.0F)
+            new ScreenshotSettings(0, 0, 1.0F)
         );
     }
 
     public PictureModeClientConfig(
         NativeImageFormat format,
         Map<String, NativeImageFormat.ConfigProvider> formatSettings,
-        ScreenshotHandler.Settings screenshotSettings
+        ScreenshotSettings screenshotSettings
     ) {
         this.format = format;
         this.formatSettings = formatSettings;

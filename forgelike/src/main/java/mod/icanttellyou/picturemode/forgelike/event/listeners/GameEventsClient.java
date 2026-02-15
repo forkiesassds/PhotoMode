@@ -1,4 +1,4 @@
-package mod.icanttellyou.picturemode.forgelike.events;
+package mod.icanttellyou.picturemode.forgelike.event.listeners;
 
 import mod.icanttellyou.picturemode.PictureMode;
 import mod.icanttellyou.picturemode.client.PictureModeClient;
