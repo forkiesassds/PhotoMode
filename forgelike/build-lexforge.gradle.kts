@@ -31,9 +31,15 @@ fletchingTable {
     }
 }
 
+repositories {
+    maven("https://maven.fabricmc.net/") { name = "Fabric" }
+    maven("https://maven.su5ed.dev/releases/") { name = "Sinytra" }
+}
+
 dependencies {
     compileOnly("org.jetbrains:annotations:24.1.0")
-    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
+    implementation("org.sinytra.mixinbooster:mixin-booster:0.1.2+1.20.1")
+    annotationProcessor("org.sinytra:sponge-mixin:0.12.11+mixin.0.8.5")
 
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.0") as Any)
     implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.5.0") as Any)
@@ -88,4 +94,14 @@ tasks {
 
 publishMods {
     file.set(tasks.getByName<Jar>("reobfJar").archiveFile)
+
+    if (stonecutterBuild.eval(stonecutterBuild.current.version, "=1.20.1")) {
+        modrinth {
+            requires("mixinbooster")
+        }
+
+        curseforge {
+            requires("mixinbooster")
+        }
+    }
 }

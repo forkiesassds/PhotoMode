@@ -48,6 +48,11 @@ stonecutter.tasks {
 
 stonecutter.parameters {
     replacements {
+        string("resource_provider") {
+            direction = eval(current.version, "<1.20.5")
+            replace("ResourceProvider", "ResourceManager")
+        }
+
         string {
             direction = eval(current.version, "<1.21.2")
             replace("getDeltaTracker()", "getTimer()")

@@ -1,68 +1,70 @@
+//~ resource_provider
 //? if <1.21.2 {
 /*package mod.icanttellyou.picturemode.mixin;
 
-import com.llamalad7.mixinextras.sugar.Local;
-import com.llamalad7.mixinextras.sugar.ref.LocalRef;
-import com.mojang.blaze3d.shaders.EffectProgram;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.shaders.Program;
 import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceProvider;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EffectInstance.class)
 public abstract class EffectInstanceMixin {
-    @Inject(
+    @WrapOperation(
         method = "<init>",
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/server/packs/resources/ResourceProvider;getResourceOrThrow(Lnet/minecraft/resources/Identifier;)Lnet/minecraft/server/packs/resources/Resource;"
         )
     )
-    private void useModernShaderLocationBehaviour$jsonRead(
+    private Resource useModernShaderLocationBehaviour$jsonRead(
+        ResourceProvider instance,
+        Identifier resourceLocation,
+        Operation<Resource> original,
         ResourceProvider resourceProvider,
-        String name,
-        CallbackInfo ci,
-        @Local LocalRef<Identifier> shaderLocation
+        String name
     ) {
-        if (name.indexOf('/') == -1)
-            return;
-
-        Identifier parsed = Identifier.tryParse(name);
-        if (parsed != null) {
-            parsed = parsed.withPrefix("shaders/")
-                           .withSuffix(".json");
-            shaderLocation.set(parsed);
+        if (name.indexOf('/') != -1) {
+            Identifier parsed = Identifier.tryParse(name);
+            if (parsed != null) {
+                parsed = parsed.withPrefix("shaders/")
+                        .withSuffix(".json");
+                resourceLocation = parsed;
+            }
         }
+
+        return original.call(instance, resourceLocation);
     }
 
-    @Inject(
+    @WrapOperation(
         method = "getOrCreate",
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/server/packs/resources/ResourceProvider;getResourceOrThrow(Lnet/minecraft/resources/Identifier;)Lnet/minecraft/server/packs/resources/Resource;"
         )
     )
-    private static void useModernShaderLocationBehaviour$shaderRead(
+    private static Resource useModernShaderLocationBehaviour$shaderRead(
+        ResourceProvider instance,
+        Identifier resourceLocation,
+        Operation<Resource> original,
         ResourceProvider resourceProvider,
         Program.Type type,
-        String name,
-        CallbackInfoReturnable<EffectProgram> cir,
-        @Local LocalRef<Identifier> shaderLocation
+        String name
     ) {
-        if (name.indexOf('/') == -1)
-            return;
-
-        Identifier parsed = Identifier.tryParse(name);
-        if (parsed != null) {
-            parsed = parsed.withPrefix("shaders/")
-                           .withSuffix(type.getExtension());
-            shaderLocation.set(parsed);
+        if (name.indexOf('/') != -1) {
+            Identifier parsed = Identifier.tryParse(name);
+            if (parsed != null) {
+                parsed = parsed.withPrefix("shaders/")
+                        .withSuffix(type.getExtension());
+                resourceLocation = parsed;
+            }
         }
+
+        return original.call(instance, resourceLocation);
     }
 }
 *///? }
