@@ -1,4 +1,4 @@
-package mod.icanttellyou.picturemode.forgelike.event;
+package mod.icanttellyou.picturemode.forgelike.client.event;
 
 import com.mojang.blaze3d.pipeline.RenderTarget;
 //? if neoforge {
@@ -33,7 +33,7 @@ public class RenderTargetBlitEvent extends Event {
      * {@link RenderTargetBlitEvent.Pre} is fired once per frame,
      * before the current frame is drawn via {@link RenderTarget#blitToScreen}.
      * <p>
-     * Cancelling this even will result in {@link RenderTarget#blitToScreen} not being called,
+     * Cancelling this event will result in {@link RenderTarget#blitToScreen} not being called,
      * and the Render Target will not be drawn to the screen.
      * <p>
      * This event only fires on the physical client.

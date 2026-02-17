@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.GameRenderer;
  * <p>
  * There are events for before and after the game has rendered into the main Render Target
  */
-public class OnGameRenderEvents {
+public final class OnGameRenderEvents {
     /**
      * An event triggered when the game is about to be rendered.
      */

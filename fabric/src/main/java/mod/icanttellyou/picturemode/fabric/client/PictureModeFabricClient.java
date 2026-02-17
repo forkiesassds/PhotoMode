@@ -1,11 +1,10 @@
 package mod.icanttellyou.picturemode.fabric.client;
 
 import mod.icanttellyou.picturemode.client.PictureModeClient;
-import mod.icanttellyou.picturemode.client.PictureModeState;
 import mod.icanttellyou.picturemode.client.config.PictureModeClientConfig;
+import mod.icanttellyou.picturemode.fabric.client.event.listeners.ClientLevelEventListeners;
+import mod.icanttellyou.picturemode.fabric.client.event.listeners.ClientTickEventListeners;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.loader.api.FabricLoader;
 
 public class PictureModeFabricClient implements ClientModInitializer {
@@ -13,14 +12,7 @@ public class PictureModeFabricClient implements ClientModInitializer {
     public void onInitializeClient() {
         PictureModeClient.config = PictureModeClientConfig.readConfig(FabricLoader.getInstance().getConfigDir());
 
-        ClientPlayConnectionEvents.DISCONNECT.register((listener, mc) ->
-                PictureModeClient.onWorldExit());
-
-        ClientTickEvents.START_CLIENT_TICK.register(client -> {
-            PictureModeState state = PictureModeClient.getState();
-
-            if (client.level != null && state != null)
-                state.tick();
-        });
+        ClientLevelEventListeners.initialise();
+        ClientTickEventListeners.initialise();
     }
 }

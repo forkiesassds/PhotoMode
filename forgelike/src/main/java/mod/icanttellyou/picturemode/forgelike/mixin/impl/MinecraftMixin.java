@@ -3,7 +3,7 @@ package mod.icanttellyou.picturemode.forgelike.mixin.impl;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.pipeline.RenderTarget;
-import mod.icanttellyou.picturemode.forgelike.event.RenderTargetBlitEvent;
+import mod.icanttellyou.picturemode.forgelike.client.event.RenderTargetBlitEvent;
 import net.minecraft.client.Minecraft;
 //? if neoforge {
 import net.neoforged.bus.api.IEventBus;
