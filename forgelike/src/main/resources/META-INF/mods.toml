@@ -42,10 +42,10 @@ ordering = "NONE"
 side = "CLIENT"
 
 #? if forge && =1.20.1 {
-[[dependencies.picturemode]]
-modId = "mixinbooster"
-mandatory = true
-versionRange = "*"
-ordering = "NONE"
-side = "BOTH"
+#[[dependencies.picturemode]]
+#modId = "mixinbooster"
+#mandatory = true
+#versionRange = "*"
+#ordering = "NONE"
+#side = "BOTH"
 #? }
