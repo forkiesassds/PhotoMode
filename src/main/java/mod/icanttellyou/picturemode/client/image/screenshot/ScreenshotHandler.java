@@ -44,7 +44,13 @@ public class ScreenshotHandler {
                     NativeImageWriter.writeToFile(image, format, file);
                     Component component = Component.literal(file.getName())
                             .withStyle(ChatFormatting.UNDERLINE)
-                            .withStyle(style -> style.withClickEvent(new ClickEvent.OpenFile(file.getAbsoluteFile())));
+                            .withStyle(style -> style.withClickEvent(
+                                //? if >=1.21.5 {
+                                new ClickEvent.OpenFile(file.getAbsoluteFile())
+                                //? } else {
+                                /*new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath())
+                                *///? }
+                            ));
                     messageConsumer.accept(Component.translatable("screenshot.success", component));
                 } catch (Exception e) {
                     LoggingUtil.log(Level.WARN, "Couldn't save screenshot", e);

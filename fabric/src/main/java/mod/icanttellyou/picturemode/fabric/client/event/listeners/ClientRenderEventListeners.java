@@ -31,7 +31,12 @@ public final class ClientRenderEventListeners {
             if (screenshotHandler.getStatus() != ScreenshotHandler.Status.WAITING_FOR_RENDER)
                 return;
 
+            //? if >=1.21.5 {
             Screenshot.takeScreenshot(mc.getMainRenderTarget(), screenshotHandler.getScreenshotCallback());
+            //? } else {
+            /*com.mojang.blaze3d.platform.NativeImage screenshot = Screenshot.takeScreenshot(mc.getMainRenderTarget());
+            screenshotHandler.getScreenshotCallback().accept(screenshot);
+            *///? }
             screenshotHandler.transitionStatus(ScreenshotHandler.Status.CAPTURED);
         });
 
