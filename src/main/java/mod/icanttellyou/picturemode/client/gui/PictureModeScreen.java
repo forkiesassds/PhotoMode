@@ -6,10 +6,10 @@ import mod.icanttellyou.picturemode.client.PictureModeState;
 import mod.icanttellyou.picturemode.client.gui.layout.AnchorLayout;
 import mod.icanttellyou.picturemode.client.gui.widget.FadingStringWidget;
 import mod.icanttellyou.picturemode.client.gui.widget.Slider;
+import mod.icanttellyou.picturemode.client.image.screenshot.ScreenshotHandler;
 import mod.icanttellyou.picturemode.util.LevelUtils;
 import mod.icanttellyou.picturemode.util.Tickable;
 import net.minecraft.SharedConstants;
-import net.minecraft.client.Screenshot;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -33,8 +33,6 @@ public class PictureModeScreen extends Screen {
 
     private static final String TAKE_SCREENSHOT_KEY = "gui.picturemode.takeScreenshot";
     private static final String HELP_TEXT_KEY = "gui.picturemode.helpText";
-
-    private boolean isTakingScreenshot;
 
     private final PictureModeState pmState;
 
@@ -68,16 +66,12 @@ public class PictureModeScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        if (PictureModeClient.getScreenshotHandler().getStatus() != ScreenshotHandler.Status.IDLE)
+            return;
+
         centerCameraButton.active =
             (pmState.cameraPanX.getValue(partialTick) != 0.0D || pmState.cameraPanY.getValue(partialTick) != 0.0D) &&
                     (pmState.cameraPanX.getGoal() != 0.0D || pmState.cameraPanY.getGoal() != 0.0D);
-        if (isTakingScreenshot) {
-            Screenshot.grab(minecraft.gameDirectory, minecraft.getMainRenderTarget(), message -> {
-                helpText.setMessage(message);
-                repositionElements();
-            });
-            isTakingScreenshot = false;
-        }
 
         super.render(graphics, mouseX, mouseY, partialTick);
     }
@@ -194,8 +188,13 @@ public class PictureModeScreen extends Screen {
                 pmState.cameraRotation.addToGoal(ROTATION_STEP_SIZE, this.getDeltaTicks()))
             .width(20)
             .build());
-        rows.addChild(Button.builder(Component.translatable(TAKE_SCREENSHOT_KEY), button ->
-                this.isTakingScreenshot = true)
+        rows.addChild(Button.builder(Component.translatable(TAKE_SCREENSHOT_KEY), button -> {
+                    ScreenshotHandler screenshotHandler = PictureModeClient.getScreenshotHandler();
+                    screenshotHandler.prepareForScreenshot(minecraft.gameDirectory, message -> {
+                        helpText.setMessage(message);
+                        repositionElements();
+                    });
+                })
             .width(98)
             .build());
         rows.addChild(Button.builder(Component.literal(">"), button ->

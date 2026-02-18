@@ -5,6 +5,7 @@ import dev.isxander.yacl3.api.controller.CyclingListControllerBuilder;
 import mod.icanttellyou.picturemode.PictureMode;
 import mod.icanttellyou.picturemode.client.image.format.NativeImageFormat;
 import mod.icanttellyou.picturemode.client.image.format.NativeImageFormats;
+import mod.icanttellyou.picturemode.services.PictureModeServices;
 import mod.icanttellyou.picturemode.util.LoggingUtil;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -14,7 +15,8 @@ import java.lang.reflect.Field;
 import java.nio.file.Path;
 
 public class ConfigHelper {
-    public static Screen getConfigScreen(Screen parent, Path configPath, PictureModeClientConfig config) {
+    public static Screen getConfigScreen(Screen parent, PictureModeClientConfig config) {
+        Path configPath = PictureModeServices.PLATFORM.getConfigDir();
         ConfigCategory.Builder categoryBuilder = ConfigCategory.createBuilder()
             .name(getConfigText("title"))
             .group(OptionGroup.createBuilder()

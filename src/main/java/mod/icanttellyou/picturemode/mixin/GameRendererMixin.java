@@ -15,7 +15,6 @@ import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -49,8 +48,8 @@ public abstract class GameRendererMixin {
         if (state == null || !state.isEnabled())
             return;
 
-        int width = minecraft.getWindow().getWidth();
-        int height = minecraft.getWindow().getHeight();
+        int width = PictureModeClient.getWidth();
+        int height = PictureModeClient.getHeight();
 
         float farPlane = getDepthFar();
 

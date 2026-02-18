@@ -75,7 +75,7 @@ public class JPGFormat implements NativeImageFormat {
     }
 
     public static class Config implements ConfigProvider {
-        public static final Codec<Config> CODEC = Codec.intRange(0, 100).optionalFieldOf("quality", 75).codec()
+        public static final Codec<Config> CODEC = Codec.intRange(1, 100).optionalFieldOf("quality", 75).codec()
                 .xmap(Config::new, config -> config.quality);
 
         public int quality;
@@ -112,7 +112,7 @@ public class JPGFormat implements NativeImageFormat {
                             .binding(75,
                                 () -> Config.this.quality, newVal -> Config.this.quality = newVal)
                             .controller(opt -> IntegerSliderControllerBuilder.create(opt)
-                                .range(0, 100)
+                                .range(1, 100)
                                 .step(1))
                             .build())
                         .build());

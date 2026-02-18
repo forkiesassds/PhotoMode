@@ -2,6 +2,7 @@ package mod.icanttellyou.picturemode.client;
 
 import mod.icanttellyou.picturemode.client.config.PictureModeClientConfig;
 import mod.icanttellyou.picturemode.client.gui.PictureModeScreen;
+import mod.icanttellyou.picturemode.client.image.screenshot.ScreenshotHandler;
 import mod.icanttellyou.picturemode.services.PictureModeServices;
 import mod.icanttellyou.picturemode.util.LevelUtils;
 import net.minecraft.client.Minecraft;
@@ -12,7 +13,10 @@ import net.minecraft.network.chat.Component;
 public class PictureModeClient {
 
     private static PictureModeState state;
-    public static PictureModeClientConfig config;
+    private static final PictureModeClientConfig config =
+            PictureModeClientConfig.readConfig(PictureModeServices.PLATFORM.getConfigDir());
+
+    private static final ScreenshotHandler screenshotHandler = new ScreenshotHandler();
 
     /**
      * Gets the current Picture Mode state
@@ -21,6 +25,48 @@ public class PictureModeClient {
      */
     public static PictureModeState getState() {
         return state;
+    }
+
+    /**
+     * Gets the config for Picture Mode.
+     *
+     * @return The Picture Mode config.
+     */
+    public static PictureModeClientConfig getConfig() {
+        return config;
+    }
+
+    /**
+     * Gets the screenshot handler for Picture Mode.
+     *
+     * @return The screenshot handler used by Picture Mode.
+     */
+    public static ScreenshotHandler getScreenshotHandler() {
+        return screenshotHandler;
+    }
+
+    /**
+     * Gets the width, for use of calculating projection matrices
+     *
+     * @return The width of the viewport.
+     */
+    public static int getWidth() {
+        if (screenshotHandler.getStatus() == ScreenshotHandler.Status.IDLE)
+            return Minecraft.getInstance().getWindow().getWidth();
+
+        return screenshotHandler.getWidth();
+    }
+
+    /**
+     * Gets the height, for use of calculating projection matrices
+     *
+     * @return The height of the viewport.
+     */
+    public static int getHeight() {
+        if (screenshotHandler.getStatus() == ScreenshotHandler.Status.IDLE)
+            return Minecraft.getInstance().getWindow().getHeight();
+
+        return screenshotHandler.getHeight();
     }
 
     public static Button makePMButton(Minecraft minecraft, Screen screen) {

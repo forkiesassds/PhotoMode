@@ -88,7 +88,7 @@ public interface NativeImageFormat {
     @SuppressWarnings("unchecked")
     static <P extends ConfigProvider> P getConfig(NativeImageFormat format) {
         //TODO: maybe do this better?
-        return (P) PictureModeClient.config.formatSettings.get(format.getFormatName());
+        return (P) PictureModeClient.getConfig().formatSettings.get(format.getFormatName());
     }
 
     interface ConfigProvider extends AbstractGUIOptionsProviderFactory {

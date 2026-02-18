@@ -2,7 +2,6 @@ package mod.icanttellyou.picturemode.forgelike.client;
 
 import mod.icanttellyou.picturemode.client.PictureModeClient;
 import mod.icanttellyou.picturemode.client.config.ConfigHelper;
-import mod.icanttellyou.picturemode.client.config.PictureModeClientConfig;
 import mod.icanttellyou.picturemode.forgelike.client.event.listeners.GameRenderEventListeners;
 import mod.icanttellyou.picturemode.forgelike.client.event.listeners.GameTickEventListeners;
 import mod.icanttellyou.picturemode.forgelike.client.event.listeners.LevelEventListeners;
@@ -14,7 +13,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
 //? } else {
@@ -23,7 +21,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.loading.FMLPaths;
 *///? }
 
 //? if neoforge
@@ -54,10 +51,8 @@ public class PictureModeForgelikeClient {
                 /*ConfigScreenHandler.ConfigScreenFactory.class,
                 () -> new ConfigScreenHandler.ConfigScreenFactory
                 *///? }
-                ((client, parent) -> ConfigHelper.getConfigScreen(parent, FMLPaths.CONFIGDIR.get(), PictureModeClient.config))
+                ((client, parent) -> ConfigHelper.getConfigScreen(parent, PictureModeClient.getConfig()))
             );
         }
-
-        PictureModeClient.config = PictureModeClientConfig.readConfig(FMLPaths.CONFIGDIR.get());
     }
 }
