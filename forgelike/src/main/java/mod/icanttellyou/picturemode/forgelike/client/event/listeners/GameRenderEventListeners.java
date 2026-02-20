@@ -65,7 +65,7 @@ public final class GameRenderEventListeners {
         Minecraft mc = Minecraft.getInstance();
         ScreenshotHandler screenshotHandler = PictureModeClient.getScreenshotHandler();
 
-        if (screenshotHandler.getStatus() != ScreenshotHandler.Status.WAITING_FOR_RENDER)
+        if (screenshotHandler.getStatus() != ScreenshotHandler.Status.WAITING_FOR_RENDER || !screenshotHandler.shouldCapture())
             return;
 
         //? if >=1.21.5 {
@@ -82,13 +82,15 @@ public final class GameRenderEventListeners {
         Minecraft mc = Minecraft.getInstance();
         ScreenshotHandler screenshotHandler = PictureModeClient.getScreenshotHandler();
 
-        if (screenshotHandler.getStatus() != ScreenshotHandler.Status.CAPTURED)
+        if (screenshotHandler.getStatus() == ScreenshotHandler.Status.IDLE) {
             return;
+        } else if (screenshotHandler.getStatus() == ScreenshotHandler.Status.CAPTURED) {
+            screenshotHandler.restoreCurrentResolution(mc.getWindow());
+            mc.resizeDisplay();
 
-        screenshotHandler.restoreCurrentResolution(mc.getWindow());
-        mc.resizeDisplay();
+            screenshotHandler.transitionStatus(ScreenshotHandler.Status.IDLE);
+        }
 
-        screenshotHandler.transitionStatus(ScreenshotHandler.Status.IDLE);
         event.setCanceled(true);
     }
 

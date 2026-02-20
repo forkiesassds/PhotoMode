@@ -18,10 +18,13 @@ import java.io.File;
 import java.util.function.Consumer;
 
 public class ScreenshotHandler {
+    private static final int FRAME_DELAY = 3;
+
     private Status status = Status.IDLE;
     private Consumer<NativeImage> screenshotCallback;
 
     private int curWidth, curHeight;
+    private int frame;
 
     /**
      * Prepares the callbacks for taking a screenshot.
@@ -78,6 +81,9 @@ public class ScreenshotHandler {
      */
     public void transitionStatus(Status newStatus) {
         status.validateStatusTransition(newStatus);
+        if (newStatus == Status.IDLE)
+            frame = 0;
+
         status = newStatus;
     }
 
@@ -88,6 +94,15 @@ public class ScreenshotHandler {
      */
     public Status getStatus() {
         return status;
+    }
+
+    /**
+     * Determines if the screenshot should be captured
+     *
+     * @return Boolean on if the screenshot should be captured
+     */
+    public boolean shouldCapture() {
+        return ++frame >= FRAME_DELAY;
     }
 
     /**

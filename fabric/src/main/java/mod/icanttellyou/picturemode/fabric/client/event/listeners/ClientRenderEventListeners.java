@@ -28,7 +28,7 @@ public final class ClientRenderEventListeners {
             screenshotHandler.transitionStatus(ScreenshotHandler.Status.WAITING_FOR_RENDER);
         });
         OnGameRenderEvents.AFTER.register((renderer, renderLevel) -> {
-            if (screenshotHandler.getStatus() != ScreenshotHandler.Status.WAITING_FOR_RENDER)
+            if (screenshotHandler.getStatus() != ScreenshotHandler.Status.WAITING_FOR_RENDER || !screenshotHandler.shouldCapture())
                 return;
 
             //? if >=1.21.5 {
@@ -41,13 +41,15 @@ public final class ClientRenderEventListeners {
         });
 
         RenderTargetBlitEvents.BEFORE.register(target -> {
-            if (screenshotHandler.getStatus() != ScreenshotHandler.Status.CAPTURED)
+            if (screenshotHandler.getStatus() == ScreenshotHandler.Status.IDLE) {
                 return true;
+            } else if (screenshotHandler.getStatus() == ScreenshotHandler.Status.CAPTURED) {
+                screenshotHandler.restoreCurrentResolution(mc.getWindow());
+                mc.resizeDisplay();
 
-            screenshotHandler.restoreCurrentResolution(mc.getWindow());
-            mc.resizeDisplay();
+                screenshotHandler.transitionStatus(ScreenshotHandler.Status.IDLE);
+            }
 
-            screenshotHandler.transitionStatus(ScreenshotHandler.Status.IDLE);
             return false;
         });
     }
