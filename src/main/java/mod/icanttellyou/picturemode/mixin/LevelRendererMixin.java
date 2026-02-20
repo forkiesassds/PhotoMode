@@ -36,8 +36,18 @@ public abstract class LevelRendererMixin {
     private CloudStatus hideCloudsInPM(Options instance, Operation<CloudStatus> original) {
         PictureModeState state = PictureModeClient.getState();
 
-        if (state == null || state.isEnabled())
+        if (state == null || state.isEnabled()) {
+            //? if <1.21.2 {
+            /*if (net.minecraft.client.Minecraft.useShaderTransparency()) {
+                com.mojang.blaze3d.pipeline.RenderTarget renderTarget = ((LevelRenderer) (Object) this).getCloudsTarget();
+                if (renderTarget != null) {
+                    renderTarget.clear(net.minecraft.client.Minecraft.ON_OSX);
+                }
+            }
+            *///? }
+
             return CloudStatus.OFF;
+        }
 
         return original.call(instance);
     }
