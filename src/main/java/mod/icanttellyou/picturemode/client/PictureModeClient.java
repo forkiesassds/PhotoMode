@@ -2,6 +2,7 @@ package mod.icanttellyou.picturemode.client;
 
 import mod.icanttellyou.picturemode.client.config.PictureModeClientConfig;
 import mod.icanttellyou.picturemode.client.gui.PictureModeScreen;
+import mod.icanttellyou.picturemode.client.gui.widget.button.AbstractButtonBuilder;
 import mod.icanttellyou.picturemode.client.image.screenshot.ScreenshotHandler;
 import mod.icanttellyou.picturemode.services.PictureModeServices;
 import mod.icanttellyou.picturemode.util.LevelUtils;
@@ -69,24 +70,14 @@ public class PictureModeClient {
         return screenshotHandler.getHeight();
     }
 
-    public static Button makePMButton(Minecraft minecraft, Screen screen) {
-        Button pmButton = Button.builder(Component.translatable("gui.picturemode"),
-            button -> {
-                if (LevelUtils.isPMDisabledForDimension(minecraft.level)) {
-                    button.active = false;
-                    return;
-                }
-
-                minecraft.setScreen(new PictureModeScreen(screen, Component.literal("")));
-            })
+    @SuppressWarnings("unchecked")
+    public static <T> T makePMButton(Minecraft minecraft, Screen screen) {
+        return (T) AbstractButtonBuilder.getBuilder(screen, Component.translatable("gui.picturemode"),
+            button -> minecraft.setScreen(new PictureModeScreen(screen, Component.literal(""))))
+            .disableIf(() -> LevelUtils.isPMDisabledForDimension(minecraft.level))
             .pos(screen.width / 2 - 48, 8)
             .width(98)
             .build();
-
-        boolean disabled = LevelUtils.isPMDisabledForDimension(minecraft.level);
-
-        pmButton.active = !disabled;
-        return pmButton;
     }
 
     public static void onWorldLoad() {
