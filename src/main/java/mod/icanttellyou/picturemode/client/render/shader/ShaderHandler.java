@@ -14,12 +14,14 @@ public class ShaderHandler {
      */
     public static void setShader(Identifier shader) {
         GameRenderer renderer = Minecraft.getInstance().gameRenderer;
-        //? if <1.21.2 {
-        /*if (shader == null) {
-            renderer.shutdownEffect();
+        if (shader == null) {
+            //? if >=1.21.2 {
+            renderer.clearPostEffect();
+            //? } else {
+            /*renderer.shutdownEffect();
+            *///? }
             return;
         }
-        *///? }
 
         ((mod.icanttellyou.picturemode.mixin.GameRendererAccessor) renderer).invokeSetPostEffect(shader);
         //? if >=1.21.6 {

@@ -186,12 +186,9 @@ public class PictureModeScreen extends Screen {
                 (button, holder) -> {
                     intensitySlider.active = holder.id() != null;
 
-                    GameRenderer renderer = this.minecraft.gameRenderer;
-                    //? if >=1.21.2 {
-                    if (renderer.currentPostEffect() != null)
-                        renderer.clearPostEffect();
-                    //? } else {
-                    /*if (renderer.currentEffect() != null)
+                    //? if <1.21.2 {
+                    /*GameRenderer renderer = this.minecraft.gameRenderer;
+                    if (renderer.currentEffect() != null)
                         renderer.shutdownEffect();
                     *///? }
 
@@ -333,7 +330,7 @@ public class PictureModeScreen extends Screen {
 
     @Override
     public void removed() {
-        this.pmState.setEnabled(false);
+        this.onExit();
     }
 
     @Override
@@ -347,11 +344,14 @@ public class PictureModeScreen extends Screen {
 
     @Override
     public void onClose() {
+        this.onExit();
+        super.onClose();
+    }
+
+    private void onExit() {
         this.pmState.setEnabled(false);
         ShaderHandler.setIntensity(1.0F);
         ShaderHandler.setShader(null);
-
-        super.onClose();
     }
 
     private float getDeltaTicks() {
