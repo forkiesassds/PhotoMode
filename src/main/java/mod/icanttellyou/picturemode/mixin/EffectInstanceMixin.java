@@ -7,24 +7,29 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.shaders.Program;
 import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceProvider;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(EffectInstance.class)
+@Debug(export = true)
+@Mixin(value = EffectInstance.class, priority = 1001)
 public abstract class EffectInstanceMixin {
     @WrapOperation(
         method = "<init>",
         at = @At(
+            //? if >=1.21 {
             value = "INVOKE",
-            target = "Lnet/minecraft/server/packs/resources/ResourceProvider;getResourceOrThrow(Lnet/minecraft/resources/Identifier;)Lnet/minecraft/server/packs/resources/Resource;"
+            target = "Lnet/minecraft/resources/Identifier;withDefaultNamespace(Ljava/lang/String;)Lnet/minecraft/resources/Identifier;"
+            //? } else {
+            /^value = "NEW",
+            target = "net/minecraft/resources/Identifier"
+            ^///? }
         )
     )
-    private Resource useModernShaderLocationBehaviour$jsonRead(
-        ResourceProvider instance,
-        Identifier resourceLocation,
-        Operation<Resource> original,
+    private Identifier useModernShaderLocationBehaviour$jsonRead(
+        String s,
+        Operation<Identifier> original,
         ResourceProvider resourceProvider,
         String name
     ) {
@@ -33,24 +38,28 @@ public abstract class EffectInstanceMixin {
             if (parsed != null) {
                 parsed = parsed.withPrefix("shaders/")
                         .withSuffix(".json");
-                resourceLocation = parsed;
+                return parsed;
             }
         }
 
-        return original.call(instance, resourceLocation);
+        return original.call(s);
     }
 
     @WrapOperation(
         method = "getOrCreate",
         at = @At(
+            //? if >=1.21 {
             value = "INVOKE",
-            target = "Lnet/minecraft/server/packs/resources/ResourceProvider;getResourceOrThrow(Lnet/minecraft/resources/Identifier;)Lnet/minecraft/server/packs/resources/Resource;"
+            target = "Lnet/minecraft/resources/Identifier;withDefaultNamespace(Ljava/lang/String;)Lnet/minecraft/resources/Identifier;"
+            //? } else {
+            /^value = "NEW",
+            target = "net/minecraft/resources/Identifier"
+            ^///? }
         )
     )
-    private static Resource useModernShaderLocationBehaviour$shaderRead(
-        ResourceProvider instance,
-        Identifier resourceLocation,
-        Operation<Resource> original,
+    private static Identifier useModernShaderLocationBehaviour$shaderRead(
+        String s,
+        Operation<Identifier> original,
         ResourceProvider resourceProvider,
         Program.Type type,
         String name
@@ -60,11 +69,11 @@ public abstract class EffectInstanceMixin {
             if (parsed != null) {
                 parsed = parsed.withPrefix("shaders/")
                         .withSuffix(type.getExtension());
-                resourceLocation = parsed;
+                return parsed;
             }
         }
 
-        return original.call(instance, resourceLocation);
+        return original.call(s);
     }
 }
 *///? }

@@ -43,8 +43,8 @@
       //? }
       "output": "swap",
       //? } else {
-      /*"name": "picturemode:post/blur",
-      "intarget": "minecraft:vignette",
+      /*"name": "picturemode:post/vignette",
+      "intarget": "minecraft:main",
       "outtarget": "swap"
       *///? }
     },

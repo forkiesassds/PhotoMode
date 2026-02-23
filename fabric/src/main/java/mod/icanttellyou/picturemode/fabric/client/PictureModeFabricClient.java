@@ -15,6 +15,11 @@ public class PictureModeFabricClient implements ClientModInitializer {
         ClientRenderEventListeners.initialise();
         ClientTickEventListeners.initialise();
 
+        //? if >=1.21.6 {
+        net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents.CLIENT_STARTED
+                .register(client -> ResourceLoaderHandlers.initialise());
+        //? }
+
         PictureModeKeymaps.initialise(KeyBindingHelper::registerKeyBinding);
         ClientTickEvents.END_CLIENT_TICK.register(PictureModeKeymaps.getMappingHandler()::accept);
     }

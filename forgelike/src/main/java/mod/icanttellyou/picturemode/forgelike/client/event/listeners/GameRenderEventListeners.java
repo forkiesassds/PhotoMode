@@ -32,6 +32,9 @@ public final class GameRenderEventListeners {
             return;
         *///? }
 
+        //? if >=1.21.6
+        PictureModeClient.getShaderPatchHandler().writeUBO();
+
         Minecraft mc = Minecraft.getInstance();
         ScreenshotHandler screenshotHandler = PictureModeClient.getScreenshotHandler();
 

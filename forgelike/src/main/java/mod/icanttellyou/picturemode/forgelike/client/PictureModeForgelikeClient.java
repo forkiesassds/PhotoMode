@@ -3,6 +3,8 @@ package mod.icanttellyou.picturemode.forgelike.client;
 import mod.icanttellyou.picturemode.client.PictureModeClient;
 import mod.icanttellyou.picturemode.client.config.ConfigHelper;
 import mod.icanttellyou.picturemode.client.keymap.PictureModeKeymaps;
+//? if >=1.21.6
+import mod.icanttellyou.picturemode.client.render.shader.ShaderPatchHandler;
 import mod.icanttellyou.picturemode.forgelike.client.event.listeners.GameRenderEventListeners;
 import mod.icanttellyou.picturemode.forgelike.client.event.listeners.GameTickEventListeners;
 import mod.icanttellyou.picturemode.forgelike.client.event.listeners.LevelEventListeners;
@@ -43,6 +45,8 @@ public class PictureModeForgelikeClient {
 
         eventBus.addListener(PictureModeForgelikeClient::onInitialize);
         eventBus.addListener(PictureModeForgelikeClient::registerBindings);
+        //? if >=1.21.6
+        eventBus.addListener(PictureModeForgelikeClient::addClientReloadListeners);
     }
 
     public static void onInitialize(FMLClientSetupEvent event) {
@@ -63,4 +67,13 @@ public class PictureModeForgelikeClient {
     public static void registerBindings(RegisterKeyMappingsEvent event) {
         PictureModeKeymaps.initialise(event::register);
     }
+
+    //? if >=1.21.6 {
+    public static void addClientReloadListeners(net.neoforged.neoforge.client.event.AddClientReloadListenersEvent event) {
+        PictureModeClient.initialiseShaderPatchHandler();
+        event.addListener(ShaderPatchHandler.RELOAD_LISTENER_ID, PictureModeClient.getShaderPatchHandler());
+        event.addDependency(net.neoforged.neoforge.client.resources.VanillaClientListeners.SHADERS,
+                ShaderPatchHandler.RELOAD_LISTENER_ID);
+    }
+    //? }
 }

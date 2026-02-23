@@ -14,6 +14,9 @@ public final class ClientRenderEventListeners {
         ScreenshotHandler screenshotHandler = PictureModeClient.getScreenshotHandler();
 
         OnGameRenderEvents.BEFORE.register((renderer, renderLevel) -> {
+            //? if >=1.21.6
+            PictureModeClient.getShaderPatchHandler().writeUBO();
+
             if (screenshotHandler.getStatus() != ScreenshotHandler.Status.WAITING_FOR_FRAME)
                 return;
 

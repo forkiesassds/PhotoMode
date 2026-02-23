@@ -12,7 +12,7 @@
     {
       //? if >=1.21.2 {
       //? if >=1.21.5 {
-      "vertex_shader": "minecraft:post/sobel",
+      "vertex_shader": "minecraft:core/screenquad",
       "fragment_shader": "picturemode:post/outline",
       //? } else {
       /*"program": "picturemode:post/outline",
@@ -50,6 +50,12 @@
       //? } else {
       /*"name": "picturemode:post/outline",
       "intarget": "minecraft:main",
+      "auxtargets": [
+        {
+          "name": "InDepthSampler",
+          "id": "minecraft:main:depth"
+        }
+      ],
       "outtarget": "swap"
       *///? }
     },

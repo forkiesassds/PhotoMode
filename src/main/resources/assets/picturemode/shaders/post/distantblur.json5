@@ -7,7 +7,7 @@
     "dstrgb": "zero"
   },
   ^///? }
-  "vertex": "minecraft:post/sobel",
+  "vertex": "minecraft:core/screenquad",
   "fragment": "picturemode:post/distantblur",
   //? if <1.21.2
   //"attributes": [ "Position" ],

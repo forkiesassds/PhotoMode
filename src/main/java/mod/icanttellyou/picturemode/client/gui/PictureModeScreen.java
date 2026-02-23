@@ -7,16 +7,24 @@ import mod.icanttellyou.picturemode.client.gui.layout.AnchorLayout;
 import mod.icanttellyou.picturemode.client.gui.widget.FadingStringWidget;
 import mod.icanttellyou.picturemode.client.gui.widget.Slider;
 import mod.icanttellyou.picturemode.client.image.screenshot.ScreenshotHandler;
+import mod.icanttellyou.picturemode.client.render.shader.ShaderHandler;
+import mod.icanttellyou.picturemode.client.render.shader.ShaderHolder;
+import mod.icanttellyou.picturemode.client.render.shader.ShaderUtil;
 import mod.icanttellyou.picturemode.util.LevelUtils;
 import mod.icanttellyou.picturemode.util.Tickable;
 import net.minecraft.SharedConstants;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.CycleButton;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Util;
 
 import static mod.icanttellyou.picturemode.PictureModeConstants.*;
@@ -30,6 +38,8 @@ public class PictureModeScreen extends Screen {
     private static final String TIME_KEY = "gui.picturemode.time";
     private static final String FOG_KEY = "gui.picturemode.fog";
     private static final String TILT_KEY = "gui.picturemode.tilt";
+    private static final String SHADER_KEY = "gui.picturemode.shader";
+    private static final String INTENSITY_KEY = "gui.picturemode.intensity";
 
     private static final String TAKE_SCREENSHOT_KEY = "gui.picturemode.takeScreenshot";
     private static final String HELP_TEXT_KEY = "gui.picturemode.helpText";
@@ -156,6 +166,42 @@ public class PictureModeScreen extends Screen {
                         slider.setMessage(Component.translatable(FOG_KEY, percent));
                     }
                 }));
+        }
+
+        Slider intensitySlider = new Slider(0, 0, 1.0D,
+            (slider, value, messageUpdate) -> {
+                if (!messageUpdate) {
+                    ShaderHandler.setIntensity((float) value);
+                } else {
+                    int percent = (int) (value * 100.0D);
+                    slider.setMessage(Component.translatable(INTENSITY_KEY, percent));
+                }
+            });
+        CycleButton<ShaderHolder> shaderButton;
+        rows.addChild(shaderButton = CycleButton.builder(ShaderHolder::getTranslatedName /*? >=1.21.11 {*/, ShaderHolder.EMPTY /*?}*/)
+            .withValues(ShaderUtil.SHADER_PROGRAMS)
+            //? if <1.21.11
+            //.withInitialValue(ShaderHolder.EMPTY)
+            .create(Component.translatable("gui.picturemode.shader"),
+                (button, holder) -> {
+                    intensitySlider.active = holder.id() != null;
+
+                    GameRenderer renderer = this.minecraft.gameRenderer;
+                    //? if >=1.21.2 {
+                    if (renderer.currentPostEffect() != null)
+                        renderer.clearPostEffect();
+                    //? } else {
+                    /*if (renderer.currentEffect() != null)
+                        renderer.shutdownEffect();
+                    *///? }
+
+                    ShaderHandler.setShader(holder.getLocation());
+                }));
+        rows.addChild(intensitySlider);
+
+        if (Minecraft.useShaderTransparency()) {
+            shaderButton.active = false;
+            shaderButton.setTooltip(Tooltip.create(Component.translatable("gui.picturemode.shader.incompatible")));
         }
 
         return layout;
@@ -302,6 +348,9 @@ public class PictureModeScreen extends Screen {
     @Override
     public void onClose() {
         this.pmState.setEnabled(false);
+        ShaderHandler.setIntensity(1.0F);
+        ShaderHandler.setShader(null);
+
         super.onClose();
     }
 

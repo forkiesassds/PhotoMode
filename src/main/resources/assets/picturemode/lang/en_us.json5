@@ -5,7 +5,12 @@
   "gui.picturemode.fog": "Fog: %s%%",
   "gui.picturemode.tilt": "Tilt: %s",
   "gui.picturemode.intensity": "Intensity: %s%%",
-  "gui.picturemode.shader": "Shader: %s",
+  "gui.picturemode.shader": "Shader",
+  //? if >=1.21.11 {
+  "gui.picturemode.shader.incompatible": "Shaders are incompatible with improved transparency. Please toggle it off.",
+  //? } else {
+  /*"gui.picturemode.shader.incompatible": "Shaders are incompatible with Fabulous graphics. Please switch to Fancy graphics.",
+  *///? }
   "gui.picturemode.default": "Default",
   "gui.picturemode.none": "None",
   "gui.picturemode.degrees": "%s degrees",

@@ -89,6 +89,37 @@ public abstract class GameRendererMixin {
             ci.cancel();
     }
 
+    @WrapOperation(
+        method = "renderLevel",
+        //? if >=1.21.6 {
+        at = @At(
+            value = "INVOKE",
+            target = "Lcom/mojang/blaze3d/systems/CommandEncoder;clearDepthTexture(Lcom/mojang/blaze3d/textures/GpuTexture;D)V"
+        )
+        //? } else {
+        /*at = @At(
+            value = "INVOKE",
+            target = "Lcom/mojang/blaze3d/systems/RenderSystem;clear(IZ)V"
+        )
+        *///? }
+    )
+    private void doNotClearDepthTextureInPM(
+        //? if >=1.21.6 {
+        com.mojang.blaze3d.systems.CommandEncoder o,
+        com.mojang.blaze3d.textures.GpuTexture o2,
+        double v,
+        //? } else {
+        /*int o,
+        boolean o2,
+        *///? }
+        Operation<Void> original
+    ) {
+        PictureModeState state = PictureModeClient.getState();
+
+        if (state == null || !state.isEnabled())
+            original.call(o, o2 /*? >=1.21.6 {*/, v/*?}*/);
+    }
+
     @Inject(method = "renderItemInHand", at = @At("HEAD"), cancellable = true)
     private void hideHandInPM(CallbackInfo ci) {
         PictureModeState state = PictureModeClient.getState();

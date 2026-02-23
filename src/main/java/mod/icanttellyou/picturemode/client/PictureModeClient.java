@@ -4,10 +4,11 @@ import mod.icanttellyou.picturemode.client.config.PictureModeClientConfig;
 import mod.icanttellyou.picturemode.client.gui.PictureModeScreen;
 import mod.icanttellyou.picturemode.client.gui.widget.button.AbstractButtonBuilder;
 import mod.icanttellyou.picturemode.client.image.screenshot.ScreenshotHandler;
+//? if >=1.21.6
+import mod.icanttellyou.picturemode.client.render.shader.ShaderPatchHandler;
 import mod.icanttellyou.picturemode.services.PictureModeServices;
 import mod.icanttellyou.picturemode.util.LevelUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -18,6 +19,8 @@ public class PictureModeClient {
             PictureModeClientConfig.readConfig(PictureModeServices.PLATFORM.getConfigDir());
 
     private static final ScreenshotHandler screenshotHandler = new ScreenshotHandler();
+    //? if >=1.21.6
+    private static ShaderPatchHandler shaderPatchHandler;
 
     /**
      * Gets the current Picture Mode state
@@ -45,6 +48,26 @@ public class PictureModeClient {
     public static ScreenshotHandler getScreenshotHandler() {
         return screenshotHandler;
     }
+
+    //? if >=1.21.6 {
+
+    /**
+     * Initialises the shader patch handler.
+     */
+    public static void initialiseShaderPatchHandler() {
+        if (shaderPatchHandler == null)
+            shaderPatchHandler = new ShaderPatchHandler();
+    }
+
+    /**
+     * Gets the shader patch handler for Picture Mode.
+     *
+     * @return The shader patch handler used by Picture Mode.
+     */
+    public static ShaderPatchHandler getShaderPatchHandler() {
+        return shaderPatchHandler;
+    }
+    //? }
 
     /**
      * Gets the width, for use of calculating projection matrices
