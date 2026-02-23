@@ -4,8 +4,6 @@ package mod.icanttellyou.picturemode.client.render.shader;
 import mod.icanttellyou.picturemode.client.PictureModeClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
-//? if <1.21.6
-//import net.minecraft.client.renderer.PostChain;
 import net.minecraft.resources.Identifier;
 
 public class ShaderHandler {
@@ -27,10 +25,7 @@ public class ShaderHandler {
         //? if >=1.21.6 {
         PictureModeClient.getShaderPatchHandler().patchShader(shader);
         //? } else {
-        /*PostChain shaderEffect = renderer.currentEffect();
-
-        if (shaderEffect != null)
-            shaderEffect.setUniform("Intensity", 1.0F);
+        /*setIntensity(1.0F);
         *///? }
     }
 
@@ -42,11 +37,28 @@ public class ShaderHandler {
     public static void setIntensity(float intensity) {
         //? if >=1.21.6 {
         PictureModeClient.getShaderPatchHandler().setIntensity(intensity);
-        //? } else {
-        /*PostChain shader = Minecraft.getInstance().gameRenderer.currentEffect();
+         //? } else {
+        /*setUniform("Intensity", intensity);
+        *///? }
+    }
 
-        if (shader != null)
-            shader.setUniform("Intensity", intensity);
+    //? if >=1.21.6
+    @SuppressWarnings("unused")
+    private static void setUniform(String uniform, float value) {
+        //? if >=1.21.6 {
+        throw new RuntimeException("Direct uniform setting is unsupported in 1.21.6+");
+        //? } else {
+        /*net.minecraft.client.renderer.PostChain shader = Minecraft.getInstance().gameRenderer.currentEffect();
+
+        if (shader != null) {
+            //? if >=1.20.5 {
+            shader.setUniform(uniform, value);
+            //? } else {
+            /^for (net.minecraft.client.renderer.PostPass postPass : ((mod.icanttellyou.picturemode.mixin.PostChainAccessor) shader).getPasses()) {
+                postPass.getEffect().safeGetUniform(uniform).set(value);
+            }
+            ^///? }
+        }
         *///? }
     }
 }

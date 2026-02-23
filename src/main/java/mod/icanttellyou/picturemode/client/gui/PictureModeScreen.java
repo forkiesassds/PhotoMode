@@ -182,7 +182,7 @@ public class PictureModeScreen extends Screen {
             .withValues(ShaderUtil.SHADER_PROGRAMS)
             //? if <1.21.11
             //.withInitialValue(ShaderHolder.EMPTY)
-            .create(Component.translatable("gui.picturemode.shader"),
+            .create(0, 0, Button.DEFAULT_WIDTH, Button.DEFAULT_HEIGHT, Component.translatable("gui.picturemode.shader"),
                 (button, holder) -> {
                     intensitySlider.active = holder.id() != null;
 

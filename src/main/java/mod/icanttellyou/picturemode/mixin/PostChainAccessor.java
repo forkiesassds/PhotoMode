@@ -1,4 +1,4 @@
-//? if >=1.21.6 {
+//? if <1.20.5 || >=1.21.6 {
 package mod.icanttellyou.picturemode.mixin;
 
 import net.minecraft.client.renderer.PostChain;
