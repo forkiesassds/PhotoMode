@@ -5,11 +5,11 @@
   "gui.picturemode.fog": "Fog: %s%%",
   "gui.picturemode.tilt": "Tilt: %s",
   "gui.picturemode.intensity": "Intensity: %s%%",
-  "gui.picturemode.shader": "Shader",
+  "gui.picturemode.shader": "Filter",
   //? if >=1.21.11 {
-  "gui.picturemode.shader.incompatible": "Shaders are incompatible with improved transparency. Please toggle it off.",
+  "gui.picturemode.shader.incompatible": "Filters are incompatible with improved transparency. Please toggle it off, in order to use filters.",
   //? } else {
-  /*"gui.picturemode.shader.incompatible": "Shaders are incompatible with Fabulous graphics. Please switch to Fancy graphics.",
+  /*"gui.picturemode.shader.incompatible": "Filters are incompatible with Fabulous graphics. Please switch to Fancy graphics, in order to use filters.",
   *///? }
   "gui.picturemode.default": "Default",
   "gui.picturemode.none": "None",
@@ -33,7 +33,7 @@
 
   "picturemode.config.title": "Mod Options",
   "picturemode.config.format.name": "Image Format",
-  "picturemode.config.format.desc": "The format to save resulting images as.",
+  "picturemode.config.format.desc": "The format to save screenshots as.",
   "picturemode.config.format.png": "PNG (lossless)",
   "picturemode.config.format.jpg": "JPEG (lossy)",
   "picturemode.config.format.tga": "TGA (lossless, uncompressed)",
@@ -52,5 +52,5 @@
 
   "picturemode.config.format.jpg.settings": "JPEG Format Settings",
   "picturemode.config.format.jpg.quality.name": "Quality",
-  "picturemode.config.format.jpg.quality.desc": "The quality of the resulting image. Higher quality values use more disk space per image.\n\n(0 is lowest quality, whilst 100 is best quality.)"
+  "picturemode.config.format.jpg.quality.desc": "The quality of the screenshot, when using JPEG. Higher quality values use more disk space per screenshot.\n\n(0 is lowest quality, whilst 100 is best quality.)"
 }
