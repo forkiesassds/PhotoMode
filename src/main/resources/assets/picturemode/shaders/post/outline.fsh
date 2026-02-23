@@ -12,10 +12,10 @@ layout(std140) uniform PMConfig {
     float Intensity;
 };
 //? } else {
-/*in vec2 oneTexel;
-
-uniform float Intensity;
-*///? }
+//in vec2 oneTexel;
+//
+//uniform float Intensity;
+//? }
 
 uniform sampler2D InSampler;
 uniform sampler2D InDepthSampler;

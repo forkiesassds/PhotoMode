@@ -1,3 +1,6 @@
+import dev.kikugie.stitcher.antlr.scanner.HashStyleScanner
+import dev.kikugie.stitcher.transform.impl.LineCommentStrategy
+
 plugins {
     id("dev.kikugie.stonecutter")
 
@@ -87,4 +90,8 @@ stonecutter.parameters {
 
 stonecutter handlers {
     inherit("yaml", "toml")
+    //HACK: VulkanMod does not support block comments in shaders. We need to use a simpler handler.
+    configure("fsh", "vsh") {
+        commenter.set(LineCommentStrategy("//"))
+    }
 }

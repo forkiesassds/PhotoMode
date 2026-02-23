@@ -8,8 +8,8 @@ layout(std140) uniform PMConfig {
     float Intensity;
 };
 //? } else {
-/*uniform float Intensity;
-*///? }
+//uniform float Intensity;
+//? }
 
 out vec4 fragColor;
 
