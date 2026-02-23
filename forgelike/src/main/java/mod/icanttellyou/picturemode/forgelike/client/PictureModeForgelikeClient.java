@@ -2,6 +2,7 @@ package mod.icanttellyou.picturemode.forgelike.client;
 
 import mod.icanttellyou.picturemode.client.PictureModeClient;
 import mod.icanttellyou.picturemode.client.config.ConfigHelper;
+import mod.icanttellyou.picturemode.client.keymap.PictureModeKeymaps;
 import mod.icanttellyou.picturemode.forgelike.client.event.listeners.GameRenderEventListeners;
 import mod.icanttellyou.picturemode.forgelike.client.event.listeners.GameTickEventListeners;
 import mod.icanttellyou.picturemode.forgelike.client.event.listeners.LevelEventListeners;
@@ -13,6 +14,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
 //? } else {
@@ -39,6 +41,7 @@ public class PictureModeForgelikeClient {
         gameBus.register(new LevelEventListeners());
 
         eventBus.addListener(PictureModeForgelikeClient::onInitialize);
+        eventBus.addListener(PictureModeForgelikeClient::registerBindings);
     }
 
     public static void onInitialize(FMLClientSetupEvent event) {
@@ -54,5 +57,9 @@ public class PictureModeForgelikeClient {
                 ((client, parent) -> ConfigHelper.getConfigScreen(parent, PictureModeClient.getConfig()))
             );
         }
+    }
+
+    public static void registerBindings(RegisterKeyMappingsEvent event) {
+        PictureModeKeymaps.initialise(event::register);
     }
 }

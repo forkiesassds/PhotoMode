@@ -73,7 +73,7 @@ public class PictureModeClient {
     @SuppressWarnings("unchecked")
     public static <T> T makePMButton(Minecraft minecraft, Screen screen) {
         return (T) AbstractButtonBuilder.getBuilder(screen, Component.translatable("gui.picturemode"),
-            button -> minecraft.setScreen(new PictureModeScreen(screen, Component.literal(""))))
+            button -> minecraft.setScreen(new PictureModeScreen(screen)))
             .disableIf(() -> LevelUtils.isPMDisabledForDimension(minecraft.level))
             .pos(screen.width / 2 - 48, 8)
             .width(98)

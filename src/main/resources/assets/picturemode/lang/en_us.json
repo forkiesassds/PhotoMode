@@ -13,6 +13,8 @@
   "gui.picturemode.showPlayer": "Show Player: %s",
   "gui.picturemode.helpText": "Click and drag to move and rotate.",
 
+  "key.picturemode.open": "Open Picture Mode",
+
   "shader.picturemode.blur": "Blur",
   "shader.picturemode.distantblur": "Distant Blur",
   "shader.picturemode.eerie": "Eerie",

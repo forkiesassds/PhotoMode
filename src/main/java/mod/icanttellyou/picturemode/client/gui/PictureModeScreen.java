@@ -50,8 +50,8 @@ public class PictureModeScreen extends Screen {
     private double mouseXStart;
     private double mouseYStart;
 
-    public PictureModeScreen(Screen parent, Component title) {
-        super(title);
+    public PictureModeScreen(Screen parent) {
+        super(Component.empty());
         this.parent = parent;
         this.pmState = PictureModeClient.getState();
         this.layout = new AnchorLayout(0, 0);
