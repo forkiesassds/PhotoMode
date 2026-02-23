@@ -1,4 +1,3 @@
-import dev.kikugie.stitcher.antlr.scanner.HashStyleScanner
 import dev.kikugie.stitcher.transform.impl.LineCommentStrategy
 
 plugins {
