@@ -89,7 +89,7 @@ public class PictureModeClientConfig {
         }
 
         try {
-            Files.createDirectories(configDir);
+            Files.createDirectories(configFile.getParent());
             try (BufferedWriter writer = Files.newBufferedWriter(configFile)) {
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 gson.toJson(encodedConfig.result().get(), writer);
