@@ -21,11 +21,10 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
 import net.minecraft.util.Util;
+import org.jetbrains.annotations.Nullable;
 
 import static mod.icanttellyou.picturemode.PictureModeConstants.*;
 
@@ -60,6 +59,8 @@ public class PictureModeScreen extends Screen {
     private double mouseXStart;
     private double mouseYStart;
 
+    private @Nullable Runnable textDelegate;
+
     public PictureModeScreen(Screen parent) {
         super(Component.empty());
         this.parent = parent;
@@ -78,6 +79,11 @@ public class PictureModeScreen extends Screen {
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         if (PictureModeClient.getScreenshotHandler().getStatus() != ScreenshotHandler.Status.IDLE)
             return;
+
+        if (textDelegate != null) {
+            textDelegate.run();
+            textDelegate = null;
+        }
 
         centerCameraButton.active =
             (pmState.cameraPanX.getValue(partialTick) != 0.0D || pmState.cameraPanY.getValue(partialTick) != 0.0D) &&
@@ -182,7 +188,7 @@ public class PictureModeScreen extends Screen {
             .withValues(ShaderUtil.SHADER_PROGRAMS)
             //? if <1.21.11
             //.withInitialValue(ShaderHolder.EMPTY)
-            .create(0, 0, Button.DEFAULT_WIDTH, Button.DEFAULT_HEIGHT, Component.translatable("gui.picturemode.shader"),
+            .create(0, 0, Button.DEFAULT_WIDTH, Button.DEFAULT_HEIGHT, Component.translatable(SHADER_KEY),
                 (button, holder) -> {
                     intensitySlider.active = holder.id() != null;
 
@@ -198,7 +204,7 @@ public class PictureModeScreen extends Screen {
 
         if (Minecraft.useShaderTransparency()) {
             shaderButton.active = false;
-            shaderButton.setTooltip(Tooltip.create(Component.translatable("gui.picturemode.shader.incompatible")));
+            shaderButton.setTooltip(Tooltip.create(Component.translatable(SHADER_KEY + ".incompatible")));
         }
         intensitySlider.active = false;
 
@@ -234,10 +240,11 @@ public class PictureModeScreen extends Screen {
             .build());
         rows.addChild(Button.builder(Component.translatable(TAKE_SCREENSHOT_KEY), button -> {
                     ScreenshotHandler screenshotHandler = PictureModeClient.getScreenshotHandler();
-                    screenshotHandler.prepareForScreenshot(minecraft.gameDirectory, message -> {
-                        helpText.setMessage(message);
-                        repositionElements();
-                    });
+                    screenshotHandler.prepareForScreenshot(minecraft.gameDirectory, message ->
+                        textDelegate = () -> {
+                            helpText.setMessage(message);
+                            repositionElements();
+                        });
                 })
             .width(98)
             .build());
