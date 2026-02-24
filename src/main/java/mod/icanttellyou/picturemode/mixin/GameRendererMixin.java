@@ -10,12 +10,14 @@ import mod.icanttellyou.picturemode.client.PictureModeClient;
 import mod.icanttellyou.picturemode.client.PictureModeState;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Coerce;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -138,6 +140,24 @@ public abstract class GameRendererMixin {
             return original;
 
         return !state.isEnabled() && original;
+    }
+
+    @WrapOperation(
+        method = "render",
+        at = @At(
+            value = "INVOKE",
+            //? if >=1.21.2 {
+            target = "Lnet/minecraft/client/gui/components/toasts/ToastManager;render(Lnet/minecraft/client/gui/GuiGraphics;)V"
+            //? } else {
+            /*target = "Lnet/minecraft/client/gui/components/toasts/ToastComponent;render(Lnet/minecraft/client/gui/GuiGraphics;)V"
+            *///? }
+        )
+    )
+    private void hideToastsInPM(@Coerce Object instance, GuiGraphics i, Operation<Void> original) {
+        PictureModeState state = PictureModeClient.getState();
+
+        if (state == null || !state.isEnabled())
+            original.call(instance, i);
     }
 
     //? if >=1.21.6 {

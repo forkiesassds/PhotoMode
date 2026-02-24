@@ -200,6 +200,7 @@ public class PictureModeScreen extends Screen {
             shaderButton.active = false;
             shaderButton.setTooltip(Tooltip.create(Component.translatable("gui.picturemode.shader.incompatible")));
         }
+        intensitySlider.active = false;
 
         return layout;
     }
