@@ -193,7 +193,7 @@ public class PictureModeScreen extends Screen {
                     intensitySlider.active = holder.id() != null;
 
                     //? if <1.21.2 {
-                    /*GameRenderer renderer = this.minecraft.gameRenderer;
+                    /*net.minecraft.client.renderer.GameRenderer renderer = this.minecraft.gameRenderer;
                     if (renderer.currentEffect() != null)
                         renderer.shutdownEffect();
                     *///? }
