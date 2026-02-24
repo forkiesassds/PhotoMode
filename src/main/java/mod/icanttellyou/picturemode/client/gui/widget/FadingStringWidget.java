@@ -33,6 +33,8 @@ public class FadingStringWidget extends AbstractStringWidget implements Tickable
     private final int defaultTicksUntilFade;
     private int ticksUntilFade;
 
+    private Component queuedMessageChange;
+
     //? <1.21.11
     //private @Nullable java.util.function.Consumer<Style> componentClickHandler = null;
 
@@ -54,9 +56,7 @@ public class FadingStringWidget extends AbstractStringWidget implements Tickable
 
     @Override
     public void setMessage(Component message) {
-        super.setMessage(message);
-        //? if <1.21.11
-        //this.setWidth(this.getFont().width(message.getVisualOrderText()));
+        this.queuedMessageChange = message;
         this.cachedWidthDirty = true;
         this.haltFading = false;
         this.resetFade();
@@ -103,6 +103,13 @@ public class FadingStringWidget extends AbstractStringWidget implements Tickable
 
     @Override
     public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float deltaTicks) {
+        if (this.queuedMessageChange != null) {
+            super.setMessage(this.queuedMessageChange);
+            //? if <1.21.11
+            //this.setWidth(this.getFont().width(this.queuedMessageChange.getVisualOrderText()));
+            this.queuedMessageChange = null;
+        }
+
         double fade = this.alphaFade.getValue(deltaTicks);
         if (fade == 0.0D) {
             this.visible = false;
