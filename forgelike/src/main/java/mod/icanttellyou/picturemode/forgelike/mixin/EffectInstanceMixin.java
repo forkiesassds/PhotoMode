@@ -18,7 +18,7 @@ public abstract class EffectInstanceMixin {
         at = @At(
             //? if >=1.21 {
             value = "INVOKE",
-            target = "Lnet/minecraft/resources/Identifier;withDefaultNamespace(Ljava/lang/String;)Lnet/minecraft/resources/Identifier;"
+            target = "Lnet/minecraft/resources/Identifier;withDefaultNamespace(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/resources/Identifier;"
             //? } else {
             /^value = "NEW",
             target = "net/minecraft/resources/Identifier"
@@ -49,7 +49,7 @@ public abstract class EffectInstanceMixin {
         at = @At(
             //? if >=1.21 {
             value = "INVOKE",
-            target = "Lnet/minecraft/resources/Identifier;withDefaultNamespace(Ljava/lang/String;)Lnet/minecraft/resources/Identifier;"
+            target = "Lnet/minecraft/resources/Identifier;withDefaultNamespace(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/resources/Identifier;"
             //? } else {
             /^value = "NEW",
             target = "net/minecraft/resources/Identifier"
