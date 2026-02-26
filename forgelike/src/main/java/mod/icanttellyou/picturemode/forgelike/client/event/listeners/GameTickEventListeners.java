@@ -13,7 +13,7 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 *///? }
 import net.neoforged.neoforge.common.util.Lazy;
 //? } else {
-/*import cpw.mods.util.Lazy;
+/*import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 *///? }

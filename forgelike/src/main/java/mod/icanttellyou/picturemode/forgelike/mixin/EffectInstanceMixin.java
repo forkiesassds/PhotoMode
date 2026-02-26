@@ -1,6 +1,6 @@
 //~ resource_provider
 //? if <1.21.2 {
-/*package mod.icanttellyou.picturemode.mixin;
+/*package mod.icanttellyou.picturemode.forgelike.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -27,6 +27,7 @@ public abstract class EffectInstanceMixin {
     )
     private Identifier useModernShaderLocationBehaviour$jsonRead(
         String s,
+        String s2,
         Operation<Identifier> original,
         ResourceProvider resourceProvider,
         String name
@@ -40,7 +41,7 @@ public abstract class EffectInstanceMixin {
             }
         }
 
-        return original.call(s);
+        return original.call(s, s2);
     }
 
     @WrapOperation(
@@ -57,6 +58,7 @@ public abstract class EffectInstanceMixin {
     )
     private static Identifier useModernShaderLocationBehaviour$shaderRead(
         String s,
+        String s2,
         Operation<Identifier> original,
         ResourceProvider resourceProvider,
         Program.Type type,
@@ -71,7 +73,7 @@ public abstract class EffectInstanceMixin {
             }
         }
 
-        return original.call(s);
+        return original.call(s, s2);
     }
 }
 *///? }
