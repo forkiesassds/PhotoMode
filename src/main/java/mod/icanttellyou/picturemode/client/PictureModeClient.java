@@ -8,9 +8,15 @@ import mod.icanttellyou.picturemode.client.image.screenshot.ScreenshotHandler;
 import mod.icanttellyou.picturemode.client.render.shader.ShaderPatchHandler;
 import mod.icanttellyou.picturemode.services.PictureModeServices;
 import mod.icanttellyou.picturemode.util.LevelUtils;
+import mod.icanttellyou.picturemode.util.LoggingUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import org.slf4j.event.Level;
+
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.util.function.BooleanSupplier;
 
 public class PictureModeClient {
 
@@ -21,6 +27,32 @@ public class PictureModeClient {
     private static final ScreenshotHandler screenshotHandler = new ScreenshotHandler();
     //? if >=1.21.6
     private static ShaderPatchHandler shaderPatchHandler;
+
+    public static void commonInit() {
+        if (PictureModeServices.PLATFORM.isModPresent("firstperson")) {
+            /*
+             * What good is an API that is proprietary? What good does it serve for the developer?
+             * Making a proprietary API is a huge loss towards Open Source developers and the community.
+             * This horrid mess is a result of all of this.
+             */
+            try {
+                Class<?> api = Class.forName("dev.tr7zw.firstperson.api.FirstPersonAPI");
+                Class<?> activationHandler = Class.forName("dev.tr7zw.firstperson.api.ActivationHandler");
+                Method register = api.getMethod("registerPlayerHandler", Object.class);
+                Object handler = Proxy.newProxyInstance(activationHandler.getClassLoader(), new Class[] {activationHandler},
+                    (o, m, args) -> {
+                        if (m.getName().equals("preventFirstperson"))
+                            return state != null && state.isEnabled();
+
+                        throw new RuntimeException("This should NOT happen!");
+                    });
+
+                register.invoke(null, handler);
+            } catch (Exception e) {
+                LoggingUtil.log(Level.ERROR, "Failed to initialise FirstPerson compatibility: ", e);
+            }
+        }
+    }
 
     /**
      * Gets the current Picture Mode state

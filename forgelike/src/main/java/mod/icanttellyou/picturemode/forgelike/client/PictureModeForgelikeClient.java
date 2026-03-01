@@ -50,6 +50,8 @@ public class PictureModeForgelikeClient {
     }
 
     public static void onInitialize(FMLClientSetupEvent event) {
+        PictureModeClient.commonInit();
+
         if (PictureModeServices.PLATFORM.isModPresent("yet_another_config_lib_v3")) {
             ModLoadingContext.get().registerExtensionPoint(
                 //? if neoforge {
