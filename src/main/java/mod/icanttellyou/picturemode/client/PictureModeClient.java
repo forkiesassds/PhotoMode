@@ -43,7 +43,7 @@ public class PictureModeClient {
                         if (m.getName().equals("preventFirstperson"))
                             return state != null && state.isEnabled();
 
-                        throw new RuntimeException("This should NOT happen!");
+                        throw new RuntimeException("Proxy invoked for unhandled method " + m.getName() + ". This should NOT happen!");
                     });
 
                 register.invoke(null, handler);
