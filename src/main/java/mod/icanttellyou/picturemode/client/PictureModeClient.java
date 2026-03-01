@@ -16,7 +16,6 @@ import org.slf4j.event.Level;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.function.BooleanSupplier;
 
 public class PictureModeClient {
 
