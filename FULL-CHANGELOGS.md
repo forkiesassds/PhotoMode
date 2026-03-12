@@ -6,6 +6,7 @@
 - Fixed compatibility issue with the Blur mod on 1.20.1
     - NOTE: Only the Fabric version of the Blur mod works with the workaround.
       On Forge, you have to use the Fabric version of the Blur mod with Sinytra Connector.
+- Fixed crash with JourneyMap compatibility mixins on Fabric
 
 # 1.1.1
 
