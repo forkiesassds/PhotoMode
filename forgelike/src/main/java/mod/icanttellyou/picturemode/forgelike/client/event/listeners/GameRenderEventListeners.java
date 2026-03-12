@@ -27,7 +27,7 @@ public final class GameRenderEventListeners {
             /*TickEvent.RenderTickEvent
             *///? }
             event) {
-        //? if !neoforge || <1.20.5 {
+        //? if forge || <1.20.5 {
         /*if (event.phase != TickEvent.Phase.START)
             return;
         *///? }
@@ -60,7 +60,7 @@ public final class GameRenderEventListeners {
             /*TickEvent.RenderTickEvent
             *///? }
             event) {
-        //? if !neoforge || <1.20.5 {
+        //? if forge || <1.20.5 {
         /*if (event.phase != TickEvent.Phase.END)
             return;
         *///? }
