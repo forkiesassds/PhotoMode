@@ -54,6 +54,9 @@ public class ShaderPatchHandler implements ResourceManagerReloadListener {
      * Writes the UBO into the intensity uniform buffer.
      */
     public void writeUBO() {
+        if (this.intensityUniform.isClosed())
+            return;
+
         try (MemoryStack memoryStack = MemoryStack.stackPush()) {
             ByteBuffer byteBuffer = Std140Builder.onStack(memoryStack, 4)
                     .putFloat(this.intensity)
