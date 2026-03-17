@@ -18,7 +18,11 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(Minecraft.class)
 public class MinecraftMixin {
     @WrapOperation(
+        //? if >=26.1 {
+        /*method = "renderFrame",
+        *///? } else {
         method = "runTick",
+        //? }
         at = @At(
             value = "INVOKE",
             target = "Lcom/mojang/blaze3d/pipeline/RenderTarget;blitToScreen(" +

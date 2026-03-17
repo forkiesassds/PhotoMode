@@ -1,3 +1,4 @@
+//? if <26.1 {
 package mod.icanttellyou.picturemode.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -52,3 +53,4 @@ public abstract class LevelRendererMixin {
         return original.call(instance);
     }
 }
+//? }

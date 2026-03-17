@@ -30,7 +30,11 @@ public abstract class MinecraftMixin {
     }
 
     @WrapOperation(
+        //? if >=26.1 {
+        /*method = "renderFrame",
+        *///? } else {
         method = "runTick",
+        //? }
         at = @At(
             value = "INVOKE",
             target = "Lcom/mojang/blaze3d/pipeline/RenderTarget;blitToScreen(" +
@@ -48,10 +52,14 @@ public abstract class MinecraftMixin {
     }
 
     @WrapOperation(
+        //? if >=26.1 {
+        /*method = "renderFrame",
+        *///? } else {
         method = "runTick",
+        //? }
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/renderer/GameRenderer;render(" +
+            target = "Lnet/minecraft/client/renderer/GameRenderer;" + /*? >= 26.1 {*/ /*"extract(" *//*? } else {*/ "render(" /*?}*/ +
                 //? if >=1.21 {
                 "Lnet/minecraft/client/DeltaTracker;"
                 //? } else {

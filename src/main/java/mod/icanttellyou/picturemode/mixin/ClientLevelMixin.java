@@ -1,3 +1,4 @@
+//? if <26.1 {
 package mod.icanttellyou.picturemode.mixin;
 
 import mod.icanttellyou.picturemode.client.PictureModeClient;
@@ -48,3 +49,4 @@ public abstract class ClientLevelMixin extends Level {
         return (long) (dayBase + override);
     }
 }
+//? }

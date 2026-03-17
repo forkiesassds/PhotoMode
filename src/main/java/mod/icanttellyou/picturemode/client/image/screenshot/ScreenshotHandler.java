@@ -141,6 +141,9 @@ public class ScreenshotHandler {
 
         window.setWidth(width);
         window.setHeight(height);
+
+        //? if >=26.1
+        //((mod.icanttellyou.picturemode.imixin.PMWindowResizeTrick)(Object) window).pictureMode$forciblyResizeWindow();
     }
 
     private void storeCurrentResolution(Window window) {
@@ -156,6 +159,9 @@ public class ScreenshotHandler {
     public void restoreCurrentResolution(Window window) {
         window.setWidth(this.curWidth);
         window.setHeight(this.curHeight);
+
+        //? if >=26.1
+        //((mod.icanttellyou.picturemode.imixin.PMWindowResizeTrick)(Object) window).pictureMode$forciblyResizeWindow();
     }
 
     private static File getFile(File rootDir, NativeImageFormat format) {
