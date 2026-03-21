@@ -17,6 +17,7 @@ public abstract class PauseScreenMixin extends Screen {
 
     @Inject(method = "createPauseMenu", at = @At("TAIL"))
     private void addPMButtonToPauseMenu(CallbackInfo ci) {
-        this.addRenderableWidget(PictureModeClient.makePMButton(this.minecraft, this));
+        if (PictureModeClient.getConfig().buttonInPauseMenu)
+            this.addRenderableWidget(PictureModeClient.makePMButton(this.minecraft, this));
     }
 }

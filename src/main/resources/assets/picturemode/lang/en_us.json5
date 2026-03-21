@@ -32,6 +32,8 @@
   "shader.picturemode.vignette": "Vignette",
 
   "picturemode.config.title": "Mod Options",
+  "picturemode.config.buttonInPauseMenu.name": "Button in Pause Screen",
+  "picturemode.config.buttonInPauseMenu.desc": "This option determines on if the Picture Mode should be present in the Pause Screen.",
   "picturemode.config.format.name": "Image Format",
   "picturemode.config.format.desc": "The format to save screenshots as.",
   "picturemode.config.format.png": "PNG (lossless)",

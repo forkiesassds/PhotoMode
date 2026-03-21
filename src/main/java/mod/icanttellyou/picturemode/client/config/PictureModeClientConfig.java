@@ -25,6 +25,8 @@ import java.util.Map;
 public class PictureModeClientConfig {
     public static final Codec<PictureModeClientConfig> CODEC =
         RecordCodecBuilder.create(instance -> instance.group(
+                Codec.BOOL.optionalFieldOf("button_in_pause_menu", true)
+                        .forGetter(conf -> conf.buttonInPauseMenu),
                 Codec.STRING.fieldOf("format").xmap(NativeImageFormats::getFormat, NativeImageFormat::getFormatName)
                         .forGetter(conf -> conf.format),
                 NativeImageFormat.ConfigProvider.CONFIG_MAP_CODEC.fieldOf("format_settings")
@@ -33,12 +35,14 @@ public class PictureModeClientConfig {
                         .forGetter(conf -> conf.screenshotSettings)
         ).apply(instance, PictureModeClientConfig::new));
 
+    public boolean buttonInPauseMenu;
     public NativeImageFormat format;
     public Map<String, NativeImageFormat.ConfigProvider> formatSettings;
     public ScreenshotSettings screenshotSettings;
 
     public PictureModeClientConfig() {
         this(
+            true,
             NativeImageFormats.PNG_FORMAT,
             NativeImageFormats.FORMATS.stream()
                 .map(f -> Pair.of(f.getFormatName(), f.provideConfigProvider()))
@@ -49,10 +53,12 @@ public class PictureModeClientConfig {
     }
 
     public PictureModeClientConfig(
+        boolean buttonInPauseMenu,
         NativeImageFormat format,
         Map<String, NativeImageFormat.ConfigProvider> formatSettings,
         ScreenshotSettings screenshotSettings
     ) {
+        this.buttonInPauseMenu = buttonInPauseMenu;
         this.format = format;
         this.formatSettings = formatSettings;
         this.screenshotSettings = screenshotSettings;

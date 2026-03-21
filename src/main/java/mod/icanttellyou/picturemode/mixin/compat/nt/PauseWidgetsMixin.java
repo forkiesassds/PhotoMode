@@ -28,8 +28,10 @@ public class PauseWidgetsMixin {
     //TODO: maybe position the buttons in a way that would fit in more
     @Inject(method = "init", at = @At("HEAD"))
     private void addPMButtonToPauseMenu(CallbackInfo ci) {
-        Object button = PictureModeClient.makePMButton(Minecraft.getInstance(), this.pm$pauseScreen);
-        pm$addWidget(pm$pauseScreen, button);
+        if (PictureModeClient.getConfig().buttonInPauseMenu) {
+            Object button = PictureModeClient.makePMButton(Minecraft.getInstance(), this.pm$pauseScreen);
+            pm$addWidget(pm$pauseScreen, button);
+        }
     }
 
     @Unique

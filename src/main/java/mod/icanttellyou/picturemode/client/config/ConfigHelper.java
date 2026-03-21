@@ -1,6 +1,7 @@
 package mod.icanttellyou.picturemode.client.config;
 
 import dev.isxander.yacl3.api.*;
+import dev.isxander.yacl3.api.controller.BooleanControllerBuilder;
 import dev.isxander.yacl3.api.controller.CyclingListControllerBuilder;
 import mod.icanttellyou.picturemode.PictureMode;
 import mod.icanttellyou.picturemode.client.image.format.NativeImageFormat;
@@ -20,6 +21,12 @@ public class ConfigHelper {
         ConfigCategory.Builder categoryBuilder = ConfigCategory.createBuilder()
             .name(getConfigText("title"))
             .group(OptionGroup.createBuilder()
+                .option(Option.<Boolean>createBuilder()
+                    .name(getConfigText("buttonInPauseMenu.name"))
+                    .description(OptionDescription.of(getConfigText("buttonInPauseMenu.desc")))
+                    .binding(true, () -> config.buttonInPauseMenu, newVal -> config.buttonInPauseMenu = newVal)
+                    .controller(BooleanControllerBuilder::create)
+                    .build())
                 .option(Option.<NativeImageFormat>createBuilder()
                     .name(getConfigText("format.name"))
                     .description(OptionDescription.of(getConfigText("format.desc")))
