@@ -8,24 +8,23 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import mod.icanttellyou.picturemode.client.PictureModeClient;
 import mod.icanttellyou.picturemode.client.PictureModeState;
-import net.minecraft.client.Camera;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
-import org.joml.Matrix4f;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Coerce;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+//? if <26.1 {
+import net.minecraft.client.Camera;
+import org.joml.Matrix4f;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+//? }
 
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin {
-    @Shadow @Final private Minecraft minecraft;
-
+    //? if <26.1 {
     //? if >=1.21.9
     @Shadow public abstract Matrix4f getProjectionMatrix(float fov);
     @Shadow public abstract float getDepthFar();
@@ -82,6 +81,7 @@ public abstract class GameRendererMixin {
         return original.call(a, b);
     }
     *///? }
+    //? }
 
     @Inject(method = {"bobView", "bobHurt"}, at = @At("HEAD"), cancellable = true)
     private void cancelBobbingInPM(CallbackInfo ci) {
@@ -132,7 +132,17 @@ public abstract class GameRendererMixin {
 
     @Definition(id = "renderLevel", local = @Local(type = boolean.class, ordinal = 0, argsOnly = true))
     @Expression("renderLevel")
-    @ModifyExpressionValue(method = "render", at = @At(value = "MIXINEXTRAS:EXPRESSION", ordinal = 1))
+    @ModifyExpressionValue(
+        //? if >=26.1 {
+        /*method = "extractGui",
+        *///? } else {
+        method = "render",
+        //? }
+        at = @At(
+            value = "MIXINEXTRAS:EXPRESSION",
+            ordinal = /*? >=26.1 {*/ /*0 *//*? } else {*/ 1 /*? }*/
+        )
+    )
     private boolean hideHudInPM(boolean original) {
         PictureModeState state = PictureModeClient.getState();
 
@@ -143,7 +153,11 @@ public abstract class GameRendererMixin {
     }
 
     @WrapOperation(
+        //? if >=26.1 {
+        /*method = "extractGui",
+        *///? } else {
         method = "render",
+        //? }
         at = @At(
             value = "INVOKE",
             //? if >=1.21.2 {
@@ -177,4 +191,26 @@ public abstract class GameRendererMixin {
         return state.isEnabled() || original.call(instance);
     }
     //? }
+
+    //? if >=26.1 {
+    /*@WrapOperation(
+        method = "extractOptions",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/client/Options;getCloudStatus()Lnet/minecraft/client/CloudStatus;"
+        )
+    )
+    private net.minecraft.client.CloudStatus hideCloudsInPM(
+        net.minecraft.client.Options instance,
+        Operation<net.minecraft.client.CloudStatus> original
+    ) {
+        PictureModeState state = PictureModeClient.getState();
+
+        if (state != null && state.isEnabled()) {
+            return net.minecraft.client.CloudStatus.OFF;
+        }
+
+        return original.call(instance);
+    }
+    *///? }
 }

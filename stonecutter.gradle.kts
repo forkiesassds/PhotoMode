@@ -84,6 +84,25 @@ stonecutter.parameters {
             replace("Identifier", "ResourceLocation")
             replace("net.minecraft.util.Util", "net.minecraft.Util")
         }
+
+        string {
+            direction = eval(current.version, ">=26.1")
+            replace("net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper", "net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper")
+            replace("KeyBindingHelper", "KeyMappingHelper")
+            replace("registerKeyBinding", "registerKeyMapping")
+            replace(".registerReloader(", ".registerReloadListener(")
+            replace(".addReloaderOrdering(", ".addListenerOrdering(")
+            replace("GuiGraphics", "GuiGraphicsExtractor")
+            replace(".drawString(", ".text(")
+            replace(".drawCenteredString(", ".centeredText(")
+            replace("renderWidget", "extractWidgetRenderState")
+            replace("void render(", "void extractRenderState(")
+            replace(".render(", ".extractRenderState(")
+            replace(";render(Lnet/minecraft/client/gui/", ";extractRenderState(Lnet/minecraft/client/gui/")
+            replace("renderBackground", "extractBackground")
+            replace(".resizeDisplay()", ".resizeGui()")
+            replace("Timelines.DAY", "Timelines.OVERWORLD_DAY")
+        }
     }
 }
 
