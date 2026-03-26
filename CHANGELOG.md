@@ -1,7 +1,6 @@
+## Additions
+- Added support for Minecraft 26.1
+- Added an option to hide the Picture Mode button in the mod config.
+
 ## Fixes
-- Fixed screenshots being broken on Forge 1.20.1
-- Fixed incompatibility with the FirstPerson mod.
-- Fixed compatibility issue with the Blur mod on 1.20.1
-  - NOTE: Only the Fabric version of the Blur mod works with the workaround. 
-    On Forge, you have to use the Fabric version of the Blur mod with Sinytra Connector.
-- Fixed crash with JourneyMap compatibility mixins on Fabric
+- Fixed crash when reloading resources on 1.21.11+
