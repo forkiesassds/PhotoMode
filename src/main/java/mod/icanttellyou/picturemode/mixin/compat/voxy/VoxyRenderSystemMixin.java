@@ -27,7 +27,7 @@ public abstract class VoxyRenderSystemMixin {
         int height = client.getWindow().getHeight();
 
         double delta = client.getDeltaTracker().getGameTimeDeltaPartialTick(true);
-        cir.setReturnValue(state.getProjectionMatrix(width, height, near, far, delta));
+        cir.setReturnValue(state.getProjectionMatrix(width, height, far, delta));
     }
 }
 //? }

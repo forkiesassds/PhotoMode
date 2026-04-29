@@ -39,27 +39,13 @@ public class PictureModeState {
     /**
      * Gets the projection matrix for the Picture Mode state
      *
-     * @param width    The viewport width
-     * @param height   The viewport height
-     * @param farPlane The far plane distance
-     * @param delta    The delta time for getting values
-     * @return A {@link Matrix4f} with an orthographic projection matrix.
-     */
-    public Matrix4f getProjectionMatrix(int width, int height, float farPlane, double delta) {
-        return getProjectionMatrix(width, height, -farPlane, farPlane, delta);
-    }
-
-    /**
-     * Gets the projection matrix for the Picture Mode state
-     *
      * @param width     The viewport width
      * @param height    The viewport height
-     * @param nearPlane The near plane distance
      * @param farPlane  The far plane distance
      * @param delta     The delta time for getting values
      * @return A {@link Matrix4f} with an orthographic projection matrix.
      */
-    public Matrix4f getProjectionMatrix(int width, int height, float nearPlane, float farPlane, double delta) {
+    public Matrix4f getProjectionMatrix(int width, int height, float farPlane, double delta) {
         float viewWidth = (float) adjustViewportDimension(width, delta);
         float viewHeight = (float) adjustViewportDimension(height, delta);
 
@@ -73,7 +59,7 @@ public class PictureModeState {
         return new Matrix4f().setOrtho(
                 -viewWidth, viewWidth,
                 -viewHeight, viewHeight,
-                nearPlane * 2.0F, farPlane * 2.0F
+                -farPlane * 2.0F, farPlane * 2.0F
                 //? if >=26.1
                 //, com.mojang.blaze3d.systems.RenderSystem.getDevice().isZZeroToOne()
             )
