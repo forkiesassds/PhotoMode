@@ -6,18 +6,25 @@ import mod.icanttellyou.picturemode.client.PictureModeState;
 import mod.icanttellyou.picturemode.client.gui.layout.AnchorLayout;
 import mod.icanttellyou.picturemode.client.gui.widget.FadingStringWidget;
 import mod.icanttellyou.picturemode.client.gui.widget.Slider;
+import mod.icanttellyou.picturemode.client.image.screenshot.ScreenshotHandler;
+import mod.icanttellyou.picturemode.client.render.shader.ShaderHandler;
+import mod.icanttellyou.picturemode.client.render.shader.ShaderHolder;
+import mod.icanttellyou.picturemode.client.render.shader.ShaderUtil;
 import mod.icanttellyou.picturemode.util.LevelUtils;
 import mod.icanttellyou.picturemode.util.Tickable;
 import net.minecraft.SharedConstants;
-import net.minecraft.client.Screenshot;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.CycleButton;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Util;
+import org.jetbrains.annotations.Nullable;
 
 import static mod.icanttellyou.picturemode.PictureModeConstants.*;
 
@@ -30,11 +37,11 @@ public class PictureModeScreen extends Screen {
     private static final String TIME_KEY = "gui.picturemode.time";
     private static final String FOG_KEY = "gui.picturemode.fog";
     private static final String TILT_KEY = "gui.picturemode.tilt";
+    private static final String SHADER_KEY = "gui.picturemode.shader";
+    private static final String INTENSITY_KEY = "gui.picturemode.intensity";
 
     private static final String TAKE_SCREENSHOT_KEY = "gui.picturemode.takeScreenshot";
     private static final String HELP_TEXT_KEY = "gui.picturemode.helpText";
-
-    private boolean isTakingScreenshot;
 
     private final PictureModeState pmState;
 
@@ -52,8 +59,10 @@ public class PictureModeScreen extends Screen {
     private double mouseXStart;
     private double mouseYStart;
 
-    public PictureModeScreen(Screen parent, Component title) {
-        super(title);
+    private @Nullable Runnable textDelegate;
+
+    public PictureModeScreen(Screen parent) {
+        super(Component.empty());
         this.parent = parent;
         this.pmState = PictureModeClient.getState();
         this.layout = new AnchorLayout(0, 0);
@@ -68,16 +77,17 @@ public class PictureModeScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        if (PictureModeClient.getScreenshotHandler().getStatus() != ScreenshotHandler.Status.IDLE)
+            return;
+
+        if (textDelegate != null) {
+            textDelegate.run();
+            textDelegate = null;
+        }
+
         centerCameraButton.active =
             (pmState.cameraPanX.getValue(partialTick) != 0.0D || pmState.cameraPanY.getValue(partialTick) != 0.0D) &&
                     (pmState.cameraPanX.getGoal() != 0.0D || pmState.cameraPanY.getGoal() != 0.0D);
-        if (isTakingScreenshot) {
-            Screenshot.grab(minecraft.gameDirectory, minecraft.getMainRenderTarget(), message -> {
-                helpText.setMessage(message);
-                repositionElements();
-            });
-            isTakingScreenshot = false;
-        }
 
         super.render(graphics, mouseX, mouseY, partialTick);
     }
@@ -164,6 +174,40 @@ public class PictureModeScreen extends Screen {
                 }));
         }
 
+        Slider intensitySlider = new Slider(0, 0, 1.0D,
+            (slider, value, messageUpdate) -> {
+                if (!messageUpdate) {
+                    ShaderHandler.setIntensity((float) value);
+                } else {
+                    int percent = (int) (value * 100.0D);
+                    slider.setMessage(Component.translatable(INTENSITY_KEY, percent));
+                }
+            });
+        CycleButton<ShaderHolder> shaderButton;
+        rows.addChild(shaderButton = CycleButton.builder(ShaderHolder::getTranslatedName /*? >=1.21.11 {*/, ShaderHolder.EMPTY /*?}*/)
+            .withValues(ShaderUtil.SHADER_PROGRAMS)
+            //? if <1.21.11
+            //.withInitialValue(ShaderHolder.EMPTY)
+            .create(0, 0, Button.DEFAULT_WIDTH, Button.DEFAULT_HEIGHT, Component.translatable(SHADER_KEY),
+                (button, holder) -> {
+                    intensitySlider.active = holder.id() != null;
+
+                    //? if <1.21.2 {
+                    /*net.minecraft.client.renderer.GameRenderer renderer = this.minecraft.gameRenderer;
+                    if (renderer.currentEffect() != null)
+                        renderer.shutdownEffect();
+                    *///? }
+
+                    ShaderHandler.setShader(holder.getLocation());
+                }));
+        rows.addChild(intensitySlider);
+
+        if (Minecraft.useShaderTransparency()) {
+            shaderButton.active = false;
+            shaderButton.setTooltip(Tooltip.create(Component.translatable(SHADER_KEY + ".incompatible")));
+        }
+        intensitySlider.active = false;
+
         return layout;
     }
 
@@ -194,8 +238,14 @@ public class PictureModeScreen extends Screen {
                 pmState.cameraRotation.addToGoal(ROTATION_STEP_SIZE, this.getDeltaTicks()))
             .width(20)
             .build());
-        rows.addChild(Button.builder(Component.translatable(TAKE_SCREENSHOT_KEY), button ->
-                this.isTakingScreenshot = true)
+        rows.addChild(Button.builder(Component.translatable(TAKE_SCREENSHOT_KEY), button -> {
+                    ScreenshotHandler screenshotHandler = PictureModeClient.getScreenshotHandler();
+                    screenshotHandler.prepareForScreenshot(minecraft.gameDirectory, message ->
+                        textDelegate = () -> {
+                            helpText.setMessage(message);
+                            repositionElements();
+                        });
+                })
             .width(98)
             .build());
         rows.addChild(Button.builder(Component.literal(">"), button ->
@@ -288,7 +338,7 @@ public class PictureModeScreen extends Screen {
 
     @Override
     public void removed() {
-        this.pmState.setEnabled(false);
+        this.onExit();
     }
 
     @Override
@@ -302,8 +352,14 @@ public class PictureModeScreen extends Screen {
 
     @Override
     public void onClose() {
-        this.pmState.setEnabled(false);
+        this.onExit();
         super.onClose();
+    }
+
+    private void onExit() {
+        this.pmState.setEnabled(false);
+        ShaderHandler.setIntensity(1.0F);
+        ShaderHandler.setShader(null);
     }
 
     private float getDeltaTicks() {

@@ -11,6 +11,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import mod.icanttellyou.picturemode.PictureMode;
 import mod.icanttellyou.picturemode.client.image.format.NativeImageFormat;
 import mod.icanttellyou.picturemode.client.image.format.NativeImageFormats;
+import mod.icanttellyou.picturemode.client.image.screenshot.ScreenshotSettings;
 import mod.icanttellyou.picturemode.util.LoggingUtil;
 import org.slf4j.event.Level;
 
@@ -24,28 +25,43 @@ import java.util.Map;
 public class PictureModeClientConfig {
     public static final Codec<PictureModeClientConfig> CODEC =
         RecordCodecBuilder.create(instance -> instance.group(
+                Codec.BOOL.optionalFieldOf("button_in_pause_menu", true)
+                        .forGetter(conf -> conf.buttonInPauseMenu),
                 Codec.STRING.fieldOf("format").xmap(NativeImageFormats::getFormat, NativeImageFormat::getFormatName)
                         .forGetter(conf -> conf.format),
                 NativeImageFormat.ConfigProvider.CONFIG_MAP_CODEC.fieldOf("format_settings")
-                        .forGetter(conf -> conf.formatSettings)
+                        .forGetter(conf -> conf.formatSettings),
+                ScreenshotSettings.CODEC.fieldOf("screenshot_settings")
+                        .forGetter(conf -> conf.screenshotSettings)
         ).apply(instance, PictureModeClientConfig::new));
 
+    public boolean buttonInPauseMenu;
     public NativeImageFormat format;
     public Map<String, NativeImageFormat.ConfigProvider> formatSettings;
+    public ScreenshotSettings screenshotSettings;
 
     public PictureModeClientConfig() {
         this(
+            true,
             NativeImageFormats.PNG_FORMAT,
             NativeImageFormats.FORMATS.stream()
                 .map(f -> Pair.of(f.getFormatName(), f.provideConfigProvider()))
                 .filter(entry -> entry.getFirst() != null && entry.getSecond() != null)
-                .collect(ImmutableMap.toImmutableMap(Pair::getFirst, Pair::getSecond))
+                .collect(ImmutableMap.toImmutableMap(Pair::getFirst, Pair::getSecond)),
+            new ScreenshotSettings(0, 0, 1.0F)
         );
     }
 
-    public PictureModeClientConfig(NativeImageFormat format, Map<String, NativeImageFormat.ConfigProvider> formatSettings) {
+    public PictureModeClientConfig(
+        boolean buttonInPauseMenu,
+        NativeImageFormat format,
+        Map<String, NativeImageFormat.ConfigProvider> formatSettings,
+        ScreenshotSettings screenshotSettings
+    ) {
+        this.buttonInPauseMenu = buttonInPauseMenu;
         this.format = format;
         this.formatSettings = formatSettings;
+        this.screenshotSettings = screenshotSettings;
     }
 
     private final static String CONFIG_PATH = PictureMode.MOD_ID + "/" + PictureMode.MOD_ID + "_client.json";
@@ -79,7 +95,7 @@ public class PictureModeClientConfig {
         }
 
         try {
-            Files.createDirectories(configDir);
+            Files.createDirectories(configFile.getParent());
             try (BufferedWriter writer = Files.newBufferedWriter(configFile)) {
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 gson.toJson(encodedConfig.result().get(), writer);

@@ -34,6 +34,8 @@
         {
           "name": "Intensity",
           "type": "float"
+          //? if >=1.21.6
+          , "value": 1.0
         }
       ],
       //? if >=1.21.6
@@ -41,8 +43,8 @@
       //? }
       "output": "swap",
       //? } else {
-      /*"name": "picturemode:post/blur",
-      "intarget": "minecraft:vignette",
+      /*"name": "picturemode:post/vignette",
+      "intarget": "minecraft:main",
       "outtarget": "swap"
       *///? }
     },
@@ -71,7 +73,7 @@
         {
           "name": "ColorModulate",
           "type": "vec4",
-          "values": [ 1.0, 1.0, 1.0, 1.0 ]
+          "value": [ 1.0, 1.0, 1.0, 1.0 ]
         }
       ],
       //? if >=1.21.6

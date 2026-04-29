@@ -12,6 +12,13 @@
     "sources": "https://codeberg.org/icanttellyou/PictureMode",
     "issues": "https://codeberg.org/icanttellyou/PictureMode/issues"
   },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.kofi": "https://ko-fi.com/ictyprojects"
+      }
+    }
+  },
 
   "license": "LGPLv3",
   "icon": "assets/picturemode/icon.png",
@@ -36,5 +43,8 @@
   },
   "recommends": {
     "yet_another_config_lib_v3": "*"
+  },
+  "conflicts": {
+    "vulkanmod": "*"
   }
 }

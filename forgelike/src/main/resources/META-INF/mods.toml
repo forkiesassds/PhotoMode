@@ -6,6 +6,9 @@ license = "MIT"
 [[mixins]]
 config = "picturemode-common.mixins.json"
 
+[[mixins]]
+config = "picturemode-forgelike.mixins.json"
+
 [[mods]]
 modId = "picturemode"
 version = "${version}"

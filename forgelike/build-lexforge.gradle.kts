@@ -23,6 +23,14 @@ legacyForge {
     }
 }
 
+fletchingTable {
+    mixins.create("main") {
+        mixin("default", "picturemode-forgelike.mixins.json") {
+            env("CLIENT")
+        }
+    }
+}
+
 dependencies {
     compileOnly("org.jetbrains:annotations:24.1.0")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
@@ -36,6 +44,7 @@ mixin {
     add(sourceSets.main.get(), "picturemode.refmap.json")
 
     config("picturemode-common.mixins.json")
+    config("picturemode-forgelike.mixins.json")
 }
 
 legacyForge {
@@ -68,7 +77,7 @@ tasks {
         finalizedBy("reobfJar")
 
         manifest.attributes(mapOf(
-            "MixinConfigs" to "picturemode-common.mixins.json"
+            "MixinConfigs" to "picturemode-common.mixins.json,picturemode-forgelike.mixins.json"
         ))
     }
 

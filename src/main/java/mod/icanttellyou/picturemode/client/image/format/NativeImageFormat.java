@@ -4,9 +4,8 @@ import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.*;
-import dev.isxander.yacl3.api.ConfigCategory;
-import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import mod.icanttellyou.picturemode.client.PictureModeClient;
+import mod.icanttellyou.picturemode.client.config.AbstractGUIOptionsProviderFactory;
 import mod.icanttellyou.picturemode.util.LoggingUtil;
 import org.slf4j.event.Level;
 
@@ -89,10 +88,10 @@ public interface NativeImageFormat {
     @SuppressWarnings("unchecked")
     static <P extends ConfigProvider> P getConfig(NativeImageFormat format) {
         //TODO: maybe do this better?
-        return (P) PictureModeClient.config.formatSettings.get(format.getFormatName());
+        return (P) PictureModeClient.getConfig().formatSettings.get(format.getFormatName());
     }
 
-    interface ConfigProvider {
+    interface ConfigProvider extends AbstractGUIOptionsProviderFactory {
         Codec<Map<String, ConfigProvider>> CONFIG_MAP_CODEC = Codec.of(new Encoder<>() {
             @Override
             public <T> DataResult<T> encode(Map<String, ConfigProvider> o, DynamicOps<T> ops, T t) {
@@ -169,35 +168,5 @@ public interface NativeImageFormat {
         });
 
         <P extends ConfigProvider> Codec<P> getCodec();
-
-        /**
-         * Gets the config GUI options provider
-         *
-         * @return The config GUI options provider for the format
-         */
-        default GUIOptionsProvider getGUIOptionsProvider() {
-            return new GUIOptionsProvider() {
-                @Override
-                public void provide(YetAnotherConfigLib.Builder builder, ConfigCategory.Builder mainCategory) {}
-            };
-        }
-
-        /**
-         * A class for providing GUI options
-         *
-         * @apiNote This is a class, as to avoid loading YACL at runtime.
-         */
-        abstract class GUIOptionsProvider {
-            /**
-             * Provides the config GUI options for the format
-             *
-             * @param builder      The config GUI builder instance
-             * @param mainCategory The main category builder instance
-             */
-            public abstract void provide(
-                YetAnotherConfigLib.Builder builder,
-                ConfigCategory.Builder mainCategory
-            );
-        }
     }
 }

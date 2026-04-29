@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec;
 import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.api.controller.IntegerSliderControllerBuilder;
 import mod.icanttellyou.picturemode.client.config.ConfigHelper;
+import mod.icanttellyou.picturemode.client.config.GUIOptionsProvider;
 import mod.icanttellyou.picturemode.client.image.ImageWriteCallback;
 import org.lwjgl.stb.STBImage;
 import org.lwjgl.stb.STBImageWrite;
@@ -74,7 +75,7 @@ public class JPGFormat implements NativeImageFormat {
     }
 
     public static class Config implements ConfigProvider {
-        public static final Codec<Config> CODEC = Codec.intRange(0, 100).optionalFieldOf("quality", 75).codec()
+        public static final Codec<Config> CODEC = Codec.intRange(1, 100).optionalFieldOf("quality", 75).codec()
                 .xmap(Config::new, config -> config.quality);
 
         public int quality;
@@ -104,17 +105,17 @@ public class JPGFormat implements NativeImageFormat {
                 @Override
                 public void provide(YetAnotherConfigLib.Builder builder, ConfigCategory.Builder mainCategory) {
                     mainCategory.group(OptionGroup.createBuilder()
-                    .name(ConfigHelper.getConfigText("format.jpg.settings"))
-                    .option(Option.<Integer>createBuilder()
-                        .name(ConfigHelper.getConfigText("format.jpg.quality.name"))
-                        .description(OptionDescription.of(ConfigHelper.getConfigText("format.jpg.quality.desc")))
-                        .binding(75,
-                            () -> Config.this.quality, newVal -> Config.this.quality = newVal)
-                        .controller(opt -> IntegerSliderControllerBuilder.create(opt)
-                            .range(0, 100)
-                            .step(1))
-                        .build())
-                    .build());
+                        .name(ConfigHelper.getConfigText("format.jpg.settings"))
+                        .option(Option.<Integer>createBuilder()
+                            .name(ConfigHelper.getConfigText("format.jpg.quality.name"))
+                            .description(OptionDescription.of(ConfigHelper.getConfigText("format.jpg.quality.desc")))
+                            .binding(75,
+                                () -> Config.this.quality, newVal -> Config.this.quality = newVal)
+                            .controller(opt -> IntegerSliderControllerBuilder.create(opt)
+                                .range(1, 100)
+                                .step(1))
+                            .build())
+                        .build());
                 }
             };
         }

@@ -14,6 +14,7 @@ and the isometric perspective gives a unique way to capture images of structures
 - Controls for the camera orientation
 - Panning controls for advanced cropping
 - Environment controls to make the image more pretty
+- Filters to spice up your screenshots
 
 ## Screenshot
 Below is a screenshot of the main interface of the mod.
@@ -26,3 +27,5 @@ the player is in a dimension of the disabled type
 
 ## Credits
 Thanks to the Better than Adventure! team for the original Photo Mode, which is a huge inspiration for this mod.
+
+Thanks to Bestsoft100 for letting me use their shader code for the filters. 

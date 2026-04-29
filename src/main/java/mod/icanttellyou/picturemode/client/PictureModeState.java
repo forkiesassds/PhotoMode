@@ -70,8 +70,13 @@ public class PictureModeState {
             farPlane = 9999.0F;
         }
 
-        return new Matrix4f()
-            .setOrtho(-viewWidth, viewWidth, -viewHeight, viewHeight, nearPlane * 2.0F, farPlane * 2.0F)
+        return new Matrix4f().setOrtho(
+                -viewWidth, viewWidth,
+                -viewHeight, viewHeight,
+                nearPlane * 2.0F, farPlane * 2.0F
+                //? if >=26.1
+                //, com.mojang.blaze3d.systems.RenderSystem.getDevice().isZZeroToOne()
+            )
             .translate(panX, -panY, 0.0F);
     }
 

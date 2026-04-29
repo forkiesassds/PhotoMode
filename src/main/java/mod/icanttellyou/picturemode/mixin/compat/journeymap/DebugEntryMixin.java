@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Pseudo
 @Mixin(targets = "journeymap.client.ui.debug.DebugEntry", remap = false)
 public abstract class DebugEntryMixin {
-    @Inject(method = "display", at = @At("HEAD"), cancellable = true)
+    @Inject(method = { "display", "method_72751" }, at = @At("HEAD"), cancellable = true)
     private void disableJMDebugStatsInPM(CallbackInfo ci) {
         PictureModeState state = PictureModeClient.getState();
 

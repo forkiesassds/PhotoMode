@@ -1,3 +1,5 @@
+import dev.kikugie.stitcher.transform.impl.LineCommentStrategy
+
 plugins {
     id("dev.kikugie.stonecutter")
 
@@ -43,21 +45,33 @@ publishMods {
 stonecutter.tasks {
     order("build")
     order("publishModrinth", filter = { this.branch.id == "fabric" || this.branch.id == "forgelike" })
+    order("publishCurseforge", filter = { this.branch.id == "fabric" || this.branch.id == "forgelike" })
 }
 
 stonecutter.parameters {
     replacements {
+        string("resource_provider") {
+            direction = eval(current.version, "<1.20.5")
+            replace("ResourceProvider", "ResourceManager")
+        }
+
         string {
             direction = eval(current.version, "<1.21.2")
             replace("getDeltaTracker()", "getTimer()")
             replace("InSampler", "DiffuseSampler")
             replace("InDepthSampler", "DiffuseDepthSampler")
+            replace("minecraft:core/screenquad", "minecraft:program/sobel")
             replace("minecraft:post/", "minecraft:program/")
         }
 
         string {
+            direction = eval(current.version, "<1.21.6", ">=1.21.2")
+            replace("minecraft:core/screenquad", "minecraft:post/sobel")
+        }
+
+        string {
             direction = eval(current.version, "<1.21.6")
-            replace("\"vertex_shader\": \"minecraft:core/screenquad\"", "\"vertex_shader\": \"minecraft:post/blit\"")
+            replace("\"value\": ", "\"values\": ")
         }
 
         string {
@@ -70,5 +84,32 @@ stonecutter.parameters {
             replace("Identifier", "ResourceLocation")
             replace("net.minecraft.util.Util", "net.minecraft.Util")
         }
+
+        string {
+            direction = eval(current.version, ">=26.1")
+            replace("net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper", "net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper")
+            replace("KeyBindingHelper", "KeyMappingHelper")
+            replace("registerKeyBinding", "registerKeyMapping")
+            replace(".registerReloader(", ".registerReloadListener(")
+            replace(".addReloaderOrdering(", ".addListenerOrdering(")
+            replace("GuiGraphics", "GuiGraphicsExtractor")
+            replace(".drawString(", ".text(")
+            replace(".drawCenteredString(", ".centeredText(")
+            replace("renderWidget", "extractWidgetRenderState")
+            replace("void render(", "void extractRenderState(")
+            replace(".render(", ".extractRenderState(")
+            replace(";render(Lnet/minecraft/client/gui/", ";extractRenderState(Lnet/minecraft/client/gui/")
+            replace("renderBackground", "extractBackground")
+            replace(".resizeDisplay()", ".resizeGui()")
+            replace("Timelines.DAY", "Timelines.OVERWORLD_DAY")
+        }
+    }
+}
+
+stonecutter handlers {
+    inherit("yaml", "toml")
+    //HACK: VulkanMod does not support block comments in shaders. We need to use a simpler handler.
+    configure("fsh", "vsh") {
+        commenter.set(LineCommentStrategy("//"))
     }
 }

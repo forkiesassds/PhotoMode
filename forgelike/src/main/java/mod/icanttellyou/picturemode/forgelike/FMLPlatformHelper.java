@@ -3,9 +3,13 @@ package mod.icanttellyou.picturemode.forgelike;
 import mod.icanttellyou.picturemode.services.IPlatformHelper;
 //? if neoforge {
 import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.fml.loading.FMLPaths;
 //?} else {
 /*import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.fml.loading.FMLPaths;
 *///?}
+
+import java.nio.file.Path;
 
 public class FMLPlatformHelper implements IPlatformHelper {
     public boolean isModPresent(String mod) {
@@ -21,5 +25,10 @@ public class FMLPlatformHelper implements IPlatformHelper {
     @Override
     public boolean isDevEnvironment() {
         return !FMLLoader/*? >=1.21.9 {*/.getCurrent()/*?}*/.isProduction();
+    }
+
+    @Override
+    public Path getConfigDir() {
+        return FMLPaths.CONFIGDIR.get();
     }
 }

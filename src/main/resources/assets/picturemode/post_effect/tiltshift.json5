@@ -12,7 +12,7 @@
     {
       //? if >=1.21.2 {
       //? if >=1.21.5 {
-      "vertex_shader": "minecraft:post/sobel",
+      "vertex_shader": "minecraft:core/screenquad",
       "fragment_shader": "picturemode:post/tiltshift",
       //? } else {
       /*"program": "picturemode:post/tiltshift",
@@ -34,6 +34,8 @@
         {
           "name": "Intensity",
           "type": "float"
+          //? if >=1.21.6
+          , "value": 1.0
         }
       ],
       //? if >=1.21.6
@@ -71,7 +73,7 @@
         {
           "name": "ColorModulate",
           "type": "vec4",
-          "values": [ 1.0, 1.0, 1.0, 1.0 ]
+          "value": [ 1.0, 1.0, 1.0, 1.0 ]
         }
       ],
       //? if >=1.21.6

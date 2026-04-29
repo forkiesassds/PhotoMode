@@ -62,4 +62,8 @@ publishMods {
     modrinth {
         requires("fabric-api")
     }
+
+    curseforge {
+        requires("fabric-api")
+    }
 }

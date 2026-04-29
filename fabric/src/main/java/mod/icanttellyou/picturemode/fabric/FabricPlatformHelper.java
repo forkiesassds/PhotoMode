@@ -3,6 +3,8 @@ package mod.icanttellyou.picturemode.fabric;
 import mod.icanttellyou.picturemode.services.IPlatformHelper;
 import net.fabricmc.loader.api.FabricLoader;
 
+import java.nio.file.Path;
+
 public class FabricPlatformHelper implements IPlatformHelper {
     private final FabricLoader loader = FabricLoader.getInstance();
 
@@ -14,5 +16,10 @@ public class FabricPlatformHelper implements IPlatformHelper {
     @Override
     public boolean isDevEnvironment() {
         return loader.isDevelopmentEnvironment();
+    }
+
+    @Override
+    public Path getConfigDir() {
+        return loader.getConfigDir();
     }
 }
