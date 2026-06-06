@@ -1,4 +1,4 @@
-//? if >=26.1 {
+//? if >=26.1 && <26.2 {
 /*package mod.icanttellyou.picturemode.mixin;
 
 import com.mojang.blaze3d.platform.Window;

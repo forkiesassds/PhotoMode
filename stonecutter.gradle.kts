@@ -1,4 +1,4 @@
-import dev.kikugie.stitcher.transform.impl.LineCommentStrategy
+import dev.kikugie.stitcher.transformer.impl.LineCommentStrategy
 
 plugins {
     id("dev.kikugie.stonecutter")
@@ -102,6 +102,15 @@ stonecutter.parameters {
             replace("renderBackground", "extractBackground")
             replace(".resizeDisplay()", ".resizeGui()")
             replace("Timelines.DAY", "Timelines.OVERWORLD_DAY")
+        }
+
+        string(eval(current.version, ">=26.2")) {
+            replace(".setScreen(", ".gui.setScreen(")
+            replace("::setScreen", ".gui::setScreen")
+            replace("this.minecraft.screen", "this.minecraft.gui.screen()")
+            replace(".isZZeroToOne()", ".getDeviceInfo().isZZeroToOne()")
+            replace(".levelRenderer.allChanged()", ".levelExtractor.allChanged()")
+            replace(".getMainRenderTarget()", ".gameRenderer.mainRenderTarget()")
         }
     }
 }

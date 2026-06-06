@@ -34,6 +34,13 @@ public class AnchorLayout extends AbstractLayout {
         }
     }
 
+    //? if >=26.2 {
+    /*@Override
+    public void removeChildren() {
+        this.children.clear();
+    }
+    *///? }
+
     @Override
     public void visitChildren(Consumer<LayoutElement> visitor) {
         this.children.forEach(child -> visitor.accept(child.element));
