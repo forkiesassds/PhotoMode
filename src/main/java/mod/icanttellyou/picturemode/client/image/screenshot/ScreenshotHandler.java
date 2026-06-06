@@ -18,7 +18,7 @@ import java.io.File;
 import java.util.function.Consumer;
 
 public class ScreenshotHandler {
-    private static final int FRAME_DELAY = 3;
+    private static final int FRAME_DELAY = 5;
 
     private Status status = Status.IDLE;
     private Consumer<NativeImage> screenshotCallback;
