@@ -1,6 +1,8 @@
 package mod.icanttellyou.picturemode.client;
 
 import mod.icanttellyou.picturemode.PictureModeConstants;
+import mod.icanttellyou.picturemode.client.render.shader.ShaderHandler;
+import mod.icanttellyou.picturemode.client.render.shader.ShaderHolder;
 import mod.icanttellyou.picturemode.util.LoggingUtil;
 import mod.icanttellyou.picturemode.util.Tickable;
 import mod.icanttellyou.picturemode.value.Easing;
@@ -25,7 +27,8 @@ public class PictureModeState {
     public final Value fog = new InterpolatedValue(Easing.EXPONENTIAL, 1.0D, 100.0D);
     public final Value cameraPanX = new InterpolatedValue(Easing.EXPONENTIAL, 5.0D);
     public final Value cameraPanY = new InterpolatedValue(Easing.EXPONENTIAL, 5.0D);
-//    public final Value shaderIntensity = new StaticValue(1.0D);
+    private ShaderHolder currentShader = ShaderHolder.EMPTY;
+    private final Value shaderIntensity = new StaticValue(1.0D);
     public final Value timeOverride = new StaticValue();
 
     private boolean showPlayer = true;
@@ -134,7 +137,8 @@ public class PictureModeState {
         fog.setValue(1.0D);
         cameraPanX.setValue(0.0D);
         cameraPanY.setValue(0.0D);
-//        shaderIntensity.setValue(1.0D);
+        currentShader = ShaderHolder.EMPTY;
+        shaderIntensity.setValue(1.0D);
 
         showPlayer = true;
     }
@@ -156,11 +160,56 @@ public class PictureModeState {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
 
+        if (!enabled) {
+            ShaderHandler.setShader(null);
+            ShaderHandler.setIntensity(1.0F);
+        } else if (currentShader.id() != null) {
+            ShaderHandler.setShader(currentShader.getLocation());
+            ShaderHandler.setIntensity((float) shaderIntensity.getValue(0.0D));
+        }
+
         //HACK: Reload all chunks if using VulkanMod.
         // This is because when Backface Culling is enabled,
         // some chunks do not render at all until they're refreshed.
         if (ModStatus.HAS_VULKANMOD) {
             Minecraft.getInstance().levelRenderer.allChanged();
+        }
+    }
+
+    /**
+     * Sets the shader to use when in Picture Mode
+     *
+     * @param shader The {@link ShaderHolder} to set
+     */
+    public void setShader(ShaderHolder shader) {
+        if (shader == currentShader)
+            return;
+
+        ShaderHandler.setShader(shader.getLocation());
+        currentShader = shader;
+    }
+
+    /**
+     * Gets current shader in use
+     *
+     * @return The current {@link ShaderHolder} in use
+     */
+    public ShaderHolder getShader() {
+        return currentShader;
+    }
+
+    /**
+     * Sets the shader intensity
+     *
+     * @param intensity The intensity to set
+     */
+    public void setShaderIntensity(double intensity) {
+        //TODO: rework this if we ever wanted to have intensity smoothening
+        double curValue = shaderIntensity.getValue(0.0D);
+
+        if (curValue != intensity) {
+            shaderIntensity.setValue(intensity);
+            ShaderHandler.setIntensity((float) intensity);
         }
     }
 

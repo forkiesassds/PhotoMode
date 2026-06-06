@@ -27,6 +27,8 @@ public class PictureModeClientConfig {
         RecordCodecBuilder.create(instance -> instance.group(
                 Codec.BOOL.optionalFieldOf("button_in_pause_menu", true)
                         .forGetter(conf -> conf.buttonInPauseMenu),
+                Codec.BOOL.optionalFieldOf("preserve_settings", false)
+                        .forGetter(conf -> conf.preserveSettings),
                 Codec.STRING.fieldOf("format").xmap(NativeImageFormats::getFormat, NativeImageFormat::getFormatName)
                         .forGetter(conf -> conf.format),
                 NativeImageFormat.ConfigProvider.CONFIG_MAP_CODEC.fieldOf("format_settings")
@@ -36,6 +38,7 @@ public class PictureModeClientConfig {
         ).apply(instance, PictureModeClientConfig::new));
 
     public boolean buttonInPauseMenu;
+    public boolean preserveSettings;
     public NativeImageFormat format;
     public Map<String, NativeImageFormat.ConfigProvider> formatSettings;
     public ScreenshotSettings screenshotSettings;
@@ -43,6 +46,7 @@ public class PictureModeClientConfig {
     public PictureModeClientConfig() {
         this(
             true,
+            false,
             NativeImageFormats.PNG_FORMAT,
             NativeImageFormats.FORMATS.stream()
                 .map(f -> Pair.of(f.getFormatName(), f.provideConfigProvider()))
@@ -54,11 +58,13 @@ public class PictureModeClientConfig {
 
     public PictureModeClientConfig(
         boolean buttonInPauseMenu,
+        boolean preserveSettings,
         NativeImageFormat format,
         Map<String, NativeImageFormat.ConfigProvider> formatSettings,
         ScreenshotSettings screenshotSettings
     ) {
         this.buttonInPauseMenu = buttonInPauseMenu;
+        this.preserveSettings = preserveSettings;
         this.format = format;
         this.formatSettings = formatSettings;
         this.screenshotSettings = screenshotSettings;

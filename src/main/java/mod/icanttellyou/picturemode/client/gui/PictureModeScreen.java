@@ -7,7 +7,6 @@ import mod.icanttellyou.picturemode.client.gui.layout.AnchorLayout;
 import mod.icanttellyou.picturemode.client.gui.widget.FadingStringWidget;
 import mod.icanttellyou.picturemode.client.gui.widget.Slider;
 import mod.icanttellyou.picturemode.client.image.screenshot.ScreenshotHandler;
-import mod.icanttellyou.picturemode.client.render.shader.ShaderHandler;
 import mod.icanttellyou.picturemode.client.render.shader.ShaderHolder;
 import mod.icanttellyou.picturemode.client.render.shader.ShaderUtil;
 import mod.icanttellyou.picturemode.util.LevelUtils;
@@ -98,7 +97,10 @@ public class PictureModeScreen extends Screen {
     @Override
     protected void init() {
         super.init();
-        this.pmState.resetState();
+
+        if (!PictureModeClient.getConfig().preserveSettings) {
+            this.pmState.resetState();
+        }
         this.pmState.setEnabled(true);
 
         Button closeButton = Button.builder(Component.literal("X"), button ->
@@ -177,17 +179,19 @@ public class PictureModeScreen extends Screen {
         Slider intensitySlider = new Slider(0, 0, 1.0D,
             (slider, value, messageUpdate) -> {
                 if (!messageUpdate) {
-                    ShaderHandler.setIntensity((float) value);
+                    pmState.setShaderIntensity(value);
                 } else {
                     int percent = (int) (value * 100.0D);
                     slider.setMessage(Component.translatable(INTENSITY_KEY, percent));
                 }
             });
         CycleButton<ShaderHolder> shaderButton;
-        rows.addChild(shaderButton = CycleButton.builder(ShaderHolder::getTranslatedName /*? >=1.21.11 {*/, ShaderHolder.EMPTY /*?}*/)
+
+        ShaderHolder shaderHolder = pmState.getShader();
+        rows.addChild(shaderButton = CycleButton.builder(ShaderHolder::getTranslatedName /*? >=1.21.11 {*/, shaderHolder /*?}*/)
             .withValues(ShaderUtil.SHADER_PROGRAMS)
             //? if <1.21.11
-            //.withInitialValue(ShaderHolder.EMPTY)
+            //.withInitialValue(shaderHolder)
             .create(0, 0, Button.DEFAULT_WIDTH, Button.DEFAULT_HEIGHT, Component.translatable(SHADER_KEY),
                 (button, holder) -> {
                     intensitySlider.active = holder.id() != null;
@@ -198,7 +202,7 @@ public class PictureModeScreen extends Screen {
                         renderer.shutdownEffect();
                     *///? }
 
-                    ShaderHandler.setShader(holder.getLocation());
+                    pmState.setShader(holder);
                 }));
         rows.addChild(intensitySlider);
 
@@ -206,7 +210,10 @@ public class PictureModeScreen extends Screen {
             shaderButton.active = false;
             shaderButton.setTooltip(Tooltip.create(Component.translatable(SHADER_KEY + ".incompatible")));
         }
-        intensitySlider.active = false;
+
+        if (shaderHolder.id() == null) {
+            intensitySlider.active = false;
+        }
 
         return layout;
     }
@@ -358,8 +365,6 @@ public class PictureModeScreen extends Screen {
 
     private void onExit() {
         this.pmState.setEnabled(false);
-        ShaderHandler.setIntensity(1.0F);
-        ShaderHandler.setShader(null);
     }
 
     private float getDeltaTicks() {

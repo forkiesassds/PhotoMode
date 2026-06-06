@@ -34,6 +34,8 @@
   "picturemode.config.title": "Mod Options",
   "picturemode.config.buttonInPauseMenu.name": "Button in Pause Screen",
   "picturemode.config.buttonInPauseMenu.desc": "This option determines if the Picture Mode should be present in the Pause Screen.",
+  "picturemode.config.preserveSettings.name": "Preserve Settings",
+  "picturemode.config.preserveSettings.desc": "This option determines if currently set settings should be preserved when closing Picture Mode.",
   "picturemode.config.format.name": "Image Format",
   "picturemode.config.format.desc": "The format to save screenshots as.",
   "picturemode.config.format.png": "PNG (lossless)",
