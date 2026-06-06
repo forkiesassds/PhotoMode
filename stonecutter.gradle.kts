@@ -109,7 +109,6 @@ stonecutter.parameters {
             replace("::setScreen", ".gui::setScreen")
             replace("this.minecraft.screen", "this.minecraft.gui.screen()")
             replace(".isZZeroToOne()", ".getDeviceInfo().isZZeroToOne()")
-            replace(".levelRenderer.allChanged()", ".levelExtractor.allChanged()")
             replace(".getMainRenderTarget()", ".gameRenderer.mainRenderTarget()")
         }
     }
