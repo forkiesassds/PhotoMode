@@ -22,7 +22,11 @@ uniform sampler2D InDepthSampler;
 out vec4 fragColor;
 
 float getDepth(vec2 coord) {
-    return texture(InDepthSampler, coord).r;
+    float depth = texture(InDepthSampler, coord).r;
+    //? if >=26.2
+    //depth = 1.0 - depth;
+
+    return depth;
 }
 
 void main() {
