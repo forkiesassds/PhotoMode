@@ -30,7 +30,7 @@ public class ConfigHelper {
                 .option(Option.<Boolean>createBuilder()
                     .name(getConfigText("preserveSettings.name"))
                     .description(OptionDescription.of(getConfigText("preserveSettings.desc")))
-                    .binding(true, () -> config.preserveSettings, newVal -> config.preserveSettings = newVal)
+                    .binding(false, () -> config.preserveSettings, newVal -> config.preserveSettings = newVal)
                     .controller(BooleanControllerBuilder::create)
                     .build())
                 .option(Option.<NativeImageFormat>createBuilder()
