@@ -46,6 +46,9 @@ publishMods {
         minecraftVersions.addAll(commonMod.prop("supported_versions").split(",").toList())
 
         optional("yacl")
+
+        client = true
+        server = false
     }
 
     github {
