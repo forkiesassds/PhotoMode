@@ -32,10 +32,25 @@ repositories {
         )
         filter { includeGroup("org.parchmentmc.data") }
     }
-    maven("https://maven.terraformersmc.com/releases/") { name = "TerraformersMC" }
-    maven("https://maven.kikugie.dev/releases") { name = "KikuGie Releases" }
-    maven("https://maven.kikugie.dev/snapshots") { name = "KikuGie Snapshots" }
-    maven("https://maven.isxander.dev/releases") { name = "Xander Maven" }
+    exclusiveContent {
+        forRepositories(
+            maven("https://maven.terraformersmc.com/releases/") { name = "TerraformersMC" }
+        )
+        filter { includeGroupAndSubgroups("com.terraformersmc") }
+    }
+    exclusiveContent {
+        forRepositories(
+            maven("https://maven.kikugie.dev/releases") { name = "KikuGie Releases" },
+            maven("https://maven.kikugie.dev/snapshots") { name = "KikuGie Snapshots" }
+        )
+        filter { includeGroupAndSubgroups("dev.kikugie") }
+    }
+    exclusiveContent {
+        forRepositories(
+            maven("https://maven.isxander.dev/releases") { name = "Xander Maven" }
+        )
+        filter { includeGroupAndSubgroups("dev.isxander") }
+    }
 }
 
 tasks {
