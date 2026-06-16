@@ -31,17 +31,6 @@ fletchingTable {
     }
 }
 
-repositories {
-    maven {
-        name = "Maven for PR #3198" // https://github.com/neoforged/NeoForge/pull/3198
-        url = uri("https://prmaven.neoforged.net/NeoForge/pr3198")
-        content {
-            includeModule("net.neoforged", "neoforge")
-            includeModule("net.neoforged", "testframework")
-        }
-    }
-}
-
 dependencies {
     implementation("dev.isxander:yet-another-config-lib:${commonMod.prop("yacl_version")}-neoforge")
 }
