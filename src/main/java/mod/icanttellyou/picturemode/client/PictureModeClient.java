@@ -154,6 +154,14 @@ public class PictureModeClient {
             .build();
     }
 
+    public static boolean isSingleplayer(Minecraft minecraft) {
+        //? if >=26.2 {
+        /*return !minecraft.isMultiplayerServer();
+        *///? } else {
+        return minecraft.isSingleplayer();
+        //? }
+    }
+
     public static void onWorldLoad() {
         if (state != null)
             return;

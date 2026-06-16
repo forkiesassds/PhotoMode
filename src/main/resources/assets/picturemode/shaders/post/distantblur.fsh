@@ -47,6 +47,8 @@ void main() {
     vec3 color = texture(InSampler, texCoord).rgb;
     float depth = texture(InDepthSampler, texCoord).r;
 
+    //? if >=26.2
+    //depth = 1.0 - depth;
     depth = (depth - (0.45 + 0.1 * (1.0 - Intensity))) * 20;
 
     vec3 blur = getBlur();

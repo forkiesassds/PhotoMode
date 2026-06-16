@@ -104,4 +104,15 @@ public abstract class CameraMixin {
                 .pictureMode$setPan(viewWidth + panX, -viewHeight + panY);
     }
     *///? }
+
+    //? if >=26.2 {
+    /*@com.llamalad7.mixinextras.expression.Definition(id = "minecraft", field = "Lnet/minecraft/client/Camera;minecraft:Lnet/minecraft/client/Minecraft;")
+    @com.llamalad7.mixinextras.expression.Definition(id = "smartCull", field = "Lnet/minecraft/client/Minecraft;smartCull:Z")
+    @com.llamalad7.mixinextras.expression.Expression("this.minecraft.smartCull")
+    @com.llamalad7.mixinextras.injector.ModifyExpressionValue(method = "extractRenderState", at = @At("MIXINEXTRAS:EXPRESSION"))
+    private boolean disableSmartCullInPM(boolean original) {
+        PictureModeState state = PictureModeClient.getState();
+        return (state == null || !state.isEnabled()) && original;
+    }
+    *///? }
 }

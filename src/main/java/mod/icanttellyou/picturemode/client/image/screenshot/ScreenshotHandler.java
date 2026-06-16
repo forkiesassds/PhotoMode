@@ -18,7 +18,7 @@ import java.io.File;
 import java.util.function.Consumer;
 
 public class ScreenshotHandler {
-    private static final int FRAME_DELAY = 3;
+    private static final int FRAME_DELAY = 5;
 
     private Status status = Status.IDLE;
     private Consumer<NativeImage> screenshotCallback;
@@ -142,7 +142,7 @@ public class ScreenshotHandler {
         window.setWidth(width);
         window.setHeight(height);
 
-        //? if >=26.1
+        //? if >=26.1 && <26.2
         //((mod.icanttellyou.picturemode.imixin.PMWindowResizeTrick)(Object) window).pictureMode$forciblyResizeWindow();
     }
 
@@ -160,7 +160,7 @@ public class ScreenshotHandler {
         window.setWidth(this.curWidth);
         window.setHeight(this.curHeight);
 
-        //? if >=26.1
+        //? if >=26.1 && <26.2
         //((mod.icanttellyou.picturemode.imixin.PMWindowResizeTrick)(Object) window).pictureMode$forciblyResizeWindow();
     }
 

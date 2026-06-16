@@ -12,7 +12,6 @@ import mod.icanttellyou.picturemode.client.render.shader.ShaderUtil;
 import mod.icanttellyou.picturemode.util.LevelUtils;
 import mod.icanttellyou.picturemode.util.Tickable;
 import net.minecraft.SharedConstants;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.CycleButton;
@@ -150,7 +149,7 @@ public class PictureModeScreen extends Screen {
                         : Component.translatable(DEGREES_KEY, degrees)));
                 }
             }));
-        if (minecraft.isSingleplayer()) {
+        if (PictureModeClient.isSingleplayer(minecraft)) {
             rows.addChild(new Slider(0, 0, 0.0D,
                 (slider, value, messageUpdate) -> {
                     assert minecraft.level != null;
@@ -206,7 +205,7 @@ public class PictureModeScreen extends Screen {
                 }));
         rows.addChild(intensitySlider);
 
-        if (Minecraft.useShaderTransparency()) {
+        if (ShaderUtil.useShaderTransparency()) {
             shaderButton.active = false;
             shaderButton.setTooltip(Tooltip.create(Component.translatable(SHADER_KEY + ".incompatible")));
         }

@@ -1,6 +1,7 @@
 package mod.icanttellyou.picturemode.client.render.shader;
 
 import mod.icanttellyou.picturemode.PictureMode;
+import net.minecraft.client.Minecraft;
 //? if >=1.21.6 {
 import com.mojang.blaze3d.buffers.GpuBuffer;
 import mod.icanttellyou.picturemode.mixin.PostChainAccessor;
@@ -45,5 +46,14 @@ public class ShaderUtil {
 
     private static ShaderHolder create(String id) {
         return new ShaderHolder(PictureMode.createId(id));
+    }
+
+    public static boolean useShaderTransparency() {
+        //? if >=26.2 {
+        /*Minecraft minecraft = Minecraft.getInstance();
+        return minecraft.gameRenderer.gameRenderState().useShaderTransparency();
+        *///? } else {
+        return Minecraft.useShaderTransparency();
+        //? }
     }
 }

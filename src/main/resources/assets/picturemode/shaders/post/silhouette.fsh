@@ -18,6 +18,8 @@ void main() {
     vec3 color = texture(InSampler, texCoord).rgb;
     float depth = texture(InDepthSampler, texCoord).r;
 
+    //? if >=26.2
+    //depth = 1.0 - depth;
     depth = (depth - 0.45) * 10;
 
     color = mix(color, vec3(depth), Intensity);

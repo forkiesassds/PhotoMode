@@ -167,13 +167,6 @@ public class PictureModeState {
             ShaderHandler.setShader(currentShader.getLocation());
             ShaderHandler.setIntensity((float) shaderIntensity.getValue(0.0D));
         }
-
-        //HACK: Reload all chunks if using VulkanMod.
-        // This is because when Backface Culling is enabled,
-        // some chunks do not render at all until they're refreshed.
-        if (ModStatus.HAS_VULKANMOD) {
-            Minecraft.getInstance().levelRenderer.allChanged();
-        }
     }
 
     /**
