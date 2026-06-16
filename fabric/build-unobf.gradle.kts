@@ -8,12 +8,12 @@ plugins {
 
 loom {
     runConfigs.all {
-        ideConfigGenerated(true)
-        runDir = "../../../run"
+        generateRunConfig = true
+        runDirectory.set(project.file("../../../run"))
     }
 
     runs {
-        removeIf { it.environment == "server" }
+        removeIf { it.runtimeEnvironment.get() == "server" }
     }
 }
 
