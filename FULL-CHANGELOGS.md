@@ -1,3 +1,8 @@
+# 1.1.5
+
+## Fixes
+- Fixed crash with Sodium
+
 # 1.1.4
 
 ## Additions
