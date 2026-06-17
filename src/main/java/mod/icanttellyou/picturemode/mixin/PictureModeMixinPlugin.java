@@ -22,7 +22,8 @@ public class PictureModeMixinPlugin implements IMixinConfigPlugin {
         //Map.entry("mod.icanttellyou.picturemode.mixin.compat.sodium.SodiumWorldRendererMixin", () -> ModStatus.HAS_SODIUM),
         Map.entry("mod.icanttellyou.picturemode.mixin.compat.sodium.RenderSectionManagerMixin", () -> ModStatus.HAS_SODIUM),
         Map.entry("mod.icanttellyou.picturemode.mixin.compat.sodium.DefaultChunkRendererMixin", () -> ModStatus.HAS_SODIUM),
-        Map.entry("mod.icanttellyou.picturemode.mixin.compat.nt.PauseWidgetsMixin", () -> ModStatus.HAS_NOSTALGIC_TWEAKS)
+        Map.entry("mod.icanttellyou.picturemode.mixin.compat.nt.PauseWidgetsMixin", () -> ModStatus.HAS_NOSTALGIC_TWEAKS),
+        Map.entry("mod.icanttellyou.picturemode.mixin.LevelRendererMixinVanilla", () -> !ModStatus.HAS_SODIUM)
     );
 
     @Override
