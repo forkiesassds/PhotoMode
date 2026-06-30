@@ -51,7 +51,11 @@ public class ShaderUtil {
     public static boolean useShaderTransparency() {
         //? if >=26.2 {
         /*Minecraft minecraft = Minecraft.getInstance();
+        //? if >=26.3 {
+        /^return minecraft.gameRenderer.useImprovedTransparency();
+        ^///? } else {
         return minecraft.gameRenderer.gameRenderState().useShaderTransparency();
+        //? }
         *///? } else {
         return Minecraft.useShaderTransparency();
         //? }
