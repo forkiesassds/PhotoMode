@@ -18,7 +18,7 @@ import java.io.File;
 import java.util.function.Consumer;
 
 public class ScreenshotHandler {
-    private static final int FRAME_DELAY = 5;
+    private int frameDelay = -1;
 
     private Status status = Status.IDLE;
     private Consumer<NativeImage> screenshotCallback;
@@ -36,7 +36,10 @@ public class ScreenshotHandler {
         if (status != Status.IDLE)
             return;
 
-        NativeImageFormat format = PictureModeClient.getConfig().format;
+        PictureModeClientConfig config = PictureModeClient.getConfig();
+        this.frameDelay = config.screenshotSettings.frameDelay;
+
+        NativeImageFormat format = config.format;
         this.screenshotCallback = image -> {
             File directory = new File(rootDir, Screenshot.SCREENSHOT_DIR);
             directory.mkdir();
@@ -81,8 +84,10 @@ public class ScreenshotHandler {
      */
     public void transitionStatus(Status newStatus) {
         status.validateStatusTransition(newStatus);
-        if (newStatus == Status.IDLE)
+        if (newStatus == Status.IDLE) {
             frame = 0;
+            frameDelay = -1;
+        }
 
         status = newStatus;
     }
@@ -102,7 +107,10 @@ public class ScreenshotHandler {
      * @return Boolean on if the screenshot should be captured
      */
     public boolean shouldCapture() {
-        return ++frame >= FRAME_DELAY;
+        if (frameDelay == -1)
+            return false;
+
+        return ++frame >= this.frameDelay;
     }
 
     /**
