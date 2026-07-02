@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
     //"me.jellysquid.mods.sodium.client.render.chunk.RenderSectionManager"
 }, remap = false)
 public abstract class RenderSectionManagerMixin {
-    @Inject(method = "shouldUseOcclusionCulling", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "shouldUseOcclusionCulling", at = @At("RETURN"), cancellable = true, require = 0)
     private void disableSmartCullInPM(CallbackInfoReturnable<Boolean> cir) {
         PictureModeState state = PictureModeClient.getState();
         boolean original = cir.getReturnValueZ();
