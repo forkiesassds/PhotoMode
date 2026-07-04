@@ -47,7 +47,6 @@ repositories {
     }
     exclusiveContent {
         forRepositories(
-            mavenCentral(), //1.21.1+ is on Maven Central
             maven("https://maven.isxander.dev/releases") { name = "Xander Maven" }
         )
         filter { includeGroupAndSubgroups("dev.isxander") }
