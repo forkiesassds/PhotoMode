@@ -6,17 +6,17 @@ import mod.icanttellyou.picturemode.client.PictureModeState;
 import mod.icanttellyou.picturemode.util.LevelUtils;
 import net.minecraft.client.ClientClockManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.Holder;
-import net.minecraft.world.clock.WorldClock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+//~ if >=26.3 'ClientClockManager.class' -> 'ClientClockManager.ClientClockInstance.class'
 @Mixin(ClientClockManager.class)
 public abstract class ClientClockManagerMixin {
+    //~ if >=26.3 'getTotalTicks' -> 'totalTicks'
     @Inject(method = "getTotalTicks", at = @At("RETURN"), cancellable = true)
-    private void overrideTotalTicks(Holder<WorldClock> definition, CallbackInfoReturnable<Long> cir) {
+    private void overrideTotalTicks(CallbackInfoReturnable<Long> cir) {
         long dayTime = cir.getReturnValueJ();
         PictureModeState state = PictureModeClient.getState();
 

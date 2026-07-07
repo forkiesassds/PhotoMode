@@ -20,6 +20,7 @@ public class PictureModeMixinPlugin implements IMixinConfigPlugin {
         Map.entry("mod.icanttellyou.picturemode.mixin.compat.journeymap.HudOverlayHandlerMixin", () -> ModStatus.HAS_JOURNEYMAP),
         //? if <=1.21.1
         //Map.entry("mod.icanttellyou.picturemode.mixin.compat.sodium.SodiumWorldRendererMixin", () -> ModStatus.HAS_SODIUM),
+        //? if <26.3
         Map.entry("mod.icanttellyou.picturemode.mixin.compat.sodium.RenderSectionManagerMixin", () -> ModStatus.HAS_SODIUM),
         Map.entry("mod.icanttellyou.picturemode.mixin.compat.sodium.DefaultChunkRendererMixin", () -> ModStatus.HAS_SODIUM),
         Map.entry("mod.icanttellyou.picturemode.mixin.compat.nt.PauseWidgetsMixin", () -> ModStatus.HAS_NOSTALGIC_TWEAKS),

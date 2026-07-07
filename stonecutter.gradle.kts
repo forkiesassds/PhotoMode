@@ -111,6 +111,17 @@ stonecutter.parameters {
             replace(".isZZeroToOne()", ".getDeviceInfo().isZZeroToOne()")
             replace(".getMainRenderTarget()", ".gameRenderer.mainRenderTarget()")
         }
+
+        string(eval(current.version, ">=26.3")) {
+            replace("com.mojang.blaze3d.buffers.GpuBuffer", "com.mojang.renderpearl.api.buffers.GpuBuffer")
+            replace("com.mojang.blaze3d.systems.CommandEncoder", "com.mojang.renderpearl.api.commands.CommandEncoder")
+            replace("com.mojang.blaze3d.textures.GpuTexture", "com.mojang.renderpearl.api.textures.GpuTexture")
+            replace("com.mojang.blaze3d.systems.GpuSurface", "com.mojang.renderpearl.api.device.GpuSurface")
+            replace("com/mojang/blaze3d/buffers/GpuBuffer", "com/mojang/renderpearl/api/buffers/GpuBuffer")
+            replace("com/mojang/blaze3d/systems/CommandEncoder", "com/mojang/renderpearl/api/commands/CommandEncoder")
+            replace("com/mojang/blaze3d/textures/GpuTexture", "com/mojang/renderpearl/api/textures/GpuTexture")
+            replace("com/mojang/blaze3d/systems/GpuSurface", "com/mojang/renderpearl/api/device/GpuSurface")
+        }
     }
 }
 

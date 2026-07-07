@@ -1,5 +1,5 @@
 //? if >=26.1 {
-/*package mod.icanttellyou.picturemode.mixin;
+/*package mod.icanttellyou.picturemode.mixin.impl;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;

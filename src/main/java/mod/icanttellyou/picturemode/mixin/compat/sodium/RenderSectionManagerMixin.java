@@ -1,3 +1,4 @@
+//? if <26.3 {
 package mod.icanttellyou.picturemode.mixin.compat.sodium;
 
 import mod.icanttellyou.picturemode.client.PictureModeClient;
@@ -25,3 +26,4 @@ public abstract class RenderSectionManagerMixin {
         cir.setReturnValue((state == null || !state.isEnabled()) && original);
     }
 }
+//? }

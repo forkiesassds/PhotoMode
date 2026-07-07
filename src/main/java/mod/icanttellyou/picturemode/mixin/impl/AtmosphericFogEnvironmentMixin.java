@@ -1,5 +1,5 @@
 //? if >=1.21.6 {
-package mod.icanttellyou.picturemode.mixin;
+package mod.icanttellyou.picturemode.mixin.impl;
 
 import mod.icanttellyou.picturemode.imixin.PMModifiableFog;
 import net.minecraft.client.renderer.fog.environment.AtmosphericFogEnvironment;

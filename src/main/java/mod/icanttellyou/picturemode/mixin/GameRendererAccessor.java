@@ -1,3 +1,4 @@
+//? if <26.3 {
 package mod.icanttellyou.picturemode.mixin;
 
 import net.minecraft.client.renderer.GameRenderer;
@@ -10,3 +11,4 @@ public interface GameRendererAccessor {
     @Invoker(/*? >=1.21.2 {*/ "setPostEffect" /*? } else {*/ /*"loadEffect" *//*?}*/)
     void invokeSetPostEffect(Identifier postEffect);
 }
+//? }

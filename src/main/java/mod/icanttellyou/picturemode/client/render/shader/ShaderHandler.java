@@ -15,7 +15,9 @@ public class ShaderHandler {
     public static void setShader(Identifier shader) {
         GameRenderer renderer = Minecraft.getInstance().gameRenderer;
         if (shader == null) {
-            //? if >=1.21.2 {
+            //? if >=26.3 {
+            /*((mod.icanttellyou.picturemode.imixin.PMPostEffectApplier) renderer).pm$clearPostEffect();
+            *///? } else if >=1.21.2 {
             renderer.clearPostEffect();
             //? } else {
             /*renderer.shutdownEffect();
@@ -23,7 +25,11 @@ public class ShaderHandler {
             return;
         }
 
+        //? if >=26.3 {
+        /*((mod.icanttellyou.picturemode.imixin.PMPostEffectApplier) renderer).pm$setPostEffect(shader);
+        *///? } else {
         ((mod.icanttellyou.picturemode.mixin.GameRendererAccessor) renderer).invokeSetPostEffect(shader);
+        //? }
         //? if >=1.21.6 {
         PictureModeClient.getShaderPatchHandler().patchShader(shader);
         //? } else {

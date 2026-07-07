@@ -1,5 +1,5 @@
 //? if >=26.1 && <26.2 {
-/*package mod.icanttellyou.picturemode.mixin;
+/*package mod.icanttellyou.picturemode.mixin.impl;
 
 import com.mojang.blaze3d.platform.Window;
 import mod.icanttellyou.picturemode.imixin.PMWindowResizeTrick;
