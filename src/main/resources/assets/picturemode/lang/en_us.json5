@@ -52,7 +52,8 @@
   "picturemode.config.screenshotSettings.resMultiplier.name": "Resolution Multiplier",
   "picturemode.config.screenshotSettings.resMultiplier.desc": "The multiplier to use for the width and height used for when taking screenshots.",
   "picturemode.config.screenshotSettings.resMultiplier.display": "%sx (%sx%s)",
-
+  "picturemode.config.screenshotSettings.frameDelay.name": "Frame Delay",
+  "picturemode.config.screenshotSettings.frameDelay.desc": "Amount of frames to delay for when taking screenshots.\n\nAdjust this value if graphical artifacts appear in screenshots.",
 
   "picturemode.config.format.jpg.settings": "JPEG Format Settings",
   "picturemode.config.format.jpg.quality.name": "Quality",

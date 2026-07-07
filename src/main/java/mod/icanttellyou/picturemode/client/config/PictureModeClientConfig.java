@@ -52,7 +52,7 @@ public class PictureModeClientConfig {
                 .map(f -> Pair.of(f.getFormatName(), f.provideConfigProvider()))
                 .filter(entry -> entry.getFirst() != null && entry.getSecond() != null)
                 .collect(ImmutableMap.toImmutableMap(Pair::getFirst, Pair::getSecond)),
-            new ScreenshotSettings(0, 0, 1.0F)
+            new ScreenshotSettings(0, 0, 1.0F, 5)
         );
     }
 

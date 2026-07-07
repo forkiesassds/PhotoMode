@@ -6,6 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.api.controller.FloatSliderControllerBuilder;
 import dev.isxander.yacl3.api.controller.IntegerFieldControllerBuilder;
+import dev.isxander.yacl3.api.controller.IntegerSliderControllerBuilder;
 import mod.icanttellyou.picturemode.client.config.AbstractGUIOptionsProviderFactory;
 import mod.icanttellyou.picturemode.client.config.ConfigHelper;
 import mod.icanttellyou.picturemode.client.config.GUIOptionsProvider;
@@ -19,18 +20,22 @@ public class ScreenshotSettings implements AbstractGUIOptionsProviderFactory {
                     .forGetter(settings -> settings.fixedWidth),
             Codec.intRange(0, Integer.MAX_VALUE).optionalFieldOf("fixed_height", 0)
                     .forGetter(settings -> settings.fixedHeight),
-            Codec.FLOAT.fieldOf("res_multiplier").forGetter(settings -> settings.resMultiplier)
+            Codec.FLOAT.fieldOf("res_multiplier").forGetter(settings -> settings.resMultiplier),
+            Codec.INT.optionalFieldOf("frame_delay", 5)
+                    .forGetter(settings -> settings.frameDelay)
         ).apply(instance, ScreenshotSettings::new))
             .flatXmap(ScreenshotSettings::validateWidthHeight, ScreenshotSettings::validateWidthHeight);
 
     public int fixedWidth;
     public int fixedHeight;
     public float resMultiplier;
+    public int frameDelay;
 
-    public ScreenshotSettings(int fixedWidth, int fixedHeight, float resMultiplier) {
+    public ScreenshotSettings(int fixedWidth, int fixedHeight, float resMultiplier, int frameDelay) {
         this.fixedWidth = fixedWidth;
         this.fixedHeight = fixedHeight;
         this.resMultiplier = resMultiplier;
+        this.frameDelay = frameDelay;
     }
 
     public int getWidth() {
@@ -96,6 +101,13 @@ public class ScreenshotSettings implements AbstractGUIOptionsProviderFactory {
                             .formatValue(i ->
                                 ConfigHelper.getConfigText("screenshotSettings.resMultiplier.display",
                                         i, (int) (ScreenshotSettings.this.getWidth() * i), (int) (ScreenshotSettings.this.getHeight() * i))))
+                        .build())
+                    .option(Option.<Integer>createBuilder()
+                        .name(ConfigHelper.getConfigText("screenshotSettings.frameDelay.name"))
+                        .description(OptionDescription.of(ConfigHelper.getConfigText("screenshotSettings.frameDelay.desc")))
+                        .binding(5,
+                            () -> ScreenshotSettings.this.frameDelay, newVal -> ScreenshotSettings.this.frameDelay = newVal)
+                        .controller(opt -> IntegerSliderControllerBuilder.create(opt).range(0, 50).step(1))
                         .build())
                     .build());
             }
