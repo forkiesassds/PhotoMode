@@ -6,9 +6,9 @@
   "gui.picturemode.tilt": "Tilt: %s",
   "gui.picturemode.intensity": "Intensity: %s%%",
   "gui.picturemode.shader": "Filter",
-  //? if >=1.21.11 {
+  //? if <26.3 {
   "gui.picturemode.shader.incompatible": "Filters are incompatible with improved transparency. Please toggle it off, in order to use filters.",
-  //? } else {
+  //? } else if <1.21.11 {
   /*"gui.picturemode.shader.incompatible": "Filters are incompatible with Fabulous graphics. Please switch to Fancy graphics, in order to use filters.",
   *///? }
   "gui.picturemode.default": "Default",

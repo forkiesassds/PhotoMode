@@ -205,10 +205,12 @@ public class PictureModeScreen extends Screen {
                 }));
         rows.addChild(intensitySlider);
 
+        //? if <26.3 {
         if (ShaderUtil.useShaderTransparency()) {
             shaderButton.active = false;
             shaderButton.setTooltip(Tooltip.create(Component.translatable(SHADER_KEY + ".incompatible")));
         }
+        //? }
 
         if (shaderHolder.id() == null) {
             intensitySlider.active = false;

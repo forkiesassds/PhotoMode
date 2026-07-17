@@ -121,6 +121,7 @@ stonecutter.parameters {
             replace("com/mojang/blaze3d/systems/CommandEncoder", "com/mojang/renderpearl/api/commands/CommandEncoder")
             replace("com/mojang/blaze3d/textures/GpuTexture", "com/mojang/renderpearl/api/textures/GpuTexture")
             replace("com/mojang/blaze3d/systems/GpuSurface", "com/mojang/renderpearl/api/device/GpuSurface")
+            replace("org.lwjgl.glfw.GLFW.GLFW_KEY_", "org.lwjgl.sdl.SDLKeycode.SDLK_")
         }
     }
 }

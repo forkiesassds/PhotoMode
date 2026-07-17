@@ -85,6 +85,7 @@ public abstract class GameRendererMixin {
             ci.cancel();
     }
 
+    //? if <26.3 {
     @WrapOperation(
         method = "renderLevel",
         //? if >=1.21.6 {
@@ -115,6 +116,7 @@ public abstract class GameRendererMixin {
         if (state == null || !state.isEnabled())
             original.call(o, o2 /*? >=1.21.6 {*/, v/*?}*/);
     }
+    //? }
 
     @Inject(method = "renderItemInHand", at = @At("HEAD"), cancellable = true)
     private void hideHandInPM(CallbackInfo ci) {

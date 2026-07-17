@@ -5,19 +5,19 @@ import com.mojang.datafixers.util.Pair;
 import mod.icanttellyou.picturemode.client.gui.PictureModeScreen;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
+//~ if >=26.3 'KEYSYM' -> 'KEYBOARD' {
 public class PictureModeKeymaps {
     private static final Set<Pair<KeyMapping, KeyMappingCallback>> KEYMAPS = new HashSet<>();
 
     public static final KeyMapping OPEN_PICTURE_MODE = register(new KeyMapping(
         "key.picturemode.open",
         InputConstants.Type.KEYSYM,
-        GLFW.GLFW_KEY_M,
+        org.lwjgl.glfw.GLFW.GLFW_KEY_M,
         //? if >=1.21.9 {
         KeyMapping.Category.MISC
         //? } else {
@@ -57,3 +57,4 @@ public class PictureModeKeymaps {
         void handleCallback(Minecraft client, KeyMapping mapping);
     }
 }
+//~ }
