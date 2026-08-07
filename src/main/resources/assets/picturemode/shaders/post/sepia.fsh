@@ -1,4 +1,6 @@
 #version 330
+//? if >=26.3
+//#extension GL_ARB_separate_shader_objects : require
 
 in vec2 texCoord;
 

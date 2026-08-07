@@ -3,6 +3,8 @@ package mod.icanttellyou.picturemode.fabric.client.event.listeners;
 import mod.icanttellyou.picturemode.client.PictureModeClient;
 import mod.icanttellyou.picturemode.client.config.PictureModeClientConfig;
 import mod.icanttellyou.picturemode.client.image.screenshot.ScreenshotHandler;
+//? if >=1.21.6
+import mod.icanttellyou.picturemode.client.render.shader.ShaderPatchHandler;
 import mod.icanttellyou.picturemode.fabric.client.event.OnGameRenderEvents;
 import mod.icanttellyou.picturemode.fabric.client.event.RenderTargetBlitEvents;
 import net.minecraft.client.Minecraft;
@@ -14,8 +16,15 @@ public final class ClientRenderEventListeners {
         ScreenshotHandler screenshotHandler = PictureModeClient.getScreenshotHandler();
 
         OnGameRenderEvents.BEFORE.register((renderer, renderLevel) -> {
-            //? if >=1.21.6
-            PictureModeClient.getShaderPatchHandler().writeUBO();
+            //? if >=1.21.6 {
+            ShaderPatchHandler shaderPatchHandler = PictureModeClient.getShaderPatchHandler();
+            //We have to check if it's null or not because of some weird change in 26.3
+            if (shaderPatchHandler != null) {
+                shaderPatchHandler.writeUBO();
+            } else if (mc.level != null) {
+                throw new IllegalStateException("We don't have the shader patch handler, but we have the world?");
+            }
+            //? }
 
             if (screenshotHandler.getStatus() != ScreenshotHandler.Status.WAITING_FOR_FRAME)
                 return;

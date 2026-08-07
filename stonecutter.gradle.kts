@@ -122,6 +122,9 @@ stonecutter.parameters {
             replace("com/mojang/blaze3d/textures/GpuTexture", "com/mojang/renderpearl/api/textures/GpuTexture")
             replace("com/mojang/blaze3d/systems/GpuSurface", "com/mojang/renderpearl/api/device/GpuSurface")
             replace("org.lwjgl.glfw.GLFW.GLFW_KEY_", "org.lwjgl.sdl.SDLKeycode.SDLK_")
+            //Naively assuming we only have one input and output, and are vectors.
+            replace("in vec", "layout(location = 0) in vec")
+            replace("out vec", "layout(location = 0) out vec")
         }
     }
 }
