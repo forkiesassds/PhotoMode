@@ -28,17 +28,23 @@ vec3 getBlur(float r){
     vec2 oneTexel = 1.0 / InSize;
     float x, y, xx, yy, rr = r * r, dx, dy, w, w0;
     w0 = 0.3780 / pow(r, 1.975);
-    vec2 p;
+    vec2 p = vec2((texCoord.x) + (-r * oneTexel.x), (texCoord.y) + (-r * oneTexel.y));
     vec4 col = vec4(0.0, 0.0, 0.0, 0.0);
-    for (x = -r, p.x = (texCoord.x) + (x * oneTexel.x); x <= r; x++, p.x += oneTexel.x) {
+    for (x = -r; x <= r; x++) {
         xx = x * x;
-        for (y = -r, p.y = (texCoord.y) + (y * oneTexel.y); y <= r; y++, p.y += oneTexel.y) {
+        for (y = -r; y <= r; y++) {
             yy = y * y;
             if (xx + yy <= rr) {
                 w = w0 * exp((-xx - yy) / (2.0 * rr));
                 col += texture(InSampler, p) * w;
             }
+
+            p.y += oneTexel.y;
         }
+
+        //reset y coordinate after iterating y
+        p.y = (texCoord.y) + (-r * oneTexel.y);
+        p.x += oneTexel.x;
     }
     return vec3(col.r, col.g, col.b);
 }
