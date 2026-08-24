@@ -11,8 +11,6 @@ import net.minecraft.client.Screenshot;
 //? if neoforge {
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.RenderFrameEvent;
-//? if >=1.21.6
-import net.neoforged.neoforge.client.event.ViewportEvent;
 //? } else {
 /*import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -99,7 +97,7 @@ public final class GameRenderEventListeners {
 
     //? if neoforge && >=1.21.6 {
     @SubscribeEvent
-    public void onFogSetup(ViewportEvent.RenderFog event) {
+    public void onFogSetup(net.neoforged.neoforge.client.event.ViewportEvent.RenderFog event) {
         if (event.getEnvironment() instanceof PMModifiableFog pmModifiableFog) {
             pmModifiableFog.pictureMode$modifyFog(event.getFogData(), event.getPartialTick());
         }

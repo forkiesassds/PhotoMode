@@ -15,9 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Minecraft.class)
 public abstract class MinecraftMixin {
-    //? if >=26.2
-    //@org.spongepowered.asm.mixin.Unique private boolean pm$blitCancelled = false;
-
     @Inject(
         method = "updateLevelInEngines" /*? >=1.21.11 {*/ + "(Lnet/minecraft/client/multiplayer/ClientLevel;Z)V" /*?}*/,
         at = @At("TAIL")
@@ -60,9 +57,11 @@ public abstract class MinecraftMixin {
         //? }
     ) {
         if (!RenderTargetBlitEvents.BEFORE.invoker().beforeTargetBlit(instance /*? >=26.2 {*//*, commandEncoder, textureView *//*? }*/)) {
-            //? if >=26.2
-            //pm$blitCancelled = true;
+            //? if >=26.2 {
+            /*((mod.icanttellyou.picturemode.imixin.PMSkippableGpuSurface) instance).pm$skipFrame();
+            *///? } else {
             return;
+            //? }
         }
 
         //? if >=26.2 {
@@ -72,25 +71,6 @@ public abstract class MinecraftMixin {
         //? }
         RenderTargetBlitEvents.AFTER.invoker().afterTargetBlit(instance /*? >=26.2 {*//*, commandEncoder, textureView *//*? }*/);
     }
-
-    //? if >=26.2 {
-    /*@WrapOperation(
-        method = "renderFrame",
-        at = @At(
-            value = "INVOKE",
-            target = "Lcom/mojang/blaze3d/systems/GpuSurface;present()V"
-        )
-    )
-    private void onScreenPresent(com.mojang.blaze3d.systems.GpuSurface instance, Operation<Void> original) {
-        if (pm$blitCancelled) {
-            pm$blitCancelled = false;
-            ((mod.icanttellyou.picturemode.mixin.GpuSurfaceAccessor) instance).setHasImageAcquired(false);
-            return;
-        }
-
-        original.call(instance);
-    }
-    *///? }
 
     @WrapOperation(
         //? if >=26.1 {
