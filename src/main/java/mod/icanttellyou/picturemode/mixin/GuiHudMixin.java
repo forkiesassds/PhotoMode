@@ -19,10 +19,10 @@ public class GuiHudMixin {
     @Expression("renderLevel")
     @ModifyExpressionValue(
         //? if >=26.2 {
-        /*method = "extractRenderState",
-        *///? } else if >=26.1 {
-        /*method = "extractGui",
-        *///? } else {
+        //method = "extractRenderState",
+        //? } else if >=26.1 {
+        //method = "extractGui",
+        //? } else {
         method = "render",
         //? }
         at = @At(
@@ -41,10 +41,10 @@ public class GuiHudMixin {
 
     @WrapOperation(
         //? if >=26.2 {
-        /*method = "extractRenderState",
-        *///? } else if >=26.1 {
-        /*method = "extractGui",
-        *///? } else {
+        //method = "extractRenderState",
+        //? } else if >=26.1 {
+        //method = "extractGui",
+        //? } else {
         method = "render",
         //? }
         at = @At(
@@ -52,8 +52,8 @@ public class GuiHudMixin {
             //? if >=1.21.2 {
             target = "Lnet/minecraft/client/gui/components/toasts/ToastManager;render(Lnet/minecraft/client/gui/GuiGraphics;)V"
             //? } else {
-            /*target = "Lnet/minecraft/client/gui/components/toasts/ToastComponent;render(Lnet/minecraft/client/gui/GuiGraphics;)V"
-            *///? }
+            //target = "Lnet/minecraft/client/gui/components/toasts/ToastComponent;render(Lnet/minecraft/client/gui/GuiGraphics;)V"
+            //? }
         )
     )
     private void hideToastsInPM(@Coerce Object instance, GuiGraphics i, Operation<Void> original) {

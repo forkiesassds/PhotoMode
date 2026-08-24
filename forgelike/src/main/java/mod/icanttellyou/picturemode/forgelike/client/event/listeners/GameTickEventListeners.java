@@ -9,8 +9,8 @@ import net.neoforged.bus.api.SubscribeEvent;
 //? if >=1.20.5 {
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 //? } else {
-/*import net.neoforged.neoforge.event.TickEvent;
-*///? }
+//import net.neoforged.neoforge.event.TickEvent;
+//? }
 import net.neoforged.neoforge.common.util.Lazy;
 //? } else {
 /*import net.minecraftforge.common.util.Lazy;
@@ -28,8 +28,8 @@ public final class GameTickEventListeners {
         //? if neoforge && >=1.20.5 {
         ClientTickEvent.Pre
         //? } else {
-        /*TickEvent.ClientTickEvent
-        *///? }
+        //TickEvent.ClientTickEvent
+        //? }
         event
     ) {
         //? if (forge && <1.21.1) || <1.20.5 {
@@ -51,8 +51,8 @@ public final class GameTickEventListeners {
         //? if neoforge && >=1.20.5 {
         ClientTickEvent.Post
         //? } else {
-        /*TickEvent.ClientTickEvent
-        *///? }
+        //TickEvent.ClientTickEvent
+        //? }
         event
     ) {
         //? if (forge && <1.21.1) || <1.20.5 {

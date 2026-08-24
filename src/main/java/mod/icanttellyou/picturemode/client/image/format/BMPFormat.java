@@ -37,8 +37,8 @@ public class BMPFormat implements NativeImageFormat {
                 //? if >=1.21.5 {
                 image.getPointer()
                 //? } else {
-                /*((mod.icanttellyou.picturemode.mixin.NativeImageAccessor) (Object) image).getPixels()
-                *///? }
+                //((mod.icanttellyou.picturemode.mixin.NativeImageAccessor) (Object) image).getPixels()
+                //? }
             );
 
             writeCallback.throwIfException();

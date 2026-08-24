@@ -21,8 +21,8 @@ public class PictureModeKeymaps {
         //? if >=1.21.9 {
         KeyMapping.Category.MISC
         //? } else {
-        /*KeyMapping.CATEGORY_MISC
-        *///? }
+        //KeyMapping.CATEGORY_MISC
+        //? }
     ), (client, mapping) -> {
         while (mapping.consumeClick()) {
             client.setScreen(new PictureModeScreen(null));

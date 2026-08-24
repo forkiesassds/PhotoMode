@@ -18,15 +18,15 @@ import org.spongepowered.asm.mixin.injection.At;
 public class MinecraftMixin {
     @WrapOperation(
         //? if >=26.1 {
-        /*method = "renderFrame",
-        *///? } else {
+        //method = "renderFrame",
+        //? } else {
         method = "runTick",
         //? }
         at = @At(
             value = "INVOKE",
             //? if >=26.2 {
-            /*target = "Lcom/mojang/blaze3d/systems/GpuSurface;blitFromTexture(Lcom/mojang/blaze3d/systems/CommandEncoder;Lcom/mojang/blaze3d/textures/GpuTextureView;)V"
-            *///? } else {
+            //target = "Lcom/mojang/blaze3d/systems/GpuSurface;blitFromTexture(Lcom/mojang/blaze3d/systems/CommandEncoder;Lcom/mojang/blaze3d/textures/GpuTextureView;)V"
+            //? } else {
             target = "Lcom/mojang/blaze3d/pipeline/RenderTarget;blitToScreen(" +
                 //? if <1.21.5
                 //"II" +
@@ -47,22 +47,22 @@ public class MinecraftMixin {
         //? if neoforge {
         IEventBus bus = NeoForge.EVENT_BUS;
         //? } else {
-        /*IEventBus bus = MinecraftForge.EVENT_BUS;
-        *///? }
+        //IEventBus bus = MinecraftForge.EVENT_BUS;
+        //? }
         RenderTargetBlitEvent.Pre preEvent = new RenderTargetBlitEvent.Pre(instance /*? >=26.2 {*//*, commandEncoder, textureView *//*? }*/);
         bus.post(preEvent);
         
         if (preEvent.isCanceled()) {
             //? if >=26.2 {
-            /*((mod.icanttellyou.picturemode.imixin.PMSkippableGpuSurface) instance).pm$skipFrame();
-            *///? } else {
+            //((mod.icanttellyou.picturemode.imixin.PMSkippableGpuSurface) instance).pm$skipFrame();
+            //? } else {
             return;
             //? }
         }
 
         //? if >=26.2 {
-        /*original.call(instance, commandEncoder, textureView);
-        *///? } else {
+        //original.call(instance, commandEncoder, textureView);
+        //? } else {
         original.call(instance /*? <1.21.5 {*/ /*, width, height *//*?}*/);
          //? }
         bus.post(new RenderTargetBlitEvent.Post(instance /*? >=26.2 {*//*, commandEncoder, textureView *//*? }*/));

@@ -122,16 +122,16 @@ public class FadingStringWidget extends AbstractStringWidget implements Tickable
         this.alpha = (float) fade;
         super.renderWidget(graphics, mouseX, mouseY, deltaTicks);
         //? } else {
-        /*this.renderText(graphics, fade);
-        *///? }
+        //this.renderText(graphics, fade);
+        //? }
     }
 
     //? if >=1.21.11 {
     @Override
     public void visitLines(final net.minecraft.client.gui.ActiveTextCollector output) {
     //? } else {
-    /*public void renderText(GuiGraphics graphics, double alpha) {
-    *///? }
+    //public void renderText(GuiGraphics graphics, double alpha) {
+    //? }
         Component message = this.getMessage();
         Font font = this.getFont();
         int maxWidth = this.maxWidth > 0 ? this.maxWidth : this.getWidth();
@@ -152,8 +152,8 @@ public class FadingStringWidget extends AbstractStringWidget implements Tickable
                     //? if >=1.21.11 {
                     output.accept(x, y, clipText(message, font, maxWidth));
                     //? } else {
-                    /*graphics.drawString(font, clipText(message, font, maxWidth), x, y, textColor);
-                    *///? }
+                    //graphics.drawString(font, clipText(message, font, maxWidth), x, y, textColor);
+                    //? }
                     break;
                 case SCROLLING:
                     int minX = x + TEXT_MARGIN;
@@ -180,8 +180,8 @@ public class FadingStringWidget extends AbstractStringWidget implements Tickable
             //? if >=1.21.11 {
             output.accept(x, y, message.getVisualOrderText());
             //? } else {
-            /*graphics.drawString(font, message.getVisualOrderText(), x, y, textColor);
-            *///? }
+            //graphics.drawString(font, message.getVisualOrderText(), x, y, textColor);
+            //? }
         }
     }
 
@@ -192,8 +192,8 @@ public class FadingStringWidget extends AbstractStringWidget implements Tickable
         double mouseX = event.x();
         double mouseY = event.y();
     //? } else {
-    /^public boolean mouseClicked(double mouseX, double mouseY, int button) {
-     ^///? }
+    //public boolean mouseClicked(double mouseX, double mouseY, int button) {
+     //? }
 
         if (!this.visible || !this.isMouseOver(mouseX, mouseY))
             return false;

@@ -27,25 +27,25 @@ public class LevelRendererMixinVanilla {
     @Definition(
         id = "prevCamRotY",
         //? if >=26.2 {
-        /*field = "Lnet/minecraft/client/renderer/extract/LevelExtractor;prevCamRotY:D"
-        *///? } else {
+        //field = "Lnet/minecraft/client/renderer/extract/LevelExtractor;prevCamRotY:D"
+        //? } else {
         field = "Lnet/minecraft/client/renderer/LevelRenderer;prevCamRotY:D"
         //? }
     )
     //? if >=26.1 {
-    /*@Definition(id = "h", local = @Local(type = double.class, name = "camRotY"))
-    *///? } else {
+    //@Definition(id = "h", local = @Local(type = double.class, name = "camRotY"))
+    //? } else {
     @Definition(id = "h", local = @Local(type = double.class, ordinal = /*? >=1.21.9 {*/ 4 /*? } else {*/ /*7 *//*?}*/))
     //? }
     @Expression("h != this.prevCamRotY")
     @ModifyExpressionValue(
         //? if >=26.2 {
-        /*method = "extract",
-        *///? } else if >=1.21.9 {
+        //method = "extract",
+        //? } else if >=1.21.9 {
         method = "cullTerrain",
         //? } else {
-        /*method = "setupRender",
-        *///? }
+        //method = "setupRender",
+        //? }
         at = @At("MIXINEXTRAS:EXPRESSION")
     )
     private boolean checkIfPMZoomChanged(boolean original) {
@@ -58,17 +58,17 @@ public class LevelRendererMixinVanilla {
 
     @Inject(
         //? if >=26.2 {
-        /*method = "extract",
-        *///? } else if >=1.21.9 {
+        //method = "extract",
+        //? } else if >=1.21.9 {
         method = "cullTerrain",
         //? } else {
-        /*method = "setupRender",
-        *///? }
+        //method = "setupRender",
+        //? }
         at = @At(
             value = "FIELD",
             //? if >=26.2 {
-            /*target = "Lnet/minecraft/client/renderer/extract/LevelExtractor;prevCamRotY:D",
-            *///? } else {
+            //target = "Lnet/minecraft/client/renderer/extract/LevelExtractor;prevCamRotY:D",
+            //? } else {
             target = "Lnet/minecraft/client/renderer/LevelRenderer;prevCamRotY:D",
              //? }
             shift = At.Shift.AFTER,
@@ -95,8 +95,8 @@ public class LevelRendererMixinVanilla {
         //? if >=1.21.9 {
         method = "cullTerrain",
         //? } else {
-        /*method = "setupRender",
-        *///? }
+        //method = "setupRender",
+        //? }
         at = @At("MIXINEXTRAS:EXPRESSION")
     )
     private boolean disableSmartCullInPM(boolean original) {

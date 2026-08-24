@@ -15,8 +15,8 @@
       "vertex_shader": "minecraft:core/screenquad",
       "fragment_shader": "picturemode:post/outline2",
       //? } else {
-      /*"program": "picturemode:post/outline2",
-      *///? }
+      //"program": "picturemode:post/outline2",
+      //? }
       "inputs": [
         {
           "sampler_name": "InDepth",
@@ -29,8 +29,8 @@
       "uniforms": {
       "PMConfig": [
       //? } else {
-      /*"uniforms": [
-      *///? }
+      //"uniforms": [
+      //? }
         {
           "name": "Intensity",
           "type": "float"
@@ -60,8 +60,8 @@
       "vertex_shader": "minecraft:core/screenquad",
       "fragment_shader": "minecraft:post/blit",
       //? } else {
-      /*"program": "minecraft:post/blit",
-      *///? }
+      //"program": "minecraft:post/blit",
+      //? }
       "inputs": [
         {
           "sampler_name": "In",
@@ -74,8 +74,8 @@
       "uniforms": {
       "BlitConfig": [
       //? } else {
-      /*"uniforms": [
-      *///? }
+      //"uniforms": [
+      //? }
         {
           "name": "ColorModulate",
           "type": "vec4",

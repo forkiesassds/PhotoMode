@@ -30,15 +30,15 @@ public abstract class MinecraftMixin {
 
     @WrapOperation(
         //? if >=26.1 {
-        /*method = "renderFrame",
-        *///? } else {
+        //method = "renderFrame",
+        //? } else {
         method = "runTick",
         //? }
         at = @At(
             value = "INVOKE",
             //? if >=26.2 {
-            /*target = "Lcom/mojang/blaze3d/systems/GpuSurface;blitFromTexture(Lcom/mojang/blaze3d/systems/CommandEncoder;Lcom/mojang/blaze3d/textures/GpuTextureView;)V"
-            *///? } else {
+            //target = "Lcom/mojang/blaze3d/systems/GpuSurface;blitFromTexture(Lcom/mojang/blaze3d/systems/CommandEncoder;Lcom/mojang/blaze3d/textures/GpuTextureView;)V"
+            //? } else {
             target = "Lcom/mojang/blaze3d/pipeline/RenderTarget;blitToScreen(" +
                 //? if <1.21.5
                 //"II" +
@@ -58,15 +58,15 @@ public abstract class MinecraftMixin {
     ) {
         if (!RenderTargetBlitEvents.BEFORE.invoker().beforeTargetBlit(instance /*? >=26.2 {*//*, commandEncoder, textureView *//*? }*/)) {
             //? if >=26.2 {
-            /*((mod.icanttellyou.picturemode.imixin.PMSkippableGpuSurface) instance).pm$skipFrame();
-            *///? } else {
+            //((mod.icanttellyou.picturemode.imixin.PMSkippableGpuSurface) instance).pm$skipFrame();
+            //? } else {
             return;
             //? }
         }
 
         //? if >=26.2 {
-        /*original.call(instance, commandEncoder, textureView);
-        *///? } else {
+        //original.call(instance, commandEncoder, textureView);
+        //? } else {
         original.call(instance /*? <1.21.5 {*/ /*, width, height *//*?}*/);
         //? }
         RenderTargetBlitEvents.AFTER.invoker().afterTargetBlit(instance /*? >=26.2 {*//*, commandEncoder, textureView *//*? }*/);
@@ -74,8 +74,8 @@ public abstract class MinecraftMixin {
 
     @WrapOperation(
         //? if >=26.1 {
-        /*method = "renderFrame",
-        *///? } else {
+        //method = "renderFrame",
+        //? } else {
         method = "runTick",
         //? }
         at = @At(
@@ -84,8 +84,8 @@ public abstract class MinecraftMixin {
                 //? if >=1.21 {
                 "Lnet/minecraft/client/DeltaTracker;"
                 //? } else {
-                /*"FJ"
-                *///? }
+                //"FJ"
+                //? }
                 + "Z)V"
         )
     )

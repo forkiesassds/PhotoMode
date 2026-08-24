@@ -25,8 +25,8 @@ public record ShaderHolder(@Nullable Identifier id) {
         //? if >=1.21.2 {
         return id;
         //? } else {
-        /*return id != null ? id.withPrefix("post_effect/").withSuffix(".json") : null;
-        *///? }
+        //return id != null ? id.withPrefix("post_effect/").withSuffix(".json") : null;
+        //? }
     }
 
     /**

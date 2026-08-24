@@ -24,8 +24,8 @@ public abstract class CameraMixin {
 
     @Inject(
         //? if >=26.1 {
-        /*method = "alignWithEntity",
-        *///? } else {
+        //method = "alignWithEntity",
+        //? } else {
         method = "setup",
         //? }
         at = @At("TAIL")

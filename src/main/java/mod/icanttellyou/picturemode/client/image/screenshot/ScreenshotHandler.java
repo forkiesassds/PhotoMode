@@ -54,8 +54,8 @@ public class ScreenshotHandler {
                                 //? if >=1.21.5 {
                                 new ClickEvent.OpenFile(file.getAbsoluteFile())
                                 //? } else {
-                                /*new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath())
-                                *///? }
+                                //new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath())
+                                //? }
                             ));
                     messageConsumer.accept(Component.translatable("screenshot.success", component));
                 } catch (Exception e) {

@@ -20,15 +20,15 @@ public final class RenderTargetBlitEvents {
      */
     public static final Event<Before> BEFORE = EventFactory.createArrayBacked(Before.class, handlers ->
         //? if >=26.2 {
-        /*(surface, commandEncoder, textureView) -> {
-        *///? } else {
+        //(surface, commandEncoder, textureView) -> {
+        //? } else {
         target -> {
         //? }
             for (Before handler : handlers) {
                 if (!handler.beforeTargetBlit(
                     //? if >=26.2 {
-                    /*surface, commandEncoder, textureView
-                    *///? } else {
+                    //surface, commandEncoder, textureView
+                    //? } else {
                     target
                     //? }
                 )) {
@@ -48,15 +48,15 @@ public final class RenderTargetBlitEvents {
      */
     public static final Event<After> AFTER = EventFactory.createArrayBacked(After.class, handlers ->
         //? if >=26.2 {
-        /*(surface, commandEncoder, textureView) -> {
-        *///? } else {
+        //(surface, commandEncoder, textureView) -> {
+        //? } else {
         target -> {
         //? }
             for (After handler : handlers) {
                 handler.afterTargetBlit(
                     //? if >=26.2 {
-                    /*surface, commandEncoder, textureView
-                    *///? } else {
+                    //surface, commandEncoder, textureView
+                    //? } else {
                     target
                     //? }
                 );

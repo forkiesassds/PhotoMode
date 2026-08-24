@@ -57,8 +57,8 @@ public class NativeImageWriter {
         //? if >=1.21.5 {
         long pointer = image.getPointer();
         //? } else {
-        /*long pointer = ((mod.icanttellyou.picturemode.mixin.NativeImageAccessor) (Object) image).getPixels();
-         *///? }
+        //long pointer = ((mod.icanttellyou.picturemode.mixin.NativeImageAccessor) (Object) image).getPixels();
+         //? }
 
         if (pointer == 0L)
             throw new IllegalStateException("Image is not allocated.");

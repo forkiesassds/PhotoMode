@@ -16,25 +16,25 @@ public class ShaderHandler {
         GameRenderer renderer = Minecraft.getInstance().gameRenderer;
         if (shader == null) {
             //? if >=26.3 {
-            /*((mod.icanttellyou.picturemode.imixin.PMPostEffectApplier) renderer).pm$clearPostEffect();
-            *///? } else if >=1.21.2 {
+            //((mod.icanttellyou.picturemode.imixin.PMPostEffectApplier) renderer).pm$clearPostEffect();
+            //? } else if >=1.21.2 {
             renderer.clearPostEffect();
             //? } else {
-            /*renderer.shutdownEffect();
-            *///? }
+            //renderer.shutdownEffect();
+            //? }
             return;
         }
 
         //? if >=26.3 {
-        /*((mod.icanttellyou.picturemode.imixin.PMPostEffectApplier) renderer).pm$setPostEffect(shader);
-        *///? } else {
+        //((mod.icanttellyou.picturemode.imixin.PMPostEffectApplier) renderer).pm$setPostEffect(shader);
+        //? } else {
         ((mod.icanttellyou.picturemode.mixin.GameRendererAccessor) renderer).invokeSetPostEffect(shader);
         //? }
         //? if >=1.21.6 {
         PictureModeClient.getShaderPatchHandler().patchShader(shader);
         //? } else {
-        /*setIntensity(1.0F);
-        *///? }
+        //setIntensity(1.0F);
+        //? }
     }
 
     /**
@@ -46,8 +46,8 @@ public class ShaderHandler {
         //? if >=1.21.6 {
         PictureModeClient.getShaderPatchHandler().setIntensity(intensity);
          //? } else {
-        /*setUniform("Intensity", intensity);
-        *///? }
+        //setUniform("Intensity", intensity);
+        //? }
     }
 
     //? if >=1.21.6

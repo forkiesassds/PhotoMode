@@ -9,8 +9,8 @@
   //? if <26.3 {
   "gui.picturemode.shader.incompatible": "Filters are incompatible with improved transparency. Please toggle it off, in order to use filters.",
   //? } else if <1.21.11 {
-  /*"gui.picturemode.shader.incompatible": "Filters are incompatible with Fabulous graphics. Please switch to Fancy graphics, in order to use filters.",
-  *///? }
+  //"gui.picturemode.shader.incompatible": "Filters are incompatible with Fabulous graphics. Please switch to Fancy graphics, in order to use filters.",
+  //? }
   "gui.picturemode.default": "Default",
   "gui.picturemode.none": "None",
   "gui.picturemode.degrees": "%s degrees",

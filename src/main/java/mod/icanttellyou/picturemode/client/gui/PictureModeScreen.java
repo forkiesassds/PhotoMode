@@ -237,8 +237,8 @@ public class PictureModeScreen extends Screen {
         this.helpText.setComponentClickHandler(style ->
             defaultHandleGameClickEvent(style.getClickEvent(), minecraft, this));
         //? } else {
-        /*this.helpText.setComponentClickHandler(this::handleComponentClicked);
-        *///? }
+        //this.helpText.setComponentClickHandler(this::handleComponentClicked);
+        //? }
 
         columns.addChild(this.helpText, rows.newCellSettings().paddingBottom(12));
 
@@ -290,8 +290,8 @@ public class PictureModeScreen extends Screen {
 
         int button = event.button();
     //? } else {
-    /*public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
-    *///? }
+    //public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+    //? }
 
         float delta = this.getDeltaTicks();
 
@@ -322,8 +322,8 @@ public class PictureModeScreen extends Screen {
         double mouseX = event.x();
         double mouseY = event.y();
     //? } else {
-    /*public boolean mouseClicked(double mouseX, double mouseY, int button) {
-    *///? }
+    //public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    //? }
 
         if (!super.mouseClicked(/*? >=1.21.9 {*/ event, isDoubleClick /*? } else {*/ /*mouseX, mouseY, button *//*?}*/)) {
             Window window = minecraft.getWindow();
@@ -372,7 +372,7 @@ public class PictureModeScreen extends Screen {
         //? if >=1.21 {
         return this.minecraft.getDeltaTracker().getGameTimeDeltaPartialTick(true);
         //? } else {
-        /*return this.minecraft.getFrameTime();
-        *///? }
+        //return this.minecraft.getFrameTime();
+        //? }
     }
 }

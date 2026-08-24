@@ -24,8 +24,8 @@ public class LevelUtils {
 
         return dayTimeline.periodTicks().orElseThrow();
         //? } else {
-        /*return 24000;
-        *///? }
+        //return 24000;
+        //? }
     }
 
     /**

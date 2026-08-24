@@ -36,8 +36,8 @@ public class PictureModeForgelikeClient {
         //? if neoforge {
         IEventBus gameBus = NeoForge.EVENT_BUS;
         //? } else {
-        /*IEventBus gameBus = MinecraftForge.EVENT_BUS;
-        *///? }
+        //IEventBus gameBus = MinecraftForge.EVENT_BUS;
+        //? }
 
         gameBus.register(new GameRenderEventListeners());
         gameBus.register(new GameTickEventListeners());

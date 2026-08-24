@@ -22,8 +22,8 @@ public final class GameRenderEventListeners {
             //? if neoforge && >=1.20.5 {
             RenderFrameEvent.Pre
             //? } else {
-            /*TickEvent.RenderTickEvent
-            *///? }
+            //TickEvent.RenderTickEvent
+            //? }
             event) {
         //? if forge || <1.20.5 {
         /*if (event.phase != TickEvent.Phase.START)
@@ -55,8 +55,8 @@ public final class GameRenderEventListeners {
             //? if neoforge && >=1.20.5 {
             RenderFrameEvent.Post
             //? } else {
-            /*TickEvent.RenderTickEvent
-            *///? }
+            //TickEvent.RenderTickEvent
+            //? }
             event) {
         //? if forge || <1.20.5 {
         /*if (event.phase != TickEvent.Phase.END)
