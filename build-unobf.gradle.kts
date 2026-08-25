@@ -24,12 +24,11 @@ fletchingTable {
         }
     }
 
-//    relocate.configure(sourceSets.main) {
-//        matching("**/*.json5") {
-//            with(Json5ToJson)
-//        }
-//        extension("json", "**/*.json5")
-//    }
+    relocate.configure(sourceSets.main) {
+        matching("**/*.json5") {
+            with(Json5ToJson)
+        }
+    }
 }
 
 dependencies {
