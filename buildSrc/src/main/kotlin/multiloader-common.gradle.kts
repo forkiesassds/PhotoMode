@@ -74,12 +74,6 @@ tasks {
             expand(jsonExpandProps)
         }
 
-        //HACK: Exclude post pass files on 1.21.5 and above, to resolve issue with Fletching Table
-        //  failing to process files that result in being empty.
-        if (stonecutterBuild.eval(stonecutterBuild.current.version, ">=1.21.5")) {
-            exclude("assets/picturemode/shaders/post/*.json5")
-        }
-
         inputs.properties(expandProps)
     }
 }
