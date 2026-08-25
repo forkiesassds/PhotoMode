@@ -19,19 +19,9 @@ public final class RenderTargetBlitEvents {
      * event will not be triggered.
      */
     public static final Event<Before> BEFORE = EventFactory.createArrayBacked(Before.class, handlers ->
-        //? if >=26.2 {
-        //(surface, commandEncoder, textureView) -> {
-        //? } else {
         target -> {
-        //? }
             for (Before handler : handlers) {
-                if (!handler.beforeTargetBlit(
-                    //? if >=26.2 {
-                    //surface, commandEncoder, textureView
-                    //? } else {
-                    target
-                    //? }
-                )) {
+                if (!handler.beforeTargetBlit(target)) {
                     return false;
                 }
             }
@@ -47,19 +37,9 @@ public final class RenderTargetBlitEvents {
      * this event will not be triggered following the {@link #BEFORE} event
      */
     public static final Event<After> AFTER = EventFactory.createArrayBacked(After.class, handlers ->
-        //? if >=26.2 {
-        //(surface, commandEncoder, textureView) -> {
-        //? } else {
         target -> {
-        //? }
             for (After handler : handlers) {
-                handler.afterTargetBlit(
-                    //? if >=26.2 {
-                    //surface, commandEncoder, textureView
-                    //? } else {
-                    target
-                    //? }
-                );
+                handler.afterTargetBlit(target);
             }
         }
     );
@@ -68,9 +48,7 @@ public final class RenderTargetBlitEvents {
     public interface Before {
         boolean beforeTargetBlit(
             //? if >=26.2 {
-            /*com.mojang.blaze3d.systems.GpuSurface surface,
-            com.mojang.blaze3d.systems.CommandEncoder commandEncoder,
-            com.mojang.blaze3d.textures.GpuTextureView textureView
+            /*com.mojang.blaze3d.systems.GpuSurface surface
             *///? } else {
             com.mojang.blaze3d.pipeline.RenderTarget target
             //? }
@@ -81,9 +59,7 @@ public final class RenderTargetBlitEvents {
     public interface After {
         void afterTargetBlit(
             //? if >=26.2 {
-            /*com.mojang.blaze3d.systems.GpuSurface surface,
-            com.mojang.blaze3d.systems.CommandEncoder commandEncoder,
-            com.mojang.blaze3d.textures.GpuTextureView textureView
+            /*com.mojang.blaze3d.systems.GpuSurface surface
             *///? } else {
             com.mojang.blaze3d.pipeline.RenderTarget target
             //? }

@@ -52,7 +52,7 @@ public final class ClientRenderEventListeners {
             screenshotHandler.transitionStatus(ScreenshotHandler.Status.CAPTURED);
         });
 
-        RenderTargetBlitEvents.BEFORE.register(/*? >=26.2 {*/ /*(_, _, _) *//*? } else {*/ target /*? }*/ -> {
+        RenderTargetBlitEvents.BEFORE.register(target -> {
             if (screenshotHandler.getStatus() == ScreenshotHandler.Status.IDLE) {
                 return true;
             } else if (screenshotHandler.getStatus() == ScreenshotHandler.Status.CAPTURED) {

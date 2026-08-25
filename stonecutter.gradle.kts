@@ -114,13 +114,8 @@ stonecutter.parameters {
         string(eval(current.version, ">=26.3")) {
             replace("com.mojang.blaze3d.buffers.GpuBuffer", "com.mojang.renderpearl.api.buffers.GpuBuffer")
             replace("com.mojang.blaze3d.systems.CommandEncoder", "com.mojang.renderpearl.api.commands.CommandEncoder")
-            replace("com.mojang.blaze3d.systems.CommandEncoderBackend", "com.mojang.renderpearl.backend.api.CommandEncoderBackend")
-            replace("com.mojang.blaze3d.vulkan.VulkanCommandEncoder", "com.mojang.renderpearl.backend.vulkan.VulkanCommandEncoder")
             replace("com.mojang.blaze3d.textures.GpuTexture", "com.mojang.renderpearl.api.textures.GpuTexture")
             replace("com.mojang.blaze3d.systems.GpuSurface", "com.mojang.renderpearl.api.device.GpuSurface")
-            replace("com.mojang.blaze3d.systems.GpuSurfaceBackend", "com.mojang.renderpearl.backend.api.GpuSurfaceBackend")
-            replace("com.mojang.blaze3d.vulkan.VulkanGpuSurface", "com.mojang.renderpearl.backend.vulkan.VulkanGpuSurface")
-            replace("com.mojang.blaze3d.opengl.GlSurface", "com.mojang.renderpearl.backend.opengl.GlSurface")
             replace("com/mojang/blaze3d/buffers/GpuBuffer", "com/mojang/renderpearl/api/buffers/GpuBuffer")
             replace("com/mojang/blaze3d/systems/CommandEncoder", "com/mojang/renderpearl/api/commands/CommandEncoder")
             replace("com/mojang/blaze3d/textures/GpuTexture", "com/mojang/renderpearl/api/textures/GpuTexture")

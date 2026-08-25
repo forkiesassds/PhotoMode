@@ -37,7 +37,7 @@ public abstract class MinecraftMixin {
         at = @At(
             value = "INVOKE",
             //? if >=26.2 {
-            //target = "Lcom/mojang/blaze3d/systems/GpuSurface;blitFromTexture(Lcom/mojang/blaze3d/systems/CommandEncoder;Lcom/mojang/blaze3d/textures/GpuTextureView;)V"
+            //target = "Lcom/mojang/blaze3d/systems/GpuSurface;acquireNextTexture()V"
             //? } else {
             target = "Lcom/mojang/blaze3d/pipeline/RenderTarget;blitToScreen(" +
                 //? if <1.21.5
@@ -49,27 +49,17 @@ public abstract class MinecraftMixin {
     private void onScreenBlit(
         //? if >=26.2 {
         /*com.mojang.blaze3d.systems.GpuSurface instance,
-        com.mojang.blaze3d.systems.CommandEncoder commandEncoder,
-        com.mojang.blaze3d.textures.GpuTextureView textureView,
         Operation<Void> original
         *///? } else {
         com.mojang.blaze3d.pipeline.RenderTarget instance, /*? <1.21.5 {*/ /*int width, int height, *//*?}*/ Operation<Void> original
         //? }
     ) {
-        if (!RenderTargetBlitEvents.BEFORE.invoker().beforeTargetBlit(instance /*? >=26.2 {*//*, commandEncoder, textureView *//*? }*/)) {
-            //? if >=26.2 {
-            //((mod.icanttellyou.picturemode.imixin.PMSkippableGpuSurface) instance).pm$skipFrame();
-            //? } else {
+        if (!RenderTargetBlitEvents.BEFORE.invoker().beforeTargetBlit(instance)) {
             return;
-            //? }
         }
 
-        //? if >=26.2 {
-        //original.call(instance, commandEncoder, textureView);
-        //? } else {
         original.call(instance /*? <1.21.5 {*/ /*, width, height *//*?}*/);
-        //? }
-        RenderTargetBlitEvents.AFTER.invoker().afterTargetBlit(instance /*? >=26.2 {*//*, commandEncoder, textureView *//*? }*/);
+        RenderTargetBlitEvents.AFTER.invoker().afterTargetBlit(instance);
     }
 
     @WrapOperation(

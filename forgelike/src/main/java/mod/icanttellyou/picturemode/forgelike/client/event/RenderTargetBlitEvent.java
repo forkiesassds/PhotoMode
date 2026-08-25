@@ -17,34 +17,8 @@ import net.minecraftforge.eventbus.api.Event;
  * @see RenderTargetBlitEvent.Pre
  * @see RenderTargetBlitEvent.Post
  */
+//~ if >=26.2 'com.mojang.blaze3d.pipeline.RenderTarget' -> 'com.mojang.blaze3d.systems.GpuSurface' {
 public class RenderTargetBlitEvent extends Event {
-    //? if >=26.2 {
-    /*protected final com.mojang.blaze3d.systems.GpuSurface surface;
-    protected final com.mojang.blaze3d.systems.CommandEncoder commandEncoder;
-    protected final com.mojang.blaze3d.textures.GpuTextureView textureView;
-
-    protected RenderTargetBlitEvent(
-        com.mojang.blaze3d.systems.GpuSurface surface,
-        com.mojang.blaze3d.systems.CommandEncoder commandEncoder,
-        com.mojang.blaze3d.textures.GpuTextureView textureView
-    ) {
-        this.surface = surface;
-        this.commandEncoder = commandEncoder;
-        this.textureView = textureView;
-    }
-
-    public com.mojang.blaze3d.systems.GpuSurface getSurface() {
-        return this.surface;
-    }
-
-    public com.mojang.blaze3d.systems.CommandEncoder getCommandEncoder() {
-        return this.commandEncoder;
-    }
-
-    public com.mojang.blaze3d.textures.GpuTextureView getTextureView() {
-        return this.textureView;
-    }
-    *///? } else {
     protected final com.mojang.blaze3d.pipeline.RenderTarget target;
 
     protected RenderTargetBlitEvent(com.mojang.blaze3d.pipeline.RenderTarget target) {
@@ -54,7 +28,6 @@ public class RenderTargetBlitEvent extends Event {
     public com.mojang.blaze3d.pipeline.RenderTarget getTarget() {
         return this.target;
     }
-    //? }
 
     /**
      * {@link RenderTargetBlitEvent.Pre} is fired once per frame,
@@ -68,19 +41,9 @@ public class RenderTargetBlitEvent extends Event {
     //? if forge
     //@Cancelable
     public static class Pre extends RenderTargetBlitEvent /*? if neoforge {*/ implements ICancellableEvent /*?}*/ {
-        //? if >=26.2 {
-        /*public Pre(
-            com.mojang.blaze3d.systems.GpuSurface surface,
-            com.mojang.blaze3d.systems.CommandEncoder commandEncoder,
-            com.mojang.blaze3d.textures.GpuTextureView textureView
-        ) {
-            super(surface, commandEncoder, textureView);
-        }
-        *///? } else {
         public Pre(com.mojang.blaze3d.pipeline.RenderTarget target) {
             super(target);
         }
-        //? }
     }
 
     /**
@@ -90,18 +53,9 @@ public class RenderTargetBlitEvent extends Event {
      * This event only fires on the physical client.
      */
     public static class Post extends RenderTargetBlitEvent {
-        //? if >=26.2 {
-        /*public Post(
-            com.mojang.blaze3d.systems.GpuSurface surface,
-            com.mojang.blaze3d.systems.CommandEncoder commandEncoder,
-            com.mojang.blaze3d.textures.GpuTextureView textureView
-        ) {
-            super(surface, commandEncoder, textureView);
-        }
-        *///? } else {
         public Post(com.mojang.blaze3d.pipeline.RenderTarget target) {
             super(target);
         }
-        //? }
     }
 }
+//~ }
