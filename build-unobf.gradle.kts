@@ -25,7 +25,8 @@ fletchingTable {
     }
 
     relocate.configure(sourceSets.main) {
-        matching("**/*.json5") {
+        matching("(**)/(*).json5") {
+            into("$1/$2.json")
             with(Json5ToJson)
         }
     }
