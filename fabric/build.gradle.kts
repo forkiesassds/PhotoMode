@@ -1,9 +1,7 @@
 plugins {
     `multiloader-loader`
     id("net.fabricmc.fabric-loom-remap")
-    kotlin("jvm")
-    id("com.google.devtools.ksp")
-    id("dev.kikugie.fletching-table")
+    alias(ft.plugins.mixin)
 }
 
 loom {
@@ -18,8 +16,8 @@ loom {
 }
 
 fletchingTable {
-    mixins.create("main") {
-        mixin("default", "picturemode-fabric.mixins.json") {
+    mixins.configure(sourceSets.main) {
+        mixin("picturemode-fabric.mixins.json", "default") {
             env("CLIENT")
         }
     }

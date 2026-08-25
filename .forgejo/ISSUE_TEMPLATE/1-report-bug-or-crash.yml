@@ -1,0 +1,71 @@
+name: Report Bug or Crash
+description: Create a report about a bug or game crash.
+title: "[BUG]"
+labels: ["bug"]
+assignees: [""]
+body:
+  - type: textarea
+    id: describe
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: To reproduce
+      description: "Steps to reproduce the behavior"
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain your problem.
+  - type: input
+    id: mod-version
+    attributes:
+      label: Mod Version
+      description: The version of the mod you are using to reproduce the bug.
+    validations:
+      required: true
+  - type: dropdown
+    id: minecraft-version
+    attributes:
+      label: Minecraft Version
+      description: What version of Minecraft are you using?
+      options:
+        - "1.20.1"
+        - "1.21.1"
+        - "1.21.11"
+        - "26.1.x"
+        - "26.2"
+    validations:
+        required: true
+  - type: input
+    id: gpu
+    attributes:
+      label: Graphics Card (GPU)
+      description: The graphics card used to play Minecraft. Use F3 to get the exact one used by Minecraft.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here.
+    validations:
+      required: false

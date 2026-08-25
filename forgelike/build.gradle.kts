@@ -1,9 +1,7 @@
 plugins {
     id("multiloader-loader").apply(false)
     id("net.neoforged.moddev")
-    kotlin("jvm")
-    id("com.google.devtools.ksp")
-    id("dev.kikugie.fletching-table")
+    alias(ft.plugins.mixin)
     id("me.modmuss50.mod-publish-plugin")
 }
 
@@ -24,8 +22,8 @@ neoForge {
 }
 
 fletchingTable {
-    mixins.create("main") {
-        mixin("default", "picturemode-forgelike.mixins.json") {
+    mixins.configure(sourceSets.main) {
+        mixin("picturemode-forgelike.mixins.json", "default") {
             env("CLIENT")
         }
     }

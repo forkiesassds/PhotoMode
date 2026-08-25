@@ -1,9 +1,8 @@
 plugins {
     id("multiloader-common")
     id("net.fabricmc.fabric-loom")
-    kotlin("jvm")
-    id("com.google.devtools.ksp")
-    id("dev.kikugie.fletching-table")
+    alias(ft.plugins.mixin)
+    alias(ft.plugins.relocate)
 }
 
 loom {
@@ -19,14 +18,16 @@ loom {
 }
 
 fletchingTable {
-    mixins.create("main") {
-        mixin("default", "picturemode-common.mixins.json") {
+    mixins.configure(sourceSets.main) {
+        mixin("picturemode-common.mixins.json", "default") {
             env("CLIENT")
         }
     }
 
-    j52j.register("main") {
-        extension("json", "**/*.json5")
+    relocate.configure(sourceSets.main) {
+        matching("**/*.json5") {
+            with(Json5ToJson)
+        }
     }
 }
 

@@ -1,6 +1,6 @@
+{
 //? if <1.21.5 {
-/*{
-  //? if <1.21.2 {
+  /*//? if <1.21.2 {
   /^"blend": {
     "func": "add",
     "srcrgb": "one",
@@ -20,5 +20,5 @@
     { "name": "OutSize",       "type": "float",     "count": 2,  "value": [ 1.0, 1.0 ] },
     { "name": "Intensity",     "type": "float",     "count": 1,  "value": [ 1.0 ] }
   ]
-}
 *///? }
+}
