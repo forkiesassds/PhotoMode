@@ -48,8 +48,8 @@ public final class RenderTargetBlitEvents {
     public interface Before {
         boolean beforeTargetBlit(
             //? if >=26.2 {
-            /*com.mojang.blaze3d.systems.GpuSurface surface
-            *///? } else {
+            //com.mojang.blaze3d.systems.GpuSurface surface
+            //? } else {
             com.mojang.blaze3d.pipeline.RenderTarget target
             //? }
         );
@@ -59,8 +59,8 @@ public final class RenderTargetBlitEvents {
     public interface After {
         void afterTargetBlit(
             //? if >=26.2 {
-            /*com.mojang.blaze3d.systems.GpuSurface surface
-            *///? } else {
+            //com.mojang.blaze3d.systems.GpuSurface surface
+            //? } else {
             com.mojang.blaze3d.pipeline.RenderTarget target
             //? }
         );

@@ -34,7 +34,11 @@ public interface NativeImageFormat {
      * @return Whether the image is valid for the format
      */
     default boolean imageValidForFormat(NativeImage.Format components) {
+        //? if >=26.3 {
+        //return true;
+        //? } else {
         return components.supportedByStb();
+        //? }
     }
 
     /**
