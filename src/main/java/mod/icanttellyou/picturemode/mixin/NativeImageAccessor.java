@@ -1,4 +1,4 @@
-//? if <1.21.5 || >=26.3 {
+//? if <1.21.5 {
 /*package mod.icanttellyou.picturemode.mixin;
 
 import com.mojang.blaze3d.platform.NativeImage;
@@ -10,11 +10,6 @@ public interface NativeImageAccessor {
     //? if <1.21.5 {
     /^@Accessor("pixels")
     long getPixels();
-    ^///? }
-
-    //? if >=26.3 {
-    /^@Accessor("size")
-    long getSize();
     ^///? }
 }
 *///? }
